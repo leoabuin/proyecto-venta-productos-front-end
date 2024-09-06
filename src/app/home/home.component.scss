@@ -1,0 +1,76 @@
+/* Navbar básica */
+.navbar {
+    background-color: #f8f8f8; /* Color de fondo gris claro */
+    border-bottom: 1px solid #e0e0e0; /* Línea de separación sutil */
+    padding: 10px 20px;
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .navbar-logo h1 {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+  }
+  
+  .navbar-links ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .navbar-links ul li {
+    margin: 0;
+  }
+  
+  .navbar-links ul li a {
+    color: #333;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  .navbar-links ul li a:hover {
+    color: #007bff; /* Color de acento */
+  }
+  
+  .navbar-actions {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-actions .button {
+    background-color: #007bff; /* Color del botón */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .navbar-actions .button:hover {
+    background-color: #0056b3; /* Color del botón al pasar el ratón */
+  }
+  
+  /* Estilo de contenido debajo de la navbar */
+  .home-content {
+    padding: 20px;
+  }
+  
+  .home-content h2 {
+    font-size: 28px;
+  }
+  
+  .home-content p {
+    font-size: 18px;
+  }
+  
