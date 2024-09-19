@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HomeComponent } from "./home/home.component";
+import { HomeComponent } from "./home/home.component.js";
 import { LogInComponent } from './log-in/log-in.component.js';
 
 @Component({
