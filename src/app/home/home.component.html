@@ -1,29 +1,55 @@
-<div class="relative max-h-screen overflow-hidden bg-gray-50">
-  <img src="" alt="" class="absolute left-1/2 top-1/2 max-w-none -translate-x-1/2 -translate-y-1/2" width="1308"/>
-  <div class="absolute inset-0 bg-[url(/img/grid.svg) bg-center [mask-image: linear-gradient (180deg,white,rgba(255,255,255,0))]"></div>
-</div>
-<div class="relative bg-white shadow-xl ring-1 ring-gray-900/5">
-  
-  <nav class="px-4 py-4 sm:flex sm:items-center sm:justify-between sm:text-center">
-    <section class="flex justify-between">
-      <img src="Logo.jpg" class="h-6" alt="MegaShop"/>
-        <h1 class="px-4 font-semibold sm:ju">MegaShop</h1>
-        <button class="text-gray-700 sm:hidden">
-          <svg class="w-6 h-6 fill-current" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 50 50">
-            <path d="M 0 7.5 L 0 12.5 L 50 12.5 L 50 7.5 Z M 0 22.5 L 0 27.5 L 50 27.5 L 50 22.5 Z M 0 37.5 L 0 42.5 L 50 42.5 L 50 37.5 Z">
-            </path>
-          </svg>
-        </button>
-    </section>
-      <div class="flex flex-col items-center mt-3 gap-2 sm:flex-row sm:m-0">
-        <button href="#" class="text-gray-600 hover: bg-orange-400 w-full text-center px-2 rounded hover:text-gray-900">Inicio</button>
-        <button href="#" class="text-gray-600 hover: bg-orange-400 w-full text-center px-2 rounded hover:text-gray-900">Productos</button>
-        <button href="#" class="text-gray-600 hover: bg-orange-400 w-full text-center px-2 rounded hover:text-gray-900">Marcas</button>
-        <button href="#" class="text-gray-600 hover: bg-orange-400 w-full text-center px-2 rounded hover:text-gray-900">Nosotros</button>
-        <button href="#" class="text-gray-600 hover: bg-orange-400 w-full text-center px-2 rounded hover:text-gray-900">Iniciar Sesion </button>
-      </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MegaShop NavBar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Barra de navegación principal -->
+    <nav class="bg-gradient-to-t from-red-500 to-red-700 text-white shadow-lg sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between">
+                
+                <!-- Opción con submenú desplegable (Categorías a la izquierda) -->
+                <div class="relative group">
+                    <button class="py-4 px-2 focus:outline-none hover:bg-red-700 font-bold">
+                        <span>Categorías</span>
+                    </button>
+                    <!-- Menú desplegable -->
+                    <div class="absolute left-0 w-48 bg-red-400 text-gray-900 shadow-md mt-1 hidden group-hover:block z-10">
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-200">Audio, TV, Video</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-200">Electrohogar</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-200">Telefonía</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-200">Informática</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-200">Gaming</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-200">Accesorios</a>
+                    </div>
+                </div>
+
+                <!-- Lista de categorías (Alineadas a la derecha) -->
+                <div class="flex space-x-6">
+                    <a href="#" class="py-4 px-2 hover:bg-red-700 font-bold">Nosotros</a>
+                    <a href="#" class="py-4 px-2 hover:bg-red-700 font-bold">Ofertas</a>
+                    <a href="#" class="py-4 px-2 hover:bg-red-700 font-bold">Ayuda</a>
+                    <a href="#" class="py-4 px-2 hover:bg-red-700 font-bold">Iniciar Sesión</a>
+                    <button class="flex text-white items-center hover:bg-red-700 font-bold py-2 px-4 rounded">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 mr-2">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m.6 8h9.25m-10 0H3M16 16a2 2 0 100 4 2 2 0 000-4zm-8 0a2 2 0 100 4 2 2 0 000-4z" />
+                      </svg>
+                      Añadir al carrito
+                    </button>                    
+                </div>
+            </div>
+        </div>
     </nav>
-</div>  
+
+</body>
+</html>
+
+
 <!-- Contenido principal -->
   <div class="relative w-full h-64">
     <!-- Imagen -->
@@ -39,174 +65,187 @@
 
   <!-- Contenido principal -->
   <section class="home-content text-center mt-5">
-    <h2 class="font-semibold text-center text-lg">
+    <h2 class="font-bold text-center text-lg py-6">
       Nuestros productos
     </h2>
   </section>
 
 <div class="bg-white">
-  <div class="mx-10 max-w-2xl px-6 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 bg-orange-500">
+  <div class="mx-10 max-w-2xl px-6 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 bg-red-600">
     <h2 class="sr-only">Products</h2>
 
-    <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 bg-orange-500">
+    <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 bg-red-600">
       <a href="#" class="group">
         <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
           <img src="https://sportotalar.vtexassets.com/arquivos/ids/410008/TH204223BWY-22080-MARINETREFLE_1.png?v=638119085498130000" alt="Tall slender porcelain bottle with natural clay textured body and cork stopper." class="h-full w-full object-cover object-center group-hover:opacity-75">
         </div>
-        <h3 class="mt-4 text-sm text-gray-700">Remera Lacoste Hombre Croco Manga Corta</h3>
-        <p class="mt-1 text-lg font-medium text-gray-900">$19999</p>
+        <h3 class="mt-4 text-sm text-white">Remera Lacoste Hombre Croco Manga Corta</h3>
+        <p class="mt-1 text-lg font-medium text-white">$19999</p>
       </a>
       <a href="#" class="group mb-10">
         <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
           <img src="https://static.hendel.com/media/catalog/product/cache/b866fd8d147dcce474dc8744e477ca66/5/4/54319_0.jpg" alt="Olive drab green insulated bottle with flared screw lid and flat top." class="h-full w-full object-cover object-center group-hover:opacity-75">
         </div>
-        <h3 class="mt-4 text-sm text-gray-700">Celular Motorola Moto G24 4+128Gb Verde</h3>
-        <p class="mt-1 text-lg font-medium text-gray-900">$342999</p>
+        <h3 class="mt-4 text-sm text-white">Celular Motorola Moto G24 4+128Gb Verde</h3>
+        <p class="mt-1 text-lg font-medium text-white">$342999</p>
       </a>
       <a href="#" class="group">
         <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
           <img src="https://http2.mlstatic.com/D_NQ_NP_866834-MLA77275427402_072024-O.webp" alt="Person using a pen to cross a task off a productivity paper card." class="h-full w-full object-cover object-center group-hover:opacity-75">
         </div>
-        <h3 class="mt-4 text-sm text-gray-700">Sony PlayStation 5 Slim 1TB Spiderman 2 Color Blanco Lectora</h3>
-        <p class="mt-1 text-lg font-medium text-gray-900">$1.499.999</p>
+        <h3 class="mt-4 text-sm text-white">Sony PlayStation 5 Slim 1TB Spiderman 2 Color Blanco Lectora</h3>
+        <p class="mt-1 text-lg font-medium text-white">$1.499.999</p>
       </a>
       <a href="#" class="group">
         <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
           <img src="https://getthelookar.vtexassets.com/arquivos/ids/177027-800-auto?v=638295119389330000&width=800&height=auto&aspect=true">
         </div>
-        <h3 class="mt-4 text-sm text-gray-700">Secador de Pelo Ultracomb Sc-4606</h3>
-        <p class="mt-1 text-lg font-medium text-gray-900">$62.299</p>
+        <h3 class="mt-4 text-sm text-white">Secador de Pelo Ultracomb Sc-4606</h3>
+        <p class="mt-1 text-lg font-medium text-white">$62.299</p>
       </a>
       <a href="#" class="group">
         <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
           <img src="https://cdn-images.farfetch-contents.com/20/97/03/50/20970350_51158863_600.jpg" alt="Hand holding black machined steel mechanical pencil with brass tip and top." class="h-full w-full object-cover object-center group-hover:opacity-75">
         </div>
-        <h3 class="mt-4 text-sm text-gray-700">Nike Tenis Air Vapormax Plus</h3>
-        <p class="mt-1 text-lg font-medium text-gray-900">$229.999</p>
+        <h3 class="mt-4 text-sm text-white">Nike Tenis Air Vapormax Plus</h3>
+        <p class="mt-1 text-lg font-medium text-white">$229.999</p>
       </a>
         <a href="#" class="group">
         <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
           <img src="https://http2.mlstatic.com/D_Q_NP_822682-MLA40837656193_022020-O.webps" alt="Person using a pen to cross a task off a productivity paper card." class="h-full w-full object-cover object-center group-hover:opacity-75">
         </div>
-        <h3 class="mt-4 text-sm text-gray-700">Auriculares gamer Razer Kraken Mercury White</h3>
-        <p class="mt-1 text-lg font-medium text-gray-900">$144.099</p>
+        <h3 class="mt-4 text-sm text-white">Auriculares gamer Razer Kraken Mercury White</h3>
+        <p class="mt-1 text-lg font-medium text-white">$144.099</p>
       </a>
       
       <a href="#" class="group">
         <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
           <img src="https://i5.walmartimages.com/seo/Jean-Paul-Gaultier-Le-Male-Elixir-Parfum-2-5-fl-oz_adf28db3-976f-4334-b07a-944f6e1650d1.fbe7224d3661318461f0d0e66b387daa.jpeg" alt="Hand holding black machined steel mechanical pencil with brass tip and top." class="h-full w-full object-cover object-center group-hover:opacity-75">
         </div>
-        <h3 class="mt-4 text-sm text-gray-700">Jean Paul Gaultier Le Male Elixir Parfum - 75ml</h3>
-        <p class="mt-1 text-lg font-medium text-gray-900">$249.909</p>
+        <h3 class="mt-4 text-sm text-white">Jean Paul Gaultier Le Male Elixir Parfum - 75ml</h3>
+        <p class="mt-1 text-lg font-medium text-white">$249.909</p>
       </a>
 
       <a href="#" class="group">
         <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
           <img src="https://www.rodo.com.ar/media/catalog/product/cache/855090a5c67e45b26c9e0d345e7592dc/3/1/315656_samsung_microondas_2.jpg">
         </div>
-        <h3 class="mt-4 text-sm text-gray-700">Microondas 28Lts Samsung MG28F3K3TAS Digital Cerámico C/Grill Plata</h3>
-        <p class="mt-1 text-lg font-medium text-gray-900">$379.999</p>
+        <h3 class="mt-4 text-sm text-white">Microondas 28Lts Samsung MG28F3K3TAS Digital Cerámico C/Grill Plata</h3>
+        <p class="mt-1 text-lg font-medium text-white">$379.999</p>
       </a>
     </div>
   </div>
 </div>
 
 
+<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ofertas</title>
+    <title>Ofertas Responsivas</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100">
-    <div class="flex justify-center items-center h-screen">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="flex justify-center items-center min-h-screen">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
             <!-- Componente Zapatillas -->
-            <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
+            <div class="bg-red-300 p-6 rounded-lg shadow-xl flex flex-col items-center">
                 <div class="relative">
-                    <img src="https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwa7620a4a/products/NIFD6409-400/NIFD6409-400-6.JPG" alt="Zapatillas" class="w-full">
-                    <span class="absolute top-4 left-4 bg-red-600 text-white font-bold px-3 py-1 rounded-full">ZAPATILLAS</span>
+                    <img src="https://d22fxaf9t8d39k.cloudfront.net/d02b503a7bcb2017c06bbb56216d7d439686b9a1fe1211016da83cd9d25af90e39834.jpeg" alt="Zapatillas" class="w-full">
+                    <span class="absolute top-4 left-4 bg-red-500 text-white font-bold px-3 py-1 rounded-full">ZAPATILLAS</span>
                 </div>
-                <h2 class="text-xl font-bold mt-4">HASTA 35% OFF</h2>
-                <p class="text-gray-500 text-center">Y 6X SIN INTERÉS</p>
-                <button class="mt-4 bg-orange-500 text-white px-6 py-2 rounded-full hover:bg-orange-950">VER OFERTAS</button>
+                <h2 class="text-xl font-bold mt-4 text-center">HASTA 35% OFF</h2>
+                <p class="text-gray-700 text-center">Y 6X SIN INTERÉS</p>
+                <button class="mt-4 bg-red-500 text-white px-6 py-2 rounded hover:bg-red-800">VER MÁS</button>
             </div>
 
             <!-- Componente Celulares -->
-            <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
-                <div class="relative mx-8">
-                    <img src="https://images.samsung.com/is/image/samsung/p6pim/ar/2401/gallery/ar-galaxy-s24-s928-sm-s928bztvaro-thumb-539291371" alt="Celulares" class="w-full">
-                    <span class="absolute top-4 left-4 bg-red-600 text-white font-bold px-3 py-1 rounded-full">OFERTAS IMPERDIBLES</span>
+            <div class="bg-red-300 p-6 rounded-lg shadow-lg flex flex-col items-center">
+                <div class="relative">
+                    <img src="https://s3-sa-east-1.amazonaws.com/saasargentina/IWBvXUaxvOWbBmzpKOsj/imagen" alt="Celulares" class="w-full">
+                    <span class="absolute top-4 left-4 bg-blue-500 text-white font-bold px-3 py-1 rounded-full">ELECTRÓNICA</span>
                 </div>
-                <h2 class="text-xl font-bold mt-4">LO ÚLTIMO EN CELULARES</h2>
-                <P class="text-gray-500 text-center">HASTA 12 CUOTAS SIN INTERES</P>
-                <button class="mt-4 bg-orange-500 text-white px-6 py-2 rounded-full hover:bg-orange-950">VER MÁS</button>
+                <h2 class="text-xl font-bold mt-4 text-center">LO ÚLTIMO EN TECNOLOGÍA</h2>
+                <p class="text-gray-700 text-center">OFERTAS IMPERDIBLES</p>
+                <button class="mt-4 bg-red-500 text-white px-6 py-2 rounded hover:bg-red-800">VER MÁS</button>
             </div>
 
-            <!-- Componente Hogar-->
-            <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
-                <div class="relative mx-8">
-                    <img src="https://http2.mlstatic.com/D_740920-MLA50947337044_072022-C.jpg" alt="Hogar" class="w-full">
-                    <span class="absolute top-4 left-4 bg-red-600 text-white font-bold px-3 py-1 rounded-full">HOGAR</span>
+            <!-- Componente Electrónica -->
+            <div class="bg-red-300 p-6 rounded-lg shadow-lg flex flex-col items-center">
+                <div class="relative">
+                    <img src="https://http2.mlstatic.com/D_Q_NP_740920-MLA50947337044_072022-O.webp" alt="Electrónica" class="w-full">
+                    <span class="absolute top-4 left-4 bg-green-500 text-white font-bold px-3 py-1 rounded-full">HOGAR</span>
                 </div>
-                <h2 class="text-xl font-bold mt-4">TODO PARA TU HOGAR</h2>
-                <p class="text-gray-500 text-center">HASTA 40% OFF</p>
-                <button class="mt-4 bg-orange-500 text-white px-6 py-2 rounded-full hover:bg-orange-950">VER MÁS</button>
+                <h2 class="text-xl font-bold mt-4 text-center">DESCUENTOS EN ELECTRÓNICA</h2>
+                <p class="text-gray-700 text-center">HASTA 40% OFF</p>
+                <button class="mt-4 bg-red-500 text-white px-6 py-2 rounded hover:bg-red-800">VER MÁS</button>
             </div>
         </div>
     </div>
-
-
-  //falta que sea responsive esta parte.  
-<footer class="bg-orange-900 text-white p-8">
-      <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
-        
-     
-        <div>
-          <h3 class="text-white mb-4">NOSOTROS</h3>
-          <ul>
-            <li><a href="#" class="hover:text-white">Historia</a></li>
-            <li><a href="#" class="hover:text-white">Trabajá con nosotros</a></li>
-          </ul>
-        </div>
-        
+</body>
+</html>
+ 
+  <footer class="bg-gradient-to-b from-red-500 to-red-700 text-white p-6 md:p-8 justify-center">
+    <div class="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+      <!-- Sección: Nosotros -->
+      <div class="flex flex-col items-center">
+        <h3 class="text-white mb-4">NOSOTROS</h3>
+        <ul class="text-center">
+          <li><a href="#" class="hover:text-white">Quienes Somos</a></li>
+          <li><a href="#" class="hover:text-white">Trabajá con nosotros</a></li>
+          <li><a href="#" class="hover:text-white">Responsabilidad Social</a></li>
+        </ul>
+      </div>
       
-        <div>
-          <h3 class="text-white mb-4">TIENDA ONLINE</h3>
-          <ul>
-            <li><a href="#" class="hover:text-white">Cambios y Devoluciones</a></li>
-            <li><a href="#" class="hover:text-white">Descuentos y Financiación</a></li>
-            <li><a href="#" class="hover:text-white">Métodos de Entrega</a></li>
-            <li><a href="#" class="hover:text-white">Legales</a></li>
-          </ul>
-        </div>
-        
-       
-        <div>
-          <h3 class="text-white mb-4">AYUDA</h3>
-          <ul>
-            <li><a href="#" class="hover:text-white">Como comprar</a></li>
-            <li><a href="#" class="hover:text-white">Contacto</a></li>
-            <li><a href="#" class="hover:text-white">Preguntas Frecuentes</a></li>
-          </ul>
-        </div>
+      <!-- Sección: Tienda Online -->
+      <div class="flex flex-col items-center">
+        <h3 class="text-white mb-4">TIENDA ONLINE</h3>
+        <ul class="text-center">
+          <li><a href="#" class="hover:text-white">Cyber Monday</a></li>
+          <li><a href="#" class="hover:text-white">Hot Sale</a></li>
+          <li><a href="#" class="hover:text-white">Cambios y Devoluciones</a></li>
+          <li><a href="#" class="hover:text-white">Descuentos y Financiación</a></li>
+          <li><a href="#" class="hover:text-white">Métodos de Entrega</a></li>
+          <li><a href="#" class="hover:text-white">Legales</a></li>
+        </ul>
+      </div>
     
-     
-      <div class="container mx-auto mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Sección: Ayuda -->
+      <div class="flex flex-col items-center">
+        <h3 class="text-white mb-4">AYUDA</h3>
+        <ul class="text-center">
+          <li><a href="#" class="hover:text-white">Como comprar</a></li>
+          <li><a href="#" class="hover:text-white">Contacto</a></li>
+          <li><a href="#" class="hover:text-white">Limpiar sesión</a></li>
+          <li><a href="#" class="hover:text-white">Preguntas Frecuentes</a></li>
+        </ul>
+      </div>
 
-        <div class="flex space-x-0">
-          <a href="#"><img src="https://cdn-icons-png.flaticon.com/256/124/124010.png" alt="Facebook" class="w-10 h-7 mr-4"></a>
-          <a href="#"><img src="https://img.freepik.com/vector-gratis/instagram-nuevo-icono_1057-2227.jpg?size=338&ext=jpg&ga=GA1.1.2008272138.1726790400&semt=ais_hybrid" alt="Instagram" class="w-10 h-7 flex mr-4"></a>
-          <a href="#"><img src="https://img.freepik.com/vector-gratis/nuevo-diseno-icono-x-logotipo-twitter-2023_1017-45418.jpg?size=338&ext=jpg&ga=GA1.1.2008272138.1726704000&semt=ais_hybrid" alt="Twitter" class="w-10 h-7 flex mr-4"></a>
-          <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/174/174883.png" alt="YouTube" class="w-10 h-7 flex mr-4"></a>
-        </div>
-    
-        <div class="incline-flex items-center mr-0">
-          <p>Atención al cliente</p>
-          <p>0810-100-8956</p>
-          <p>0800-888-6676</p>
-        </div>
+      <div class="flex flex-col items-center">
+        <h3 class="text-white mb-4">ATENCIÓN AL CLIENTE</h3>
+        <ul class="text-center">
+          <li>0810-999-58626</li>
+          <li>0800-777-7777</li>
+        </ul>
       </div>
     </div>
-    </footer>
+  
+    <!-- Sección de redes sociales, medios de pago y contacto -->
+    <div class="container mx-auto mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Redes sociales -->
+      <div class="flex justify-center space-x-4">
+        <a href="#"><img src="https://images.vexels.com/content/223136/preview/facebook-icon-social-media-8dfafe.png" alt="Facebook" class="w-7 h-7"></a>
+        <a href="#"><img src="https://png.pngtree.com/png-clipart/20221019/original/pngtree-instagram-icon-png-image_8704817.png" alt="Instagram" class="w-6 h-6"></a>
+        <a href="#"><img src="https://static.vecteezy.com/system/resources/previews/031/737/206/non_2x/twitter-new-logo-twitter-icons-new-twitter-logo-x-2023-x-social-media-icon-free-png.png" alt="X" class="w-7 h-7"></a>
+        <a href="#"><img src="https://cdn.icon-icons.com/icons2/1488/PNG/512/5295-youtube-i_102568.png" alt="YouTube" class="w-7 h-7"></a>
+      </div>
+      <!-- Medios de pago -->
+      <div class="flex justify-center space-x-4">
+        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968299.png" alt="Visa" class="w-12">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVovQJAZXAvn27a1VeYsu1dOmlXsD5rHPkhQ&s" alt="MasterCard" class="w-12">
+      </div>
+    </div>
+  </footer>
+  
     
