@@ -6,9 +6,8 @@ import { LogInComponent } from './log-in/log-in.component.js';
 import { BrandComponent } from './brand/brand.component.js';
 =======
 import { NosotrosComponent } from "./nosotros/nosotros.component";
-import { GamingComponent } from "./gaming/gaming.component";
+// import { GamingComponent } from "./gaming/gaming.component";
 import { AddcategoriesComponent } from "./addcategories/addcategories.component";
->>>>>>> origin/master
 
 @Component({
   selector: 'app-root',
