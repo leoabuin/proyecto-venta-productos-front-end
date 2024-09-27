@@ -1,35 +1,35 @@
 
-<body class="bg-red-500 flex items-center justify-center min-h-screen">
-
-    <div class="w-full max-w-lg bg-white rounded-lg shadow-xl p-6">
-      <h2 class="text-2xl font-bold mb-6 text-center text-gray-700">Inscripción de Marca</h2>
-      <form action="#" method="POST">
-        
-        <div class="mb-4">
-          <label for="nombreMarca" class="block text-sm font-medium text-gray-600">Nombre de la Marca</label>
-          <input type="text" id="nombreMarca" name="nombreMarca" class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="Nombre de la marca" required>
-        </div>
-  
-        <div class="mb-4">
-          <label for="descripcion" class="block text-sm font-medium text-gray-600">Descripción</label>
-          <textarea id="descripcion" name="descripcion" rows="4" class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="Describe tu marca" required></textarea>
-        </div>
-  
-        <div class="mb-4">
-          <label for="sitioWeb" class="block text-sm font-medium text-gray-600">Sitio Web de la Marca</label>
-          <input type="url" id="sitioWeb" name="sitioWeb" class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="https://tusitio.com" required>
-        </div>
-  
-        <div class="mb-4">
-          <label for="paisOrigen" class="block text-sm font-medium text-gray-600">País de Origen</label>
-          <input type="text" id="paisOrigen" name="paisOrigen" class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="Escribe tu país de origen" required>
-        </div>
-  
-        <div class="mt-6">
-          <button type="submit" class="w-full px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">Inscribir Marca</button>
-        </div>
-      </form>
+<div class="w-full max-w-lg bg-white rounded-lg shadow-xl p-6">
+  <h2 class="text-2xl font-bold mb-6 text-center text-gray-700">Inscripción de Marca</h2>
+  <form (ngSubmit)="submitForm()">
+    
+    <div class="mb-4">
+      <label for="name" class="block text-sm font-medium text-gray-600">Nombre de la Marca</label>
+      <input type="text" id="name" [(ngModel)]="brandData.name" name="nombreMarca" class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="Nombre de la marca" required>
     </div>
-  </body>
-  
-  
+
+    <div class="mb-4">
+      <label for="description" class="block text-sm font-medium text-gray-600">Descripción</label>
+      <textarea id="description" [(ngModel)]="brandData.description" name="descripcion" rows="4" class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="Describe tu marca" required></textarea>
+    </div>
+
+    <div class="mb-4">
+      <label for="website" class="block text-sm font-medium text-gray-600">Sitio Web de la Marca</label>
+      <input type="url" id="website" [(ngModel)]="brandData.website" name="sitioWeb" class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="https://tusitio.com" required>
+    </div>
+
+    <div class="mb-4">
+      <label for="countryOfOrigin" class="block text-sm font-medium text-gray-600">País de Origen</label>
+      <input type="text" id="countryOfOrigin" [(ngModel)]="brandData.countryOfOrigin" name="paisOrigen" class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="Escribe tu país de origen" required>
+    </div>
+
+    <div class="mb-4">
+      <label for="logo" class="block text-sm font-medium text-gray-600">Ingrese URL del logo de la marca</label>
+      <input type="url" id="logo" [(ngModel)]="brandData.logo" name="logo" class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="https://tusitio.com" required>
+    </div>
+
+    <div class="mt-6">
+      <button type="submit" class="w-full px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">Inscribir Marca</button>
+    </div>
+  </form>
+</div>

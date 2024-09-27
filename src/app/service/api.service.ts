@@ -15,4 +15,8 @@ export class ApiService {
   public getData(): Observable<any>{
     return this.http.get<any>(this.urlBrandApi)
   }
+
+  public createBrand(brandData: any): Observable<any> {
+    return this.http.post<any>(this.urlBrandApi, brandData);
+  }
 }
