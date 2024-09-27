@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../service/api.service.js';
 
 @Component({
   selector: 'app-addbrands',
@@ -8,5 +9,7 @@ import { Component } from '@angular/core';
   styleUrl: './addbrands.component.scss'
 })
 export class AddbrandsComponent {
+  
+
 
 }

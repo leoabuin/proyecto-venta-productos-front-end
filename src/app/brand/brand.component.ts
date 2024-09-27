@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ApiService } from '../service/api.service.js';
+import { HttpClient } from '@angular/common/http';
 
 interface Marca {
   name: string;
@@ -15,12 +17,21 @@ interface Marca {
 })
 export class BrandComponent {
 
+
+  brands: any = {}
+  constructor(private service: ApiService){
+    this.service.getData().subscribe(brands =>{
+      this.brands = brands.results;
+      console.log(brands);})
+  }
+  
   marca: Marca = { name: '', description:'' };
 
   onSubmit() {
-    // Aquí realizarás la lógica para enviar los datos al servidor
-    // o guardarlos en una base de datos local
-    console.log('Marca a guardar:', this.marca);
+    this.service.getData().subscribe(brands =>{
+      this.brands = brands.results;
+      console.log(this.brands);
+    })
   }
 
 }

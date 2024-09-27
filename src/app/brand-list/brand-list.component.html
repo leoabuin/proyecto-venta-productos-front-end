@@ -1,0 +1,13 @@
+<ul role="list" class="divide-y divide-gray-100 max-w-xl mx-auto">
+    <li *ngFor="let brand of brands" class="flex justify-between gap-x-4 py-4 items-center">
+      <div class="flex min-w-0 gap-x-4">
+        <div class="min-w-0 flex-auto">
+          <p class="text-sm font-semibold leading-6 text-gray-900">{{ brand.name }}</p>
+          <p class="mt-1 truncate text-xs leading-5 text-gray-500">{{ brand.description }}</p>
+        </div>
+      </div>
+      <div class="shrink-0 sm:flex sm:flex-col sm:items-end">
+        <p class="text-sm leading-6 text-gray-900">{{ brand.website }}</p>
+      </div>
+    </li>
+  </ul>
