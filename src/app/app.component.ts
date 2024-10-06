@@ -9,11 +9,19 @@ import { NosotrosComponent } from "./nosotros/nosotros.component";
 
 import { AddcategoriesComponent } from "./addcategories/addcategories.component";
 import { BrandListComponent } from './brand-list/brand-list.component.js';
+import { CategoriesListComponent } from "./categories-list/categories-list.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HomeComponent, LogInComponent, NosotrosComponent,AddbrandsComponent ,AddcategoriesComponent,BrandListComponent],
+  imports: [RouterOutlet,
+            HomeComponent,
+            LogInComponent,
+            NosotrosComponent, 
+            AddbrandsComponent, 
+            AddcategoriesComponent, 
+            BrandListComponent, 
+            CategoriesListComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

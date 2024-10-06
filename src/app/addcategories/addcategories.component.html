@@ -1,1 +1,26 @@
+<div class="flex"></div>
 
+<div class="w-full max-w-lg bg-white rounded-lg shadow-lg p-4 mx-auto mt-10">
+  <h2 class="text-2xl font-bold mb-4 text-center">Creacion de categoria</h2>
+
+  <div *ngIf="errorMessages.length > 0" class="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded mb-4">
+    <ul>
+      <li *ngFor="let error of errorMessages">{{ error }}</li>
+    </ul>
+  </div>
+  
+  <form (ngSubmit)="submitForm()">
+    <div class="mb-3">
+      <label for="name" class="block">Nombre de la Categoria</label>
+      <input type="text" id="name" [(ngModel)]="categoryData.name" name="nombreCategoria" class="w-full border p-2 rounded" placeholder="Nombre de la categoria" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="block">Descripción</label>
+      <textarea id="description" [(ngModel)]="categoryData.description" name="descripcion" rows="3" class="w-full border p-2 rounded" placeholder="Describe la categoria" required></textarea>
+    </div>
+
+
+    <button type="submit" class="w-full p-2 text-white bg-red-500 rounded hover:bg-red-600">Crear categoria </button>
+  </form>
+</div>

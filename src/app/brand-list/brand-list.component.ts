@@ -14,10 +14,11 @@ import { FormsModule } from '@angular/forms';
 export class BrandListComponent {
   filterBrand: string = '';
   brands: any[] = []
+  selectedBrand: any = {}; // Este es el objeto original que no se modifica
+  tempBrand: any = {};     // Este es el objeto temporal que se usa en el formulario
   constructor(private service: ApiService){
     this.service.getData().subscribe(response =>{
       this.brands = response.data;
-     // console.log(brands.results);
     })
   }
 
@@ -30,13 +31,55 @@ export class BrandListComponent {
     this.service.deleteBrand(brandId).subscribe({
       next: response => {
         console.log('Marca eliminada:', response.message);
-        // Actualiza la lista de marcas eliminando la marca eliminada
         this.brands = this.brands.filter(brand => brand.id !== brandId);
       },
       error: error => {
         console.error('Error al eliminar la marca:', error);
       }
     });
+  }
+
+  errorMessages: string[] = [];
+  updateBrand() {
+    // Aquí llamas al backend para actualizar la marca
+    this.service.updateBrand(this.selectedBrand.id, this.tempBrand).subscribe({
+      next: response => {
+        // Actualiza los datos originales solo si el backend respondió correctamente
+        this.selectedBrand = { ...this.tempBrand };
+        this.closeModal();
+      },
+      error: (error) => {
+        console.error('Error al agregar la categoria:', error);
+      
+        // Reiniciar los mensajes de error en cada intento
+        this.errorMessages = [];
+      
+        // Verificar si el error tiene el formato esperado
+        if (error.status === 400 && error.error && error.error.error) {
+          // Si existe el campo 'error.error' y tiene detalles de validación
+          const backendErrors = error.error.error;
+          this.errorMessages = backendErrors.map((err: any) => {
+            return `Error en ${err.path ? err.path[0] : 'desconocido'}: ${err.message}`;
+          });
+        } else {
+          // Manejo de otros errores o respuestas inesperadas
+          this.errorMessages.push('Error desconocido. Intente nuevamente.');
+        }
+      }
+    });
+  }
+
+  isModalOpen: boolean = false;
+
+  openModal(brand: any) {
+    this.selectedBrand = brand;
+    this.tempBrand = { ...brand }; // Crea una copia del objeto para editar
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+    this.selectedBrand = null;
   }
 
 }

@@ -23,4 +23,8 @@ export class ApiService {
   public deleteBrand(id: number): Observable<any> {
     return this.http.delete<any>(`${this.urlBrandApi}/${id}`);
   }
+
+  public updateBrand(id: number, brandData: any): Observable<any> {
+    return this.http.put(`${this.urlBrandApi}/${id}`, brandData);
+  }
 }
