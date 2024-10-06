@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ApiBrandListService } from '../service/api.brandListService.js';
 import { ApiService } from '../service/api.service.js';
 import { FilterPipe } from '../pipes/filter.pipe.js';
 import { FormsModule } from '@angular/forms';
