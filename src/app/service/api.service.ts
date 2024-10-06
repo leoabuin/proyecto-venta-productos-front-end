@@ -19,4 +19,8 @@ export class ApiService {
   public createBrand(brandData: any): Observable<any> {
     return this.http.post<any>(this.urlBrandApi, brandData);
   }
+
+  public deleteBrand(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.urlBrandApi}/${id}`);
+  }
 }
