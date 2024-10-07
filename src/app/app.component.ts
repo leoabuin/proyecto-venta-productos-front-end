@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { HomeComponent } from "./home/home.component.js";
 import { LogInComponent } from './log-in/log-in.component.js';
 import { AddbrandsComponent } from './addbrands/addbrands.component.js';
@@ -21,7 +21,8 @@ import { CategoriesListComponent } from "./categories-list/categories-list.compo
             AddbrandsComponent, 
             AddcategoriesComponent, 
             BrandListComponent, 
-            CategoriesListComponent],
+            CategoriesListComponent,
+            RouterLink],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

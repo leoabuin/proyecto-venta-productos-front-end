@@ -22,6 +22,27 @@ export class BrandListComponent {
     })
   }
 
+  brandToDelete: number | null = null;
+
+  openModalDelete(brandId: number) {
+    this.brandToDelete = brandId;
+    this.isModalOpenDelete = true;
+  }
+
+  closeModalDelete() {
+    this.isModalOpenDelete = false;
+    this.brandToDelete = null;
+  }
+
+
+  confirmDelete() {
+    if (this.brandToDelete) {
+      // Lógica para eliminar la marca
+      this.deleteBrand(this.brandToDelete);
+      this.closeModalDelete();
+    }
+  }
+
   deleteBrand(brandId: number) {
     if (isNaN(brandId) || brandId <= 0) {
       console.error('ID de la marca no válido:', brandId);
@@ -70,7 +91,7 @@ export class BrandListComponent {
   }
 
   isModalOpen: boolean = false;
-
+  isModalOpenDelete: boolean = false;
   openModal(brand: any) {
     this.selectedBrand = brand;
     this.tempBrand = { ...brand }; // Crea una copia del objeto para editar
