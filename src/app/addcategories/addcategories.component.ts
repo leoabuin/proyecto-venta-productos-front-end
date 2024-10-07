@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ApiCategoryService } from '../service/categoryApi.service.js';
+import { NavbarComponent } from '../../navbar/navbar.component.js';
 
 @Component({
   selector: 'app-addcategories',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule, NavbarComponent],
   templateUrl: './addcategories.component.html',
   styleUrl: './addcategories.component.scss'
 })

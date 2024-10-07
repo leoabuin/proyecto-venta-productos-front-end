@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../service/api.service.js';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { NavbarComponent } from '../../navbar/navbar.component.js';
 
 @Component({
   selector: 'app-addbrands',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule, NavbarComponent],
   templateUrl: './addbrands.component.html',
   styleUrl: './addbrands.component.scss'
 })
@@ -20,6 +21,7 @@ export class AddbrandsComponent {
     logo:''
   };
 
+  isSuccessModalOpen = false;
   errorMessages: string[] = [];
   constructor(private service: ApiService){}
 
@@ -28,6 +30,7 @@ export class AddbrandsComponent {
     this.service.createBrand(this.brandData).subscribe({
       next: (response) => {
         console.log('Marca agregada:', response);
+        this.openSuccessModal();
 
       },
       error: (error) => {
@@ -43,5 +46,14 @@ export class AddbrandsComponent {
       }
     });
   }
+
+  openSuccessModal() {
+    this.isSuccessModalOpen = true;
+  }
+
+  closeSuccessModal() {
+    this.isSuccessModalOpen = false;
+  }
+
 
 }

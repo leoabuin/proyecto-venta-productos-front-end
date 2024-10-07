@@ -1,15 +1,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<div class="w-full max-w-xl min-w-[200px] relative mt-4" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 1000;">
-  <label class="block mb-2 text-sm text-slate-600">
-    Marcas
-  </label>
-  <div class="relative">
+<app-navbar></app-navbar>
+
+
+<div class="w-full max-w-xl min-w-[200px] relative mt-10" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 1000;">
+  <div class="relative flex items-center mt-10"> <!-- Usar flex para alinear items -->
+    <button routerLink="/addBrands" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-800 mr-2 w-fit">Crear Marca</button> <!-- Añadir margen a la derecha -->
     <input type="text" name="filterBrand" class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-10 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" placeholder="Buscar marcas" [(ngModel)]="filterBrand"/>
-    <button class="absolute right-1 top-1 rounded bg-slate-800 p-1.5 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
-        <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" />
-      </svg>
-    </button>
   </div>
 </div>
 
@@ -69,8 +65,8 @@
 
 
 
-<div *ngIf="isModalOpen" id="updateBrand" class="fixed inset-0 z-100 flex items-center justify-center w-full h-full bg-gray-900 bg-opacity-50">
-  <div class="relative p-4 w-full max-w-md max-h-full bg-white rounded-lg shadow dark:bg-gray-700 mt-12" >
+<div *ngIf="isModalOpen" id="updateBrand" class="fixed inset-0 z-100 flex items-center justify-center w-full h-full bg-gray-900 bg-opacity-50 backdrop-blur-md">
+  <div class="relative p-4 w-full max-w-md max-h-full bg-white rounded-lg shadow dark:bg-gray-700 mt-20" >
     <!-- Modal content -->
     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
       <!-- Modal header -->

@@ -10,7 +10,8 @@ import { NosotrosComponent } from "./nosotros/nosotros.component";
 import { AddcategoriesComponent } from "./addcategories/addcategories.component";
 import { BrandListComponent } from './brand-list/brand-list.component.js';
 import { CategoriesListComponent } from "./categories-list/categories-list.component";
-
+import { DistributorListComponent } from './distributor-list/distributor-list.component.js';
+import { NavbarComponent } from '../navbar/navbar.component.js';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -22,7 +23,9 @@ import { CategoriesListComponent } from "./categories-list/categories-list.compo
             AddcategoriesComponent, 
             BrandListComponent, 
             CategoriesListComponent,
-            RouterLink],
+            RouterLink,
+            NavbarComponent,
+            DistributorListComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
