@@ -3,11 +3,13 @@ import { Component } from '@angular/core';
 import { ApiService } from '../service/api.service.js';
 import { FilterPipe } from '../pipes/filter.pipe.js';
 import { FormsModule } from '@angular/forms';
+import { NavbarComponent } from '../../navbar/navbar.component.js';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-brand-list',
   standalone: true,
-  imports: [CommonModule, FilterPipe, FormsModule],
+  imports: [CommonModule, FilterPipe, FormsModule, NavbarComponent,RouterLink],
   templateUrl: './brand-list.component.html',
   styleUrl: './brand-list.component.scss'
 })

@@ -25,7 +25,7 @@ import { NavbarComponent } from '../navbar/navbar.component.js';
             CategoriesListComponent,
             RouterLink,
             NavbarComponent,
-          DistributorListComponent],
+            DistributorListComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
