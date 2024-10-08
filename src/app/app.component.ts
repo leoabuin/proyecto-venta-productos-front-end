@@ -12,20 +12,22 @@ import { BrandListComponent } from './brand-list/brand-list.component.js';
 import { CategoriesListComponent } from "./categories-list/categories-list.component";
 import { DistributorListComponent } from './distributor-list/distributor-list.component.js';
 import { NavbarComponent } from '../navbar/navbar.component.js';
+import { VentanaEmergenteComponent } from "./ventana-emergente/ventana-emergente.component";
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet,
-            HomeComponent,
-            LogInComponent,
-            NosotrosComponent, 
-            AddbrandsComponent, 
-            AddcategoriesComponent, 
-            BrandListComponent, 
-            CategoriesListComponent,
-            RouterLink,
-            NavbarComponent,
-            DistributorListComponent],
+    HomeComponent,
+    LogInComponent,
+    NosotrosComponent,
+    AddbrandsComponent,
+    AddcategoriesComponent,
+    BrandListComponent,
+    CategoriesListComponent,
+    RouterLink,
+    NavbarComponent,
+    DistributorListComponent, 
+    VentanaEmergenteComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
