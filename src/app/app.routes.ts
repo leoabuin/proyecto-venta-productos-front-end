@@ -7,6 +7,9 @@ import { AddcategoriesComponent } from './addcategories/addcategories.component.
 import { CategoriesListComponent } from './categories-list/categories-list.component.js';
 import { NosotrosComponent } from './nosotros/nosotros.component.js';
 import { DistributorListComponent } from './distributor-list/distributor-list.component.js';
+import { RegisterUserComponent } from './register-user/register-user.component.js';
+import { ProductsListComponent } from './products-list/products-list.component.js';
+import { AddProductComponent } from './add-product/add-product.component.js';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -17,5 +20,9 @@ export const routes: Routes = [
     {path: 'addCategories', component: AddcategoriesComponent},
     {path: 'categories-list', component: CategoriesListComponent},
     {path: 'aboutUs', component: NosotrosComponent},
-    {path: 'distributors-list', component: DistributorListComponent}
+    {path: 'distributors-list', component: DistributorListComponent},
+    {path: 'register', component: RegisterUserComponent},
+    {path: 'products', component: ProductsListComponent},
+    {path: 'addProduct', component: AddProductComponent}
+
 ];

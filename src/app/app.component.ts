@@ -12,6 +12,8 @@ import { BrandListComponent } from './brand-list/brand-list.component.js';
 import { CategoriesListComponent } from "./categories-list/categories-list.component";
 import { DistributorListComponent } from './distributor-list/distributor-list.component.js';
 import { NavbarComponent } from '../navbar/navbar.component.js';
+import { ProductsListComponent } from './products-list/products-list.component.js';
+import { AddProductComponent } from './add-product/add-product.component.js';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -25,7 +27,11 @@ import { NavbarComponent } from '../navbar/navbar.component.js';
             CategoriesListComponent,
             RouterLink,
             NavbarComponent,
-            DistributorListComponent],
+            DistributorListComponent,
+            ProductsListComponent,
+            AddProductComponent
+          
+          ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
