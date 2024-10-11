@@ -1,52 +1,48 @@
 <app-navbar></app-navbar>
 
 <div class="p-6 bg-white rounded-lg shadow-lg">
-    <div class="flex justify-between items-center mb-4">
+  <div class="flex justify-between items-center mb-4">
       <h2 class="text-xl font-semibold">Lista de distribuidores</h2>
       <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-800">Crear un nuevo distribuidor</button>
-    </div>
-  
-    <div class="space-y-4">
-      
-        <!-- Distributor 1-->
-      <button class="w-full text-left flex justify-between items-center bg-gray-50 p-4 rounded-lg hover:bg-gray-100 focus:outline-none">
-        <div class="space-y-1">
-          <span class="text-red-600 font-medium">Nike Oficial</span>
-          <p class="text-gray-900 text-sm">Indumentaria Deportiva</p>
-        </div>
-        <div class="flex items-center space-x-2 text-gray-400">
-          <span class="text-sm">Activo</span>
-        </div>
-      </button>
-  
-      <!-- Distributor 2 -->
-      <button class="w-full text-left flex justify-between items-center bg-gray-50 p-4 rounded-lg hover:bg-gray-100 focus:outline-none">
-        <div class="space-y-1">
-          <span class="text-red-600 font-medium">Samsung</span>
-          <p class="text-gray-900 text-sm">Tecnologia</p>
-        </div>
-        <div class="flex items-center space-x-2 text-gray-400">        
-          <span class="text-sm">Activo</span>
-        </div>
-      </button>
-  
-      <!-- Distributor 3 -->
-      <button class="w-full text-left flex justify-between items-center bg-gray-50 p-4 rounded-lg hover:bg-gray-100 focus:outline-none">
-        <div class="space-y-1">
-          <span class="text-red-600 font-medium">Sony Entertainment</span>
-          <p class="text-gray-900 text-sm">Tecnologia</p>
-        </div>
-        <div class="flex items-center space-x-2 text-gray-400">
-            <span class="text-sm">Activo</span>
-        </div>
+  </div>
 
-      <!-- Distributor 4 -->
-      <button class="w-full text-left flex justify-between items-center bg-gray-50 p-4 rounded-lg hover:bg-gray-100 focus:outline-none">
-        <div class="space-y-1">
-          <span class="text-red-600 font-medium">Adidas Oficial</span>
-          <p class="text-gray-900 text-sm">Indumentaria Deportiva</p>
+  <ul class="space-y-4">
+      <li *ngFor="let distributor of distributors">
+          <button (click)="openModal(distributor)" class="w-full text-left flex justify-between items-center bg-gray-50 p-4 rounded-lg hover:bg-gray-100 focus:outline-none">
+              <div class="space-y-1">
+                  <span class="text-red-600 font-medium">{{ distributor.name }}</span>
+                  <p class="text-gray-900 text-sm">{{ distributor.category }}</p>
+              </div>
+              <div class="flex items-center space-x-2 text-gray-400">
+                  <span class="text-sm">{{ distributor.phoneNumber }}</span>
+              </div>
+          </button>
+      </li>
+  </ul>
+
+  <div id="hs-scale-animation-modal" class="fixed inset-0 z-50 hidden overflow-y-auto" role="dialog" tabindex="-1" aria-labelledby="hs-scale-animation-modal-label">
+    <div class="flex items-center justify-center min-h-screen p-4 text-center">
+      <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+        <div class="flex justify-between items-center p-4 border-b">
+          <h3 id="hs-scale-animation-modal-label" class="text-lg font-semibold">
+            {{ selectedDistributor?.name }}
+          </h3>
+          <button type="button" class="text-gray-500 hover:text-gray-700" (click)="closeModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
         </div>
-        <div class="flex items-center space-x-2 text-gray-400">
-            <span class="text-sm">Inactivo</span>
-        </div>    
-    
+        <div class="p-4">
+          <p class="text-gray-800">Cuil: {{ selectedDistributor?.CUIL }}</p>
+          <p class="text-gray-800">Nombre: {{ selectedDistributor?.name }}</p>
+          <p class="text-gray-800">Apellido: {{ selectedDistributor?.surname }}</p>
+          <p class="text-gray-800">Dirección: {{ selectedDistributor?.address }}</p>
+          <p class="text-gray-800">Categoría: {{ selectedDistributor?.category }}</p>
+          <p class="text-gray-800">Teléfono: {{ selectedDistributor?.phoneNumber }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
