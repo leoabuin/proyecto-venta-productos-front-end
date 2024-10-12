@@ -1,8 +1,8 @@
 <app-navbar></app-navbar>
-<div class="flex"></div>
+<div class="flex bg-red-600">
 
-<div class="w-full max-w-lg bg-white rounded-lg shadow-lg p-4 mx-auto mt-10">
-  <h2 class="text-2xl font-bold mb-4 text-center">Alta de producto</h2>
+<div class="w-full max-w-lg bg-white rounded-lg shadow-xl p-4 mx-auto mt-10">
+  <h2 class="text-2xl font-semibold mb-4 text-center">Alta de producto</h2>
   
   <form (ngSubmit)="submitForm()">
     <div class="mb-3">
@@ -26,24 +26,25 @@
     <div class="mb-3">
       <input type="url" id="website" [(ngModel)]="productData.imagen" name="imagen" class="w-full border p-2 rounded" placeholder="https://tusitio.com" required>
     </div>
-    <div class="mb-4">
+    <div class="mt-6">
     <label for="brand">Marca:</label>
     <select id="brand" name="brand" [(ngModel)]="productData.brand" required>
       <option *ngFor="let brand of brands" [value]="brand.id">{{ brand.name }}</option>
     </select>
     </div>
-    <div class="mb-4">
+    <div class="mt-6">
     <label for="distributor">Distribuidor:</label>
     <select id="distributor" name="distributor" [(ngModel)]="productData.distributor" required>
         <option *ngFor="let distributor of distributors" [value]="distributor.id">{{distributor.name}}</option>
     </select>
     </div>
-    <div class="mb-4">
+    <div class="mt-6">
     <label for="category">Categoria:</label>
     <select id="category" name="category" [(ngModel)]="productData.category" required>
         <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
     </select>
     </div>
-    <button type="submit" class="w-full p-2 text-white bg-red-500 rounded hover:bg-red-600">Registrar Producto</button>
+    <button type="submit" class="w-full mt-4 p-2.5 text-white bg-red-500 rounded hover:bg-red-600">Registrar Producto</button>
   </form>
+</div>
 </div>
