@@ -18,6 +18,10 @@ import { Observable } from "rxjs";
     }
 
     public createProduct(productData: any): Observable<any> {
-        return this.http.post<any>(this.urlProductApi, productData);
+        return this.http.post<any>(this.urlProductApi, productData)
       }
+
+    public getProductbyId(id:string): Observable<any>{
+      return this.http.get<any>(`${this.urlProductApi}/${id}`)
+    }
   }

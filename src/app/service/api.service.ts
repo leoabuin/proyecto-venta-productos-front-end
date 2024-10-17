@@ -27,4 +27,9 @@ export class ApiService {
   public updateBrand(id: number, brandData: any): Observable<any> {
     return this.http.put(`${this.urlBrandApi}/${id}`, brandData);
   }
+
+  public getBrandbyId(id:string): Observable<any>{
+    return this.http.get<any>(`${this.urlBrandApi}/${id}`)
+  }
+
 }

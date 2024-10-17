@@ -10,6 +10,7 @@ import { DistributorListComponent } from './distributor-list/distributor-list.co
 import { RegisterUserComponent } from './register-user/register-user.component.js';
 import { ProductsListComponent } from './products-list/products-list.component.js';
 import { AddProductComponent } from './add-product/add-product.component.js';
+import { ProductDetailsComponent } from './product-details/product-details.component.js';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -23,6 +24,8 @@ export const routes: Routes = [
     {path: 'distributors-list', component: DistributorListComponent},
     {path: 'register', component: RegisterUserComponent},
     {path: 'products', component: ProductsListComponent},
-    {path: 'addProduct', component: AddProductComponent}
+    {path: 'addProduct', component: AddProductComponent},
+    {path: 'product-details/:id', component: ProductDetailsComponent}
+
 
 ];

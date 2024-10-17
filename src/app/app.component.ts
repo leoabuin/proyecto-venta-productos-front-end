@@ -14,6 +14,7 @@ import { DistributorListComponent } from './distributor-list/distributor-list.co
 import { NavbarComponent } from '../navbar/navbar.component.js';
 import { ProductsListComponent } from './products-list/products-list.component.js';
 import { AddProductComponent } from './add-product/add-product.component.js';
+import { ProductDetailsComponent } from './product-details/product-details.component.js';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -29,7 +30,8 @@ import { AddProductComponent } from './add-product/add-product.component.js';
             NavbarComponent,
             DistributorListComponent,
             ProductsListComponent,
-            AddProductComponent
+            AddProductComponent,
+            ProductDetailsComponent
           
           ],
   templateUrl: './app.component.html',
