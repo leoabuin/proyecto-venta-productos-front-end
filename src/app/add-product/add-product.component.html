@@ -19,6 +19,7 @@
       <label for="stock" class="block">Stock</label>
       <input type="number" id="stock" [(ngModel)]="productData.stock" name="stock" class="w-full border p-2 rounded" placeholder="Stock" required>
     </div>
+    
     <div class="mb-3">
         <label for="waist" class="block">Talle</label>
         <input type="text" id="waist" [(ngModel)]="productData.waist" name="stock" class="w-full border p-2 rounded" placeholder="Talle" required>
@@ -26,24 +27,44 @@
     <div class="mb-3">
       <input type="url" id="website" [(ngModel)]="productData.imagen" name="imagen" class="w-full border p-2 rounded" placeholder="https://tusitio.com" required>
     </div>
+
     <div class="mt-6">
     <label for="brand">Marca:</label>
-    <select id="brand" name="brand" [(ngModel)]="productData.brand" required>
+    <select id="brand" name="brand" class="w-full border p-2 rounded" [(ngModel)]="productData.brand" required>
       <option *ngFor="let brand of brands" [value]="brand.id">{{ brand.name }}</option>
     </select>
     </div>
+
     <div class="mt-6">
     <label for="distributor">Distribuidor:</label>
-    <select id="distributor" name="distributor" [(ngModel)]="productData.distributor" required>
+    <select id="distributor" name="distributor" class="w-full border p-2 rounded" [(ngModel)]="productData.distributor" required>
         <option *ngFor="let distributor of distributors" [value]="distributor.id">{{distributor.name}}</option>
     </select>
     </div>
+
     <div class="mt-6">
     <label for="category">Categoria:</label>
-    <select id="category" name="category" [(ngModel)]="productData.category" required>
+    <select id="category" name="category" class="w-full border p-2 rounded" [(ngModel)]="productData.category" required>
         <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
     </select>
     </div>
+
+    <div class="mt-6">
+      <label for="dateFrom">Fecha Desde:</label>
+      <input type="date" id="dateFrom" [(ngModel)]="productData.price.dateFrom" name="dateFrom" class="w-full border p-2 rounded" required>
+    </div>
+
+    <div class="mt-6">
+      <label for="dateUntil">Fecha Hasta:</label>
+      <input type="date" id="dateUntil" [(ngModel)]="productData.price.dateUntil" name="dateUntil" class="w-full border p-2 rounded" required>
+    </div>
+
+    <div class="mt-6">
+      <label for="cost">Costo:</label>
+      <input type="number" id="cost" [(ngModel)]="productData.price.cost" name="cost" class="w-full border p-2 rounded" placeholder="Costo" required>
+    </div>
+
+
     <button type="submit" class="w-full mt-4 p-2.5 text-white bg-red-500 rounded hover:bg-red-600">Registrar Producto</button>
   </form>
 </div>

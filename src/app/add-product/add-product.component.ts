@@ -26,6 +26,11 @@ export class AddProductComponent {
     brand:'',
     distributor:'',
     category: '',
+    price: {
+      dateFrom: '',
+      dateUntil: '',
+      cost: ''
+    }
   }
 
   brands:any[] = [];
