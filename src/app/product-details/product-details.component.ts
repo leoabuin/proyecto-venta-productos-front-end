@@ -3,17 +3,30 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiProductService } from '../service/productApi.service.js';
 import { NavbarComponent } from '../../navbar/navbar.component.js';
 import { ApiService } from '../service/api.service.js';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
+interface Price {
+  id: number;
+  dateFrom: Date;
+  dateUntil: Date;
+  cost: number;
+  productId: number;
+}
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [NavbarComponent],
+  imports: [NavbarComponent, FormsModule, CommonModule],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.scss'
 })
 export class ProductDetailsComponent implements OnInit{
+  
 
+  
   product: any;
+  currentPrice: Price | undefined;
 
   constructor(private route: ActivatedRoute, private service: ApiProductService, private brandService: ApiService) {}
   productId: string | null = null;
@@ -29,6 +42,7 @@ export class ProductDetailsComponent implements OnInit{
     this.service.getProductbyId(id).subscribe({
       next: (response) => {
         this.product = response.data;
+        this.currentPrice = this.getCurrentPrice(this.product.prices);
         console.log('Detalles del producto cargados con éxito:', this.product);
 
         this.loadBrandName(this.product.brand);
@@ -54,6 +68,13 @@ export class ProductDetailsComponent implements OnInit{
         console.error('Error al cargar el nombre de la marca:', err);
       }
     });
+  }
+
+  getCurrentPrice(prices: Price[]): Price | undefined {
+    const today = new Date();
+    return prices.find(price => 
+      new Date(price.dateFrom) <= today && new Date(price.dateUntil) >= today
+    );
   }
 
 }

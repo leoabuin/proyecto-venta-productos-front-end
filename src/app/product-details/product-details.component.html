@@ -20,10 +20,10 @@
                 <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
                    {{product.brandName}}
                 </p>
-                <div class="flex mb-4">
+                <div class="flex mb-4" *ngIf="currentPrice">
                     <div class="mr-4">
                         <span class="font-bold text-gray-700 dark:text-gray-300">Price:</span>
-                        <span class="text-gray-600 dark:text-gray-300">product.prices</span>
+                        <span class="text-gray-600 dark:text-gray-300"> ${{ currentPrice.cost }}</span>
                     </div>
                     <div>
                         <span class="font-bold text-gray-700 dark:text-gray-300">Availability:</span>
