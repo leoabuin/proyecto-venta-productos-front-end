@@ -15,25 +15,24 @@ import { NavbarComponent } from '../navbar/navbar.component.js';
 import { ProductsListComponent } from './products-list/products-list.component.js';
 import { AddProductComponent } from './add-product/add-product.component.js';
 import { ProductDetailsComponent } from './product-details/product-details.component.js';
+import { ShoppingCartComponent } from "./shopping-cart/shopping-cart.component";
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet,
-            HomeComponent,
-            LogInComponent,
-            NosotrosComponent, 
-            AddbrandsComponent, 
-            AddcategoriesComponent, 
-            BrandListComponent, 
-            CategoriesListComponent,
-            RouterLink,
-            NavbarComponent,
-            DistributorListComponent,
-            ProductsListComponent,
-            AddProductComponent,
-            ProductDetailsComponent
-          
-          ],
+    HomeComponent,
+    LogInComponent,
+    NosotrosComponent,
+    AddbrandsComponent,
+    AddcategoriesComponent,
+    BrandListComponent,
+    CategoriesListComponent,
+    RouterLink,
+    NavbarComponent,
+    DistributorListComponent,
+    ProductsListComponent,
+    AddProductComponent,
+    ProductDetailsComponent, ShoppingCartComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
