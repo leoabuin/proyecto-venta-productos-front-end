@@ -11,6 +11,8 @@ import { RegisterUserComponent } from './register-user/register-user.component.j
 import { ProductsListComponent } from './products-list/products-list.component.js';
 import { AddProductComponent } from './add-product/add-product.component.js';
 import { ProductDetailsComponent } from './product-details/product-details.component.js';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component.js';
+import { UpdateCategoryComponent } from './update-category/update-category.component.js';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -25,7 +27,10 @@ export const routes: Routes = [
     {path: 'register', component: RegisterUserComponent},
     {path: 'products', component: ProductsListComponent},
     {path: 'addProduct', component: AddProductComponent},
-    {path: 'product-details/:id', component: ProductDetailsComponent}
+    {path: 'product-details/:id', component: ProductDetailsComponent},
+    {path: 'cart', component: ShoppingCartComponent},
+    {path: 'update-category/:id', component: UpdateCategoryComponent}
+
 
 
 ];

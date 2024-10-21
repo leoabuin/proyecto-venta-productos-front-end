@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { Category } from "../update-category/update-category.component.js";
 
 
 @Injectable({
@@ -23,5 +24,14 @@ import { Observable } from "rxjs";
   
     public deleteCategory(id: number): Observable<any> {
       return this.http.delete<any>(`${this.urlCategoryApi}/${id}`);
+    }
+
+    public getCategoryById(id: number): Observable<Category> {
+      return this.http.get<Category>(`${this.urlCategoryApi}/${id}`);
+  }
+
+
+    public updateCategory(id: number,categoryUpdated: Partial<Category>): Observable<any> {
+      return this.http.put<any>(`${this.urlCategoryApi}/${id}`, categoryUpdated)
     }
   }

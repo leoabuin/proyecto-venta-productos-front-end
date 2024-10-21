@@ -67,14 +67,12 @@ export class BrandListComponent {
     // Aquí llamas al backend para actualizar la marca
     this.service.updateBrand(this.selectedBrand.id, this.tempBrand).subscribe({
       next: response => {
-        // Actualiza los datos originales solo si el backend respondió correctamente
         this.selectedBrand = { ...this.tempBrand };
         this.closeModal();
       },
       error: (error) => {
         console.error('Error al agregar la categoria:', error);
       
-        // Reiniciar los mensajes de error en cada intento
         this.errorMessages = [];
       
         // Verificar si el error tiene el formato esperado
