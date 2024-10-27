@@ -1,29 +1,36 @@
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-  <nav class="bg-gradient-to-t flow-root from-red-500 to-red-700 text-white shadow-lg sticky top-0 z-10">
-    <div class="max-w-7xl mx-auto float-right px-4">
-        <div class="flex justify-between">
-            <!-- Lista de categorías (Alineadas a la derecha) -->
-            <div class="flex space-x-12">
-              <a routerLink="/home" class="flex items-center">
-                <img src="https://w7.pngwing.com/pngs/384/470/png-transparent-retail-computer-icons-e-commerce-sales-mega-offer-miscellaneous-service-logo.png" alt="Logo de la empresa" class="h-10 w-auto">
-                <span class="text-white text-xl ml-2 font-bold"></span>
-              </a>
-                <a routerLink="/distributors-list" class="py-4 px-0 hover:bg-red-700 font-bold">Distribuidores</a>
-                <a routerLink="/categories-list" class="py-4 px-0 hover:bg-red-700 font-bold">Categorias</a>
-                <a routerLink="/brand-list" class="py-4 px-2 hover:bg-red-700 font-bold">Marcas</a>
-                <a routerLink="/aboutUs" class="py-4 px-2 hover:bg-red-700 font-bold">Nosotros</a>
-                <a href="/products" class="py-4 px-2 hover:bg-red-700 font-bold">Productos</a>
-                <a href="#" class="py-4 px-2 hover:bg-red-700 font-bold">Ayuda</a>
-                <a routerLink="/login" class="py-4 px-2 hover:bg-red-700 font-bold">Iniciar Sesión</a>
-                <button [routerLink]="['/shopping-cart']"  class="flex text-white items-center hover:bg-red-700 font-bold py-2 px-4 rounded">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 mr-2">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m.6 8h9.25m-10 0H3M16 16a2 2 0 100 4 2 2 0 000-4zm-8 0a2 2 0 100 4 2 2 0 000-4z" />
-                  </svg>
-                  Añadir al carrito
-                </button>                    
+<nav class="bg-gradient-to-t flow-root from-red-500 to-red-700 text-white shadow-lg sticky top-0 z-10">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-4">
+        <!-- Enlace de Inicio (Home) a la izquierda -->
+        <a routerLink="/home" class="flex items-center">
+            <img src="https://w7.pngwing.com/pngs/384/470/png-transparent-retail-computer-icons-e-commerce-sales-mega-offer-miscellaneous-service-logo.png" alt="Logo de la empresa" class="h-10 w-auto">
+            <span class="text-white text-xl ml-2 font-bold"></span>
+        </a>
+
+        <!-- Lista de categorías (Alineadas a la derecha) -->
+        <div class="flex space-x-12">
+            <a routerLink="/distributors-list" class="py-4 px-0 hover:bg-red-700 font-bold">Distribuidores</a>
+            <a routerLink="/categories-list" class="py-4 px-0 hover:bg-red-700 font-bold">Categorias</a>
+            <a routerLink="/brand-list" class="py-4 px-2 hover:bg-red-700 font-bold">Marcas</a>
+            <div class="relative flex items-center">
+                <a  class="py-4 px-2 hover:bg-red-700 font-bold cursor-pointer">Productos</a>
+                <div class="absolute bg-white text-black shadow-lg rounded-lg top-full left-0 z-30 transition-opacity duration-300" [ngClass]="{'hidden': !showMenu}">
+                    <a routerLink="/products"  class="block px-4 py-2 hover:bg-red-500 hover:text-white">Todos los Productos</a>
+                    <a routerLink="/addProduct"  class="block px-4 py-2 hover:bg-red-500 hover:text-white">Agregar Producto</a>
+                    <a routerLink="/change-price"  class="block px-4 py-2 hover:bg-red-500 hover:text-white">Actualizar Precio</a>
+                </div>
             </div>
+            <button [routerLink]="['/shopping-cart']" class="flex text-white items-center hover:bg-red-700 font-bold py-2 px-4 rounded">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 mr-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m.6 8h9.25m-10 0H3M16 16a2 2 0 100 4 2 2 0 000-4zm-8 0a2 2 0 100 4 2 2 0 000-4z" />
+                </svg>
+              
+            </button>
+            <a routerLink="/login" class="flex items-center py-4 px-2 hover:bg-red-700 font-bold">
+              <i class="fa fa-user text-xl"></i>
+          </a>
         </div>
     </div>
 </nav>

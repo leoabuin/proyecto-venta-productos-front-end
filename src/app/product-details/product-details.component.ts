@@ -72,9 +72,22 @@ export class ProductDetailsComponent implements OnInit{
 
   getCurrentPrice(prices: Price[]): Price | undefined {
     const today = new Date();
-    return prices.find(price => 
-      new Date(price.dateFrom) <= today && new Date(price.dateUntil) >= today
-    );
+    console.log('Fecha actual:', today);
+  
+    
+    console.log('Precios disponibles:', prices);
+  
+    const currentPrice = prices.find(price => {
+      const priceStart = new Date(price.dateFrom);
+      const priceEnd = new Date(price.dateUntil);
+      
+      console.log(`Comprobando precio: ${price.cost} desde ${priceStart} hasta ${priceEnd}`);
+      
+      return priceStart <= today && priceEnd >= today; 
+    });
+  
+    console.log('Precio actual encontrado:', currentPrice);
+    return currentPrice;
   }
 
 }

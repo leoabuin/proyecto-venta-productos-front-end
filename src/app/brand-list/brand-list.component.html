@@ -2,10 +2,12 @@
 <app-navbar></app-navbar>
 
 
-<div class="w-full max-w-xl min-w-[200px] relative mt-10" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 1000;">
-  <div class="relative flex items-center mt-10"> <!-- Usar flex para alinear items -->
-    <button routerLink="/addBrands" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-800 mr-2 w-fit">Crear Marca</button> <!-- Añadir margen a la derecha -->
-    <input type="text" name="filterBrand" class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-10 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" placeholder="Buscar marcas" [(ngModel)]="filterBrand"/>
+<div class="w-[30%] max-w-xl min-w-[200px] relative mt-10" style="position: absolute;left: 1200px; top: 10px; z-index: 1000;">
+  <div class="relative flex items-center" style="width: 60%; transform: translateY(30px); "> <!-- Ajustar el ancho al 50% -->
+    <input type="text" name="filterBrand" class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-10 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" placeholder="Buscar marcas" [(ngModel)]="filterBrand"/> 
+    <button routerLink="/addBrands" class="ml-2 rounded bg-slate-800 p-1.5 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none" type="button"> <!-- Usar margin-left para separarlo -->
+      <i class="fas fa-plus" style="font-size: 1.2rem;"></i> 
+    </button>
   </div>
 </div>
 

@@ -5,6 +5,14 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 
+interface Price {
+  id: number;
+  dateFrom: Date;
+  dateUntil: Date;
+  cost: number;
+  productId: number;
+}
+
 @Component({
   selector: 'app-products-list',
   standalone: true,
@@ -13,6 +21,7 @@ import { RouterModule } from '@angular/router';
   styleUrl: './products-list.component.scss'
 })
 export class ProductsListComponent {
+  currentPrice: Price | undefined;
 
   
   products: any[] = []
@@ -25,6 +34,15 @@ export class ProductsListComponent {
 
   goToProductDetails(product: any): void {
     this.router.navigate(['/product-details', product.id]);
+  }
+
+  getCurrentPrice(prices: Price[]): Price | undefined {
+    const today = new Date();
+    return prices.find(price => {
+      const priceStart = new Date(price.dateFrom);
+      const priceEnd = new Date(price.dateUntil);
+      return priceStart <= today && priceEnd >= today; 
+    });
   }
 
 }

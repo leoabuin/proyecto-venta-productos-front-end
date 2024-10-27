@@ -17,6 +17,8 @@ import { AddProductComponent } from './add-product/add-product.component.js';
 import { ProductDetailsComponent } from './product-details/product-details.component.js';
 import { ShoppingCartComponent } from "./shopping-cart/shopping-cart.component";
 import { UpdateCategoryComponent } from './update-category/update-category.component.js';
+import { ChangePriceComponent } from './change-price/change-price.component.js';
+import { RegisterUserComponent } from './register-user/register-user.component.js';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -35,7 +37,9 @@ import { UpdateCategoryComponent } from './update-category/update-category.compo
     AddProductComponent,
     ProductDetailsComponent, 
     ShoppingCartComponent,
-    UpdateCategoryComponent
+    UpdateCategoryComponent,
+    ChangePriceComponent,
+    RegisterUserComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

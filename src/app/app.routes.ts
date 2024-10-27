@@ -13,6 +13,7 @@ import { AddProductComponent } from './add-product/add-product.component.js';
 import { ProductDetailsComponent } from './product-details/product-details.component.js';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component.js';
 import { UpdateCategoryComponent } from './update-category/update-category.component.js';
+import { ChangePriceComponent } from './change-price/change-price.component.js';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -29,7 +30,8 @@ export const routes: Routes = [
     {path: 'addProduct', component: AddProductComponent},
     {path: 'product-details/:id', component: ProductDetailsComponent},
     {path: 'cart', component: ShoppingCartComponent},
-    {path: 'update-category/:id', component: UpdateCategoryComponent}
+    {path: 'update-category/:id', component: UpdateCategoryComponent},
+    {path: 'change-price', component: ChangePriceComponent}
 
 
 

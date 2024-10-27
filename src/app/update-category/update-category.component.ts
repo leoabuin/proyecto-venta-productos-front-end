@@ -55,7 +55,7 @@ export class UpdateCategoryComponent implements OnInit {
         console.log('ID de categoría cargada:', this.category.id); // Log adicional
       },
       error: (error) => {
-        console.error('Error al agregar la marca:', error);
+        console.error('Error al actualizar categoria:', error);
         if (error.status === 400 && error.error.errors) {
           this.errorMessages = error.error.errors.map((err: any) => {
             return `Error en ${err.path[0]}: ${err.message}`;
@@ -76,13 +76,12 @@ export class UpdateCategoryComponent implements OnInit {
           this.router.navigate(['/categories-list']);
         },
         error: (error) => {
-          console.error('Error al agregar la marca:', error);
+          console.error('Error al actualzar categoria:', error);
           if (error.status === 400 && error.error.errors) {
             this.errorMessages = error.error.errors.map((err: any) => {
               return `Error en ${err.path[0]}: ${err.message}`;
             });
           }else {
-            // Manejo de otros errores, si es necesario
             this.errorMessages.push('Error desconocido. Intente nuevamente.');
           }
         }

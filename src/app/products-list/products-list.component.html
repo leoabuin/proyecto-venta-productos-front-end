@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 
-<div class="bg-white">
+<div class="bg-[#fdf5e6]">
   <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
     <h2 class="sr-only">Products</h2>
 
@@ -10,7 +10,12 @@
           <img [src]="product.imagen" alt="Tall slender porcelain bottle with natural clay textured body and cork stopper." class="h-full w-full object-cover object-center group-hover:opacity-75">
         </div>
         <h3 class="mt-4 text-sm text-gray-700">{{ product.name }}</h3>
-        <p class="mt-1 text-lg font-medium text-gray-900">{{ product.price }}</p>
+        <ng-container *ngIf="getCurrentPrice(product.prices) as currentPrice">
+          <p class="mt-1 text-lg font-medium text-gray-900">{{ currentPrice.cost | currency }}</p>
+        </ng-container>
+        <ng-container *ngIf="!getCurrentPrice(product.prices)">
+          <p class="mt-1 text-lg font-medium text-gray-900">Precio no disponible</p>
+        </ng-container>
       </a>
     </div>
   </div>

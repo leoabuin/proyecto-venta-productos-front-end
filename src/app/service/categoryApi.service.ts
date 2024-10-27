@@ -26,8 +26,8 @@ import { Category } from "../update-category/update-category.component.js";
       return this.http.delete<any>(`${this.urlCategoryApi}/${id}`);
     }
 
-    public getCategoryById(id: number): Observable<Category> {
-      return this.http.get<Category>(`${this.urlCategoryApi}/${id}`);
+    public getCategoryById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.urlCategoryApi}/${id}`);
   }
 
 

@@ -1,0 +1,30 @@
+  /* Mostrar el menú desplegable al pasar el mouse */
+  .relative:hover .absolute {
+    display: block;
+    padding-bottom: 10px;
+  }
+
+  /* Estilos del menú desplegable */
+  .absolute {
+    display: none; /* Inicialmente oculto */
+    min-width: 160px; /* Ancho mínimo */
+    margin-top: 0.5rem; /* Margen superior para separarlo del enlace */
+    z-index: 20;
+    padding-top: 15px;
+  }
+
+  .hidden {
+    display: none; /* Cuando está oculto, no se muestra */
+  }
+
+  .show {
+    opacity: 1; /* Cuando está visible, cambia la opacidad */
+    pointer-events: auto; /* Permite interacciones */
+  }
+  .menu-desplegable {
+    position: absolute; /* Asegúrate de que esté posicionado */
+    top: 100%; /* Ajusta la posición si es necesario */
+    left: 0; /* O la posición que desees */
+    background-color: white; /* Fondo blanco */
+    z-index: 1000; /* Asegúrate de que sea mayor que otros elementos */
+}

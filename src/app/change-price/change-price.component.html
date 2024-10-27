@@ -1,0 +1,31 @@
+<app-navbar></app-navbar>
+
+<div class="flex"></div>
+
+<div class="w-full max-w-lg bg-white rounded-lg shadow-lg p-4 mx-auto mt-10">
+  <h2 class="text-2xl font-bold mb-4 text-center">Creación de Precio</h2>
+
+  <form (ngSubmit)="submitForm()">
+    <div class="mb-3">
+      <label for="productId" class="block">ID del Producto</label>
+      <input type="number" id="productId" [(ngModel)]="productId" name="idProduct" class="w-full border p-2 rounded" placeholder="ID del producto" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="dateFrom" class="block">Fecha Desde</label>
+      <input type="date" id="dateFrom" [(ngModel)]="dateFrom" name="dateFrom" class="w-full border p-2 rounded" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="dateUntil" class="block">Fecha Hasta</label>
+      <input type="date" id="dateUntil" [(ngModel)]="dateUntil" name="dateUntil" class="w-full border p-2 rounded" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="cost" class="block">Precio</label>
+      <input type="number" id="cost" [(ngModel)]="cost" name="price" class="w-full border p-2 rounded" placeholder="Precio" required>
+    </div>
+
+    <button type="submit" class="w-full p-2 text-white bg-red-500 rounded hover:bg-red-600">Crear Precio</button>
+  </form>
+</div>
