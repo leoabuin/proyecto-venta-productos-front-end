@@ -19,5 +19,10 @@ import { Observable } from "rxjs";
 
     public createUser(userData: any): Observable<any> {
         return this.http.post<any>(this.urlUserApi, userData);
-      }
+    }
+
+    public logInUser(userData:any): Observable<any>{
+      return this.http.post<any>(`${this.urlUserApi}/logIn`, userData);
+    }
+    
   }
