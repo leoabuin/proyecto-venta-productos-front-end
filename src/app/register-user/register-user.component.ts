@@ -59,4 +59,6 @@ export class RegisterUserComponent {
     this.router.navigate(['/login']);
   }
 
+
+  
 }

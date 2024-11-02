@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../app/service/local-storage.service.js';
+import { ApiUserService } from '../app/service/userApi.service.js';
 
 @Component({
   selector: 'app-navbar',
@@ -12,9 +13,9 @@ import { LocalStorageService } from '../app/service/local-storage.service.js';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-  showMenu: boolean = false;
-  username: string | null = null; // Añadir propiedad para el nombre de usuario
-
+  showMenu: boolean = false
+  username: string | null = null // Añadir propiedad para el nombre de usuario
+  errorMessages: string[] = []
 
   toggleMenu() {
     this.showMenu = !this.showMenu; 
@@ -25,17 +26,30 @@ export class NavbarComponent {
   }
 
   
-  
-  constructor(private localStorageService: LocalStorageService) {
-    this.username = this.localStorageService.getItem('username'); // Cargar el nombre del usuario desde localStorage
-    console.log(this.username); // Verifica que esto muestre el nombre de usuario
+  constructor(private localStorageService: LocalStorageService, private service: ApiUserService, private router: Router) {
+    this.username = this.localStorageService.getItem('username');
+    console.log(this.username); 
   }
 
+
+  /*
   logOut() {
-    this.username = null;
-    this.localStorageService.removeItem('username');
-   // this.router.navigate(['/']); // Redirige a la página de inicio
+    console.log('PROBANDO'); 
+    this.service.logOut().subscribe({
+      next: () => {
+        this.localStorageService.removeItem('username'); 
+        console.log(this.username); 
+        console.log('estamos dentro'); 
+        this.router.navigate(['/login']); 
+        console.log(this.username)
+      },
+      error: (error: unknown) => { // Cambia aquí
+        console.error('Error durante el logout:', error);
+      }
+    });
   }
+   
+  */
 
   
 }
