@@ -1,0 +1,43 @@
+<app-navbar></app-navbar>
+<div class="flex"></div>
+
+<div class="w-full max-w-lg bg-white rounded-lg shadow-lg p-4 mx-auto mt-10">
+  <h2 class="text-2xl font-bold mb-4 text-center">Inscripción de Distribuidor</h2>
+
+  <div *ngIf="errorMessages.length > 0" class="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded mb-4">
+    <ul>
+      <li *ngFor="let error of errorMessages">{{ error }}</li>
+    </ul>
+  </div>
+  
+  <form (ngSubmit)="submitForm()">
+    <div class="mb-3">
+        <label for="Cuil" class="block">Cuil del Distribuidor</label>
+        <input type="text" id="Cuil" [(ngModel)]="distributorData.Cuil" name="Cuil" class="w-full border p-2 rounded" placeholder="Cuil del Distribuidor" required>
+      </div>
+    
+    <div class="mb-3">
+      <label for="name" class="block">Nombre del Distribuidor</label>
+      <input type="text" id="name" [(ngModel)]="distributorData.name" name="nombreDistribuidor" class="w-full border p-2 rounded" placeholder="Nombre del Distribuidor" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="surname" class="block">Apellido del Distribuidor</label>
+      <input type="text" id="surname" [(ngModel)]="distributorData.surname" name="surname" rows="3" class="w-full border p-2 rounded" placeholder="Apellido del Distribuidor" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="block">Email</label>
+      <input type="email" id="email" [(ngModel)]="distributorData.email" name="email" class="w-full border p-2 rounded" placeholder="Email del Distribuidor" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="direccion" class="block">Dirección</label>
+      <input type="text" id="direccion" [(ngModel)]="distributorData.adress" name="direccion" class="w-full border p-2 rounded" placeholder="Direccion del Distribuidor" required>
+    </div>
+
+
+    <button type="submit" class="w-full p-2 text-white bg-red-500 rounded hover:bg-red-600">Inscribir Distribuidor</button>
+  </form>
+</div>
+
