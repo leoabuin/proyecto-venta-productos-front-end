@@ -1,0 +1,69 @@
+<app-navbar></app-navbar>
+<div class="flex"></div>
+
+<div class="w-full max-w-lg bg-white rounded-lg shadow-lg p-4 mx-auto mt-10">
+  <h2 class="text-2xl font-bold mb-4 text-center">Update distribuidor</h2>
+
+  <form (ngSubmit)="onSubmit()">
+    <div *ngIf="errorMessages.length > 0" class="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded mb-4">
+      <ul>
+        <li *ngFor="let error of errorMessages">{{ error }}</li>
+      </ul>
+    </div>
+
+    <div class="mb-3">
+      <label for="name" class="block">Nombre del Distribuidor</label>
+      <input type="text" id="name" [(ngModel)]="distributor.name" name="nombreDistribuidor" class="w-full border p-2 rounded" placeholder="Nombre del distribuidor" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="Cuil" class="block">Cuil</label>
+      <textarea id="Cuil" [(ngModel)]="distributor.Cuil" name="Cuil" rows="3" class="w-full border p-2 rounded" placeholder="Cuil del Distribuidor" required></textarea>
+    </div>
+  
+    <div class="mb-3">
+      <label for="surname" class="block">Apellido</label>
+      <textarea id="surname" [(ngModel)]="distributor.surname" name="surname" rows="3" class="w-full border p-2 rounded" placeholder="Apellido del distribuidor" required></textarea>
+    </div>
+  
+    <div class="mb-3">
+      <label for="email" class="block">Email</label>
+      <email id="email" [(ngModel)]="distributor.email" name="email" rows="3" class="w-full border p-2 rounded" placeholder="Email del distribuidor" required></email>
+    </div>
+    
+    <div class="mb-3">
+      <label for="phoneNumber" class="block">Teléfono</label>
+      <email id="phoneNumber" [(ngModel)]="distributor.phoneNumber" name="phoneNumber" rows="3" class="w-full border p-2 rounded" placeholder="Teléfono del distribuidor" required></email>
+    </div>
+
+    <div class="mb-3">
+      <label for="adress" class="block">Dirección</label>
+      <textarea id="adress" [(ngModel)]="distributor.adress" name="adress" rows="3" class="w-full border p-2 rounded" placeholder="Dirección del distribuidor" required></textarea>
+    </div>
+
+    <button type="submit" class="w-full p-2 text-white bg-red-500 rounded hover:bg-red-600">Actualizar Distribuidor</button>
+  </form>
+</div>
+
+<!-- Main modal -->
+<div *ngIf="isSuccessModalOpen" id="successModal" class="fixed inset-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
+  <div class="relative p-4 w-full max-w-md bg-white rounded-lg shadow-md dark:bg-gray-800">
+    <button (click)="closeSuccessModal()" type="button" class="absolute top-3 right-3 text-gray-400 hover:text-gray-900 dark:hover:text-white">
+      <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293-4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+      </svg>
+      <span class="sr-only">Cerrar modal</span>
+    </button>
+    <div class="flex flex-col items-center p-5">
+      <div class="w-12 h-12 mb-3 bg-green-100 rounded-full flex items-center justify-center">
+        <svg aria-hidden="true" class="w-8 h-8 text-green-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+        </svg>
+      </div>
+      <p class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Distribuidor actualizado con éxito.</p>
+      <button (click)="closeSuccessModal()" type="button" class="py-2 px-4 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-900">
+        Continuar
+      </button>
+    </div>
+  </div>
+</div>
