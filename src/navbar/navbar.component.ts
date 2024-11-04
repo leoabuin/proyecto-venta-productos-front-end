@@ -32,15 +32,16 @@ export class NavbarComponent {
   }
 
 
-  /*
+  
   logOut() {
     console.log('PROBANDO'); 
     this.service.logOut().subscribe({
       next: () => {
-        this.localStorageService.removeItem('username'); 
+        localStorage.clear()
+        //this.localStorageService.removeItem('username'); 
+        this.username = null;
         console.log(this.username); 
-        console.log('estamos dentro'); 
-        this.router.navigate(['/login']); 
+        console.log('estamos dentro');  
         console.log(this.username)
       },
       error: (error: unknown) => { // Cambia aquí
@@ -49,7 +50,7 @@ export class NavbarComponent {
     });
   }
    
-  */
+  
 
   
 }

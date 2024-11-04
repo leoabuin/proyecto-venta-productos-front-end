@@ -16,6 +16,7 @@ import { UpdateCategoryComponent } from './update-category/update-category.compo
 import { ChangePriceComponent } from './change-price/change-price.component.js';
 import { UpdateDistributorComponent } from './update-distributor/update-distributor.component.js';
 import { AddDistributorComponent } from './add-distributor/add-distributor.component.js';
+import { FooterComponent } from './footer/footer.component.js';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -35,7 +36,9 @@ export const routes: Routes = [
     {path: 'update-category/:id', component: UpdateCategoryComponent},
     {path: 'change-price', component: ChangePriceComponent},
     {path: 'update-category/:id', component: UpdateDistributorComponent},
-    {path: 'addDistributor', component: AddDistributorComponent}
+    {path: 'addDistributor', component: AddDistributorComponent},
+    {path: 'shopping-cart', component: ShoppingCartComponent},
+    {path: 'footer', component: FooterComponent}
 
 
 ];

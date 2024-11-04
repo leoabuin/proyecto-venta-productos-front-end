@@ -5,6 +5,8 @@ import { NavbarComponent } from '../../navbar/navbar.component.js';
 import { ApiService } from '../service/api.service.js';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FooterComponent } from '../footer/footer.component.js';
+import { LocalStorageService } from '../service/local-storage.service.js';
 
 interface Price {
   id: number;
@@ -17,7 +19,7 @@ interface Price {
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [NavbarComponent, FormsModule, CommonModule],
+  imports: [NavbarComponent, FormsModule, CommonModule, FooterComponent],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.scss'
 })
@@ -25,10 +27,17 @@ export class ProductDetailsComponent implements OnInit{
   
 
   
-  product: any;
-  currentPrice: Price | undefined;
+  product: any
+  currentPrice: Price | undefined
+  quantity: number = 1
+  stock:number = 0
 
-  constructor(private route: ActivatedRoute, private service: ApiProductService, private brandService: ApiService) {}
+  constructor(
+    private route: ActivatedRoute, 
+    private service: ApiProductService, 
+    private brandService: ApiService, 
+    private localStorageService: LocalStorageService) {}
+
   productId: string | null = null;
   ngOnInit(): void {
     const productId = this.route.snapshot.paramMap.get('id')
@@ -42,7 +51,8 @@ export class ProductDetailsComponent implements OnInit{
     this.service.getProductbyId(id).subscribe({
       next: (response) => {
         this.product = response.data;
-        this.currentPrice = this.getCurrentPrice(this.product.prices);
+        this.currentPrice = this.getCurrentPrice(this.product.prices)
+        this.stock = this.product.stock
         console.log('Detalles del producto cargados con éxito:', this.product);
 
         this.loadBrandName(this.product.brand);
@@ -89,5 +99,66 @@ export class ProductDetailsComponent implements OnInit{
     console.log('Precio actual encontrado:', currentPrice);
     return currentPrice;
   }
+
+  incrementQuantity(): void {
+    if (this.quantity < this.stock) {
+      this.quantity++;
+    }
+  }
+
+  decrementQuantity(): void {
+    if (this.quantity > 1) { 
+      this.quantity--;
+    }
+  }
+  
+  addToCart(): void {
+    const cartItem = {
+      productId: this.product.id,
+      quantity: this.quantity,
+      item_price: (this.currentPrice ? this.currentPrice.cost : 0) * this.quantity,
+    };
+
+
+    let cart = JSON.parse(this.localStorageService.getItem('cart') || '[]')
+    let cartToshow = JSON.parse(this.localStorageService.getItem('cartToshow') || '[]')
+
+    const existingItemIndex = cart.findIndex((item: any) => item.productId === cartItem.productId)
+
+    if (existingItemIndex > -1) {
+      cart[existingItemIndex].quantity += this.quantity;
+    } else {
+      cart.push(cartItem)
+    }
+
+    const productDetails = {
+      productId: this.product.id,
+      name: this.product.name,
+      imagen: this.product.imagen, 
+      quantity: this.quantity,
+      item_price: (this.currentPrice ? this.currentPrice.cost : 0) * this.quantity,
+    };
+  
+
+    const existingShowIndex = cartToshow.findIndex((item: any) => item.productId === productDetails.productId)
+  
+    if (existingShowIndex > -1) {
+
+      cartToshow[existingShowIndex].quantity += this.quantity
+      cartToshow[existingShowIndex].item_price += productDetails.item_price
+    } else {
+      cartToshow.push(productDetails)
+    }
+
+ 
+    this.localStorageService.setItem('cart', JSON.stringify(cart))
+    this.localStorageService.setItem('cartToshow', JSON.stringify(cartToshow))
+
+    console.log('Producto agregado al carrito:', cartItem)
+    console.log('Carrito actualizado:', cart)
+    console.log('Carrito a mostrar actualizado:', cartToshow);
+  }
+
+  
 
 }

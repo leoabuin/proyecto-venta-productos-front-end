@@ -31,8 +31,10 @@ export class LogInComponent {
     this.service.logInUser(this.userData).subscribe({
       next: (response) => {
         console.log('Inicio de sesion con exito:', response);
-        this.localStorageService.setItem('username', response.data.userName);
+        this.localStorageService.setItem('username', response.data.userName)
+        this.localStorageService.setItem('idUsuario', response.data.id )
         console.log(this.localStorageService.getItem('username'))
+        console.log(this.localStorageService.getItem('userId'))
         this.router.navigate(['/home'])
 
       },
