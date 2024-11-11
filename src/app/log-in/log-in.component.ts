@@ -39,9 +39,11 @@ export class LogInComponent {
 
       },
       error: (error) => {
-        console.error('Error al inicio de sesion:', error);
-        if (error.status === 400 && error.error && Array.isArray(error.error.error)) {
-          this.errorMessages = error.error.error.map((err: any) => {
+        console.error('Error al inicio de sesión:', error);
+        const errors = error.error?.error || []; // Usar el operador de encadenamiento opcional
+      
+        if (error.status === 500 || error.status === 400 || (Array.isArray(errors) && errors.length > 0)) {
+          this.errorMessages = errors.map((err: any) => {
             if (err.path) {
               return `Error en ${err.path[0]}: ${err.message}`;
             } else {

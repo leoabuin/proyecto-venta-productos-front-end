@@ -20,6 +20,7 @@ import { UpdateCategoryComponent } from './update-category/update-category.compo
 import { ChangePriceComponent } from './change-price/change-price.component.js';
 import { RegisterUserComponent } from './register-user/register-user.component.js';
 import { FooterComponent } from './footer/footer.component.js';
+import { MyOrdersComponent } from './my-orders/my-orders.component.js';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -41,7 +42,8 @@ import { FooterComponent } from './footer/footer.component.js';
     UpdateCategoryComponent,
     ChangePriceComponent,
     RegisterUserComponent,
-    FooterComponent
+    FooterComponent,
+    MyOrdersComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

@@ -46,6 +46,7 @@
                         <i class="fa fa-chevron-down ml-1" ></i> <!-- Flecha hacia abajo -->
                     </button>
                     <div class="absolute right-0 mt-2 bg-white text-black shadow-lg rounded-lg hidden transition-opacity duration-300" [ngClass]="{'hidden': !showMenu}">
+                        <button [routerLink]="['/myOrders',userId ]" class="block w-full text-left px-4 py-2 hover:bg-red-500 hover:text-white">Mis pedidos</button>
                         <button (click) = "logOut()" class="block w-full text-left px-4 py-2 hover:bg-red-500 hover:text-white">Cerrar sesión</button>
                     </div>
                 </div>

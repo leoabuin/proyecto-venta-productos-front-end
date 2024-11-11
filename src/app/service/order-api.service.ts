@@ -15,4 +15,12 @@ export class OrderApiService {
   public placeOrder(orderData: any): Observable<any> {
     return this.http.post<any>(this.urlOrderApi, orderData)
   }
+
+  public findOrderbyUser(userId: number): Observable<any>{
+    return this.http.get<any>(`${this.urlOrderApi}/${userId}`)
+  }
+
+  public cancelOrder(orderId: number): Observable<any>{
+    return this.http.post<any>(`${this.urlOrderApi}/${orderId}`, {})
+  }
 }

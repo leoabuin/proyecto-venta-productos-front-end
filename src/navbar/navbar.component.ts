@@ -14,7 +14,8 @@ import { ApiUserService } from '../app/service/userApi.service.js';
 })
 export class NavbarComponent {
   showMenu: boolean = false
-  username: string | null = null // Añadir propiedad para el nombre de usuario
+  username: string | null = null
+  userId: number | null = null
   errorMessages: string[] = []
 
   toggleMenu() {
@@ -28,10 +29,14 @@ export class NavbarComponent {
   
   constructor(private localStorageService: LocalStorageService, private service: ApiUserService, private router: Router) {
     this.username = this.localStorageService.getItem('username');
+    const userIdFromStorage = localStorageService.getItem('idUsuario');
+    this.userId = userIdFromStorage ? parseInt(userIdFromStorage, 10) : null;
     console.log(this.username); 
   }
 
 
+
+  
   
   logOut() {
     console.log('PROBANDO'); 
@@ -49,8 +54,8 @@ export class NavbarComponent {
       }
     });
   }
-   
-  
+
+    
 
   
 }
