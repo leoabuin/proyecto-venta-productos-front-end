@@ -27,24 +27,17 @@ export class AddcategoriesComponent {
     this.service.createCategory(this.categoryData).subscribe({
       next: (response) => {
         console.log('categoria agregada:', response);
-
       },
       error: (error) => {
         console.error('Error al agregar la categoria:', error);
-      
-        // Reiniciar los mensajes de error en cada intento
         this.errorMessages = [];
-      
-        // Verificar si el error tiene el formato esperado
         if (error.status === 400 && error.error && error.error.error) {
-          // Si existe el campo 'error.error' y tiene detalles de validación
           const backendErrors = error.error.error;
           this.errorMessages = backendErrors.map((err: any) => {
-            return `Error en ${err.path ? err.path[0] : 'desconocido'}: ${err.message}`;
-          });
+            return `Error en ${err.path ? err.path[0] : 'desconocido'}: ${err.message}`
+          })
         } else {
-          // Manejo de otros errores o respuestas inesperadas
-          this.errorMessages.push('Error desconocido. Intente nuevamente.');
+          this.errorMessages.push('Error desconocido. Intente nuevamente.')
         }
       }
       

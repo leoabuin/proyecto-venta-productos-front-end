@@ -65,7 +65,7 @@ export class MyOrdersComponent implements OnInit {
 
   closeCancelSuccessMessage() {
     this.showCancelSuccessMessage = false;
-    //window.location.reload();
+    window.location.reload();
   }
 
   

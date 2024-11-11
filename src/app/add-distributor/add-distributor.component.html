@@ -4,16 +4,16 @@
 <div class="w-full max-w-lg bg-white rounded-lg shadow-lg p-4 mx-auto mt-10">
   <h2 class="text-2xl font-bold mb-4 text-center">Inscripción de Distribuidor</h2>
 
-  <div *ngIf="errorMessages.length > 0" class="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded mb-4">
-    <ul>
-      <li *ngFor="let error of errorMessages">{{ error }}</li>
-    </ul>
+  <div *ngIf="errorMessages.length > 0" class="mt-4">
+    <div *ngFor="let message of errorMessages" class="text-red-500">
+      {{ message }}
+    </div>
   </div>
   
   <form (ngSubmit)="submitForm()">
     <div class="mb-3">
         <label for="Cuil" class="block">Cuil del Distribuidor</label>
-        <input type="text" id="Cuil" [(ngModel)]="distributorData.Cuil" name="Cuil" class="w-full border p-2 rounded" placeholder="Cuil del Distribuidor" required>
+        <input type="number" id="Cuil" [(ngModel)]="distributorData.CUIL" name="Cuil" class="w-full border p-2 rounded" placeholder="Cuil del Distribuidor" required>
       </div>
     
     <div class="mb-3">
@@ -32,8 +32,13 @@
     </div>
 
     <div class="mb-3">
+      <label for="email" class="block">Telefono</label>
+      <input type="telefono" id="telefono" [(ngModel)]="distributorData.phoneNumber" name="phoneNumber" class="w-full border p-2 rounded" placeholder="Numero de telefono" required>
+    </div>
+
+    <div class="mb-3">
       <label for="direccion" class="block">Dirección</label>
-      <input type="text" id="direccion" [(ngModel)]="distributorData.adress" name="direccion" class="w-full border p-2 rounded" placeholder="Direccion del Distribuidor" required>
+      <input type="text" id="direccion" [(ngModel)]="distributorData.address" name="direccion" class="w-full border p-2 rounded" placeholder="Direccion del Distribuidor" required>
     </div>
 
 

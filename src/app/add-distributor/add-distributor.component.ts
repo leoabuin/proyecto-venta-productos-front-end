@@ -16,11 +16,11 @@ export class AddDistributorComponent {
   distributorData = {
     id: 0,
     name: '',
-    Cuil: '',
+    CUIL: 0,
     surname: '',
     email: '',
     phoneNumber: '',
-    adress: ""
+    address: ''
     
   };
 
@@ -39,12 +39,12 @@ export class AddDistributorComponent {
       },
       error: (error) => {
         console.error('Error al agregar el distribuidor:', error);
-        if (error.status === 400 && error.error.errors) {
-          this.errorMessages = error.error.errors.map((err: any) => {
+        this.errorMessages = []
+        if (error.status === 400 && error.error && Array.isArray(error.error.error)) {
+          this.errorMessages = error.error.error.map((err: any) => {
             return `Error en ${err.path[0]}: ${err.message}`;
-          });
-        }else {
-          // Manejo de otros errores, si es necesario
+          })
+        } else {
           this.errorMessages.push('Error desconocido. Intente nuevamente.');
         }
       }

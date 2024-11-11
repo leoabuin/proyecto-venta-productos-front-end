@@ -3,6 +3,7 @@ import { NavbarComponent } from '../../navbar/navbar.component.js';
 import { ApiDistributorService } from '../service/distributorApi.service.js';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 interface Distributor {
   CUIL: string;
@@ -16,7 +17,7 @@ interface Distributor {
 @Component({
   selector: 'app-distributor-list',
   standalone: true,
-  imports: [NavbarComponent, FormsModule, CommonModule],
+  imports: [NavbarComponent, FormsModule, CommonModule, RouterLink],
   templateUrl: './distributor-list.component.html',
   styleUrl: './distributor-list.component.scss'
 })
