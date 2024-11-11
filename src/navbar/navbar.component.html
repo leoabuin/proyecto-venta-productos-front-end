@@ -16,16 +16,23 @@
             <div class="absolute bg-white text-black shadow-lg rounded-lg top-full left-0 z-30 transition-opacity duration-300" [ngClass]="{'hidden': !showMenu}">
                 <a routerLink="/distributors" class="block px-4 py-2 hover:bg-red-500 hover:text-white">Todos los Distribuidores</a>
                 <a routerLink="/addDistributor" class="block px-4 py-2 hover:bg-red-500 hover:text-white">Agregar Distribuidor</a>
-                <a routerLink="/change-distributor" class="block px-4 py-2 hover:bg-red-500 hover:text-white">Actualizar Distribuidor</a>
+                <a routerLink="/update-distributor/:id" class="block px-4 py-2 hover:bg-red-500 hover:text-white">Actualizar Distribuidor</a>
             </div>
         </div>
-            <a routerLink="/categories-list" class="py-4 px-0 hover:bg-red-700 font-bold">Categorias</a>
+        <div class="relative flex items-center">
+            <a  class="py-4 px-2 hover:bg-red-700 font-bold cursor-pointer">Categorias</a>
+            <div class="absolute bg-white text-black shadow-lg rounded-lg top-full left-0 z-30 transition-opacity duration-300" [ngClass]="{'hidden': !showMenu}">
+                <a routerLink="/categories-list"  class="block px-4 py-2 hover:bg-red-500 hover:text-white">Todos las Categorias</a>
+                <a routerLink="/addCategories"  class="block px-4 py-2 hover:bg-red-500 hover:text-white">Agregar Categoria</a>
+            </div>
+        </div>
             <a routerLink="/brand-list" class="py-4 px-2 hover:bg-red-700 font-bold">Marcas</a>
             <div class="relative flex items-center">
                 <a  class="py-4 px-2 hover:bg-red-700 font-bold cursor-pointer">Productos</a>
                 <div class="absolute bg-white text-black shadow-lg rounded-lg top-full left-0 z-30 transition-opacity duration-300" [ngClass]="{'hidden': !showMenu}">
                     <a routerLink="/products"  class="block px-4 py-2 hover:bg-red-500 hover:text-white">Todos los Productos</a>
                     <a routerLink="/addProduct"  class="block px-4 py-2 hover:bg-red-500 hover:text-white">Agregar Producto</a>
+                    <a routerLink="/change-product/:id"  class="block px-4 py-2 hover:bg-red-500 hover:text-white">Editar Producto</a>
                     <a routerLink="/change-price"  class="block px-4 py-2 hover:bg-red-500 hover:text-white">Actualizar Precio</a>
                 </div>
             </div>
@@ -36,6 +43,7 @@
               
             </button>
            
+
             <a  *ngIf="!username; else userProfile" routerLink="/login" class="flex items-center py-4 px-2 hover:bg-red-700 font-bold">
                 <i class="fa fa-user text-xl"></i>
             </a>

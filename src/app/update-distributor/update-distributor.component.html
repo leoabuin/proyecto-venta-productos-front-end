@@ -2,7 +2,7 @@
 <div class="flex"></div>
 
 <div class="w-full max-w-lg bg-white rounded-lg shadow-lg p-4 mx-auto mt-10">
-  <h2 class="text-2xl font-bold mb-4 text-center">Update distribuidor</h2>
+  <h2 class="text-2xl font-bold mb-4 text-center">Actualización del Distribuidor</h2>
 
   <form (ngSubmit)="onSubmit()">
     <div *ngIf="errorMessages.length > 0" class="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded mb-4">
@@ -17,28 +17,29 @@
     </div>
 
     <div class="mb-3">
-      <label for="Cuil" class="block">Cuil</label>
-      <textarea id="Cuil" [(ngModel)]="distributor.Cuil" name="Cuil" rows="3" class="w-full border p-2 rounded" placeholder="Cuil del Distribuidor" required></textarea>
-    </div>
-  
-    <div class="mb-3">
       <label for="surname" class="block">Apellido</label>
       <textarea id="surname" [(ngModel)]="distributor.surname" name="surname" rows="3" class="w-full border p-2 rounded" placeholder="Apellido del distribuidor" required></textarea>
+    </div>
+    
+    
+    <div class="mb-3">
+      <label for="Cuil" class="block">Cuil</label>
+      <input id="Cuil" [(ngModel)]="distributor.Cuil" name="Cuil" rows="3" class="w-full border p-2 rounded" placeholder="Cuil del Distribuidor" required>
     </div>
   
     <div class="mb-3">
       <label for="email" class="block">Email</label>
-      <email id="email" [(ngModel)]="distributor.email" name="email" rows="3" class="w-full border p-2 rounded" placeholder="Email del distribuidor" required></email>
+      <input id="email" [(ngModel)]="distributor.email" name="email" rows="3" class="w-full border p-2 rounded" placeholder="Email del distribuidor" required>
     </div>
-    
+   
     <div class="mb-3">
       <label for="phoneNumber" class="block">Teléfono</label>
-      <email id="phoneNumber" [(ngModel)]="distributor.phoneNumber" name="phoneNumber" rows="3" class="w-full border p-2 rounded" placeholder="Teléfono del distribuidor" required></email>
+      <input id="phoneNumber" [(ngModel)]="distributor.phoneNumber" name="phoneNumber" rows="3" class="w-full border p-2 rounded" placeholder="Teléfono del distribuidor" required>
     </div>
 
     <div class="mb-3">
       <label for="adress" class="block">Dirección</label>
-      <textarea id="adress" [(ngModel)]="distributor.adress" name="adress" rows="3" class="w-full border p-2 rounded" placeholder="Dirección del distribuidor" required></textarea>
+      <input id="adress" [(ngModel)]="distributor.adress" name="adress" rows="3" class="w-full border p-2 rounded" placeholder="Dirección del distribuidor" required>
     </div>
 
     <button type="submit" class="w-full p-2 text-white bg-red-500 rounded hover:bg-red-600">Actualizar Distribuidor</button>

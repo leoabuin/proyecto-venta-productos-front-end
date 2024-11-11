@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { HomeComponent } from "./home/home.component.js";
 import { LogInComponent } from './log-in/log-in.component.js';
@@ -19,6 +19,8 @@ import { ShoppingCartComponent } from "./shopping-cart/shopping-cart.component";
 import { UpdateCategoryComponent } from './update-category/update-category.component.js';
 import { ChangePriceComponent } from './change-price/change-price.component.js';
 import { RegisterUserComponent } from './register-user/register-user.component.js';
+import { FilterMenuComponent } from '../filter-menu/filter-menu.component.js';
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -39,11 +41,12 @@ import { RegisterUserComponent } from './register-user/register-user.component.j
     ShoppingCartComponent,
     UpdateCategoryComponent,
     ChangePriceComponent,
-    RegisterUserComponent
+    RegisterUserComponent,
+    FilterMenuComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent  {
   title = 'proyecto-venta-productos-front-end';
 }

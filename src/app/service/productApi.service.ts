@@ -24,4 +24,5 @@ import { Observable } from "rxjs";
     public getProductbyId(id:string): Observable<any>{
       return this.http.get<any>(`${this.urlProductApi}/${id}`)
     }
+  
   }

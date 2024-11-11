@@ -4,6 +4,7 @@ import { ApiProductService } from '../service/productApi.service.js';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { FilterMenuComponent } from '../../filter-menu/filter-menu.component.js';
 
 interface Price {
   id: number;
@@ -16,7 +17,7 @@ interface Price {
 @Component({
   selector: 'app-products-list',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, RouterModule],
+  imports: [NavbarComponent, CommonModule, RouterModule, FilterMenuComponent],
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.scss'
 })

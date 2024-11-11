@@ -1,0 +1,35 @@
+<app-navbar></app-navbar>
+<div class="flex bg-red-600">
+
+<div class="w-full max-w-lg bg-white rounded-lg shadow-xl p-4 mx-auto mt-10">
+  <h2 class="text-2xl font-semibold mb-4 text-center">Actualizar Producto</h2>
+  
+  <form (ngSubmit)="submitForm()">
+    <div class="mb-3">
+      <label for="name" class="block">Nombre del Producto</label>
+      <input type="text" id="name" [(ngModel)]="productData.name" name="nombreProducto" class="w-full border p-2 rounded" placeholder="Nombre del producto" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="block">Descripción del producto</label>
+      <textarea id="description" [(ngModel)]="productData.description" name="descripcion" rows="3" class="w-full border p-2 rounded" placeholder="Describe tu producto" required></textarea>
+    </div>
+    
+    <div class="mb-3">
+      <label for="stock" class="block">Stock</label>
+      <input type="number" id="stock" [(ngModel)]="productData.stock" name="stock" class="w-full border p-2 rounded" placeholder="Stock" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="waist" class="block">Talle</label>
+        <input type="text" id="waist" [(ngModel)]="productData.waist" name="stock" class="w-full border p-2 rounded" placeholder="Talle" required>
+    </div>
+    <div class="mb-3">
+        <label for="url" class="block">Sitio Web</label>
+        <input type="url" id="website" [(ngModel)]="productData.imagen" name="imagen" class="w-full border p-2 rounded" placeholder="https://tusitio.com" required>
+    </div>
+
+    <button type="submit" class="w-full mt-4 p-2.5 text-white bg-red-500 rounded hover:bg-red-600">Registrar Producto</button>
+  </form>
+</div>
+</div>
