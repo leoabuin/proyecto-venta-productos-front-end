@@ -13,7 +13,7 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   public getData(): Observable<any>{
-    return this.http.get<any>(this.urlBrandApi)
+    return this.http.get<any>(this.urlBrandApi,{ withCredentials: true })
   }
 
   public createBrand(brandData: any): Observable<any> {

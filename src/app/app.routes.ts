@@ -18,29 +18,30 @@ import { UpdateDistributorComponent } from './update-distributor/update-distribu
 import { AddDistributorComponent } from './add-distributor/add-distributor.component.js';
 import { FooterComponent } from './footer/footer.component.js';
 import { MyOrdersComponent } from './my-orders/my-orders.component.js';
+import { authGuard } from './auth.guard.js';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent }, 
     {path: 'login', component: LogInComponent},
-    {path: 'brand-list', component: BrandListComponent},
-    {path: 'addBrands', component: AddbrandsComponent},
-    {path: 'addCategories', component: AddcategoriesComponent},
-    {path: 'categories-list', component: CategoriesListComponent},
+    {path: 'brand-list', component: BrandListComponent, canActivate: [authGuard]},
+    {path: 'addBrands', component: AddbrandsComponent, canActivate: [authGuard]},
+    {path: 'addCategories', component: AddcategoriesComponent, canActivate: [authGuard]},
+    {path: 'categories-list', component: CategoriesListComponent, canActivate: [authGuard]},
     {path: 'aboutUs', component: NosotrosComponent},
-    {path: 'distributors-list', component: DistributorListComponent},
+    {path: 'distributors-list', component: DistributorListComponent, canActivate: [authGuard]},
     {path: 'register', component: RegisterUserComponent},
     {path: 'products', component: ProductsListComponent},
-    {path: 'addProduct', component: AddProductComponent},
+    {path: 'addProduct', component: AddProductComponent, canActivate: [authGuard]},
     {path: 'product-details/:id', component: ProductDetailsComponent},
-    {path: 'cart', component: ShoppingCartComponent},
-    {path: 'update-category/:id', component: UpdateCategoryComponent},
-    {path: 'change-price', component: ChangePriceComponent},
-    {path: 'update-category/:id', component: UpdateDistributorComponent},
-    {path: 'addDistributor', component: AddDistributorComponent},
-    {path: 'shopping-cart', component: ShoppingCartComponent},
+    {path: 'cart', component: ShoppingCartComponent, canActivate: [authGuard]},
+    {path: 'update-category/:id', component: UpdateCategoryComponent, canActivate: [authGuard]},
+    {path: 'change-price', component: ChangePriceComponent, canActivate: [authGuard]},
+    {path: 'update-distributor/:id', component: UpdateDistributorComponent, canActivate: [authGuard]},
+    {path: 'addDistributor', component: AddDistributorComponent, canActivate: [authGuard]},
+    {path: 'shopping-cart', component: ShoppingCartComponent, canActivate: [authGuard]},
     {path: 'footer', component: FooterComponent},
-    {path: 'myOrders/:idUser', component: MyOrdersComponent}
+    {path: 'myOrders/:idUser', component: MyOrdersComponent, canActivate: [authGuard]}
 
 
 ];

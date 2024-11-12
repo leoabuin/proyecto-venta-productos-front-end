@@ -14,7 +14,7 @@ import { Observable } from "rxjs";
     constructor(private http: HttpClient) { }
 
     addPriceToProduct(idProduct: number, priceData: any): Observable<any> {
-        return this.http.post(`${this.urlPriceApi}/${idProduct}/prices`, priceData);
+        return this.http.post(`${this.urlPriceApi}/${idProduct}/prices`, priceData,{ withCredentials: true });
     }
   
 

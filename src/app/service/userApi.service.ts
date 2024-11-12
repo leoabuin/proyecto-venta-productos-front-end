@@ -22,10 +22,10 @@ import { Observable } from "rxjs";
     }
 
     public logInUser(userData:any): Observable<any>{
-      return this.http.post<any>(`${this.urlUserApi}/logIn`, userData);
+      return this.http.post<any>(`${this.urlUserApi}/logIn`, userData, { withCredentials: true });
     }
     public logOut(): Observable<any> {
-      return this.http.post<any>(`${this.urlUserApi}/logOut`, {});
+      return this.http.post<any>(`${this.urlUserApi}/logOut`, {}, { withCredentials: true });
     }
     
   }

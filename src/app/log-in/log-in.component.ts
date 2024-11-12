@@ -5,6 +5,7 @@ import { ApiUserService } from '../service/userApi.service.js';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '../service/local-storage.service.js';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-log-in',
@@ -23,7 +24,8 @@ export class LogInComponent {
   errorMessages: string[] = [];
   constructor(private service: ApiUserService, 
   private router:Router,
-  private localStorageService: LocalStorageService
+  private localStorageService: LocalStorageService,
+  private cookieService: CookieService
   ){}
 
   submitForm(){
@@ -36,6 +38,9 @@ export class LogInComponent {
         console.log(this.localStorageService.getItem('username'))
         console.log(this.localStorageService.getItem('userId'))
         this.router.navigate(['/home'])
+        const token = this.cookieService.get('token');
+        console.log('Token guardado en cookie:', this.cookieService.get('token'))
+        console.log('Longitud del token guardado:', token.length);
 
       },
       error: (error) => {

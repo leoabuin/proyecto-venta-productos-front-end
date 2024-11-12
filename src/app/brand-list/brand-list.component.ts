@@ -5,6 +5,7 @@ import { FilterPipe } from '../pipes/filter.pipe.js';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from '../../navbar/navbar.component.js';
 import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-brand-list',
@@ -18,17 +19,34 @@ export class BrandListComponent {
   brands: any[] = []
   selectedBrand: any = {}; // Este es el objeto original que no se modifica
   tempBrand: any = {};     // Este es el objeto temporal que se usa en el formulario
-  constructor(private service: ApiService){
-    this.service.getData().subscribe(response =>{
-      this.brands = response.data;
+  isUnauthorizedModalOpen = false 
+  constructor(private service: ApiService, private router: Router){
+    this.service.getData().subscribe({
+      next: (response) => {
+      this.brands = response.data
+    },
+    error: (err) => {
+      if(err.status === 401){
+        console.log('HOLAAAA como va')
+        this.openUnauthorizedModal()
+      }
+    }
     })
   }
 
-  brandToDelete: number | null = null;
+  brandToDelete: number | null = null
+
+  openUnauthorizedModal(){
+    this.isUnauthorizedModalOpen = true
+  }
+  closeUnauthorizedModal(){
+    this.isUnauthorizedModalOpen = true
+    this.router.navigate(['/login'])
+  }
 
   openModalDelete(brandId: number) {
     this.brandToDelete = brandId;
-    this.isModalOpenDelete = true;
+    this.isModalOpenDelete = true
   }
 
   closeModalDelete() {

@@ -8,7 +8,7 @@ import { ApiUserService } from '../app/service/userApi.service.js';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, RouterOutlet, CommonModule],
+  imports: [RouterLink, CommonModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
@@ -28,12 +28,15 @@ export class NavbarComponent {
 
   
   constructor(private localStorageService: LocalStorageService, private service: ApiUserService, private router: Router) {
-    this.username = this.localStorageService.getItem('username');
-    const userIdFromStorage = localStorageService.getItem('idUsuario');
-    this.userId = userIdFromStorage ? parseInt(userIdFromStorage, 10) : null;
-    console.log(this.username); 
+
   }
 
+  ngOnInit() {
+    this.username = this.localStorageService.getItem('username');
+    const userIdFromStorage = this.localStorageService.getItem('idUsuario');
+    this.userId = userIdFromStorage ? parseInt(userIdFromStorage, 10) : null;
+    console.log(this.username)
+  }
 
 
   
@@ -41,12 +44,12 @@ export class NavbarComponent {
   logOut() {
     console.log('PROBANDO'); 
     this.service.logOut().subscribe({
-      next: () => {
+      next: (response) => {
         localStorage.clear()
-        //this.localStorageService.removeItem('username'); 
+        console.log(response.message);
         this.username = null;
-        console.log(this.username); 
-        console.log('estamos dentro');  
+        //this.localStorageService.removeItem('username'); 
+        console.log(this.username);  
         console.log(this.username)
       },
       error: (error: unknown) => { // Cambia aquí

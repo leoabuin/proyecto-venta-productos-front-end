@@ -14,7 +14,7 @@ import { Observable } from "rxjs";
     constructor(private http: HttpClient) { }
   
     public getProductsData(): Observable<any>{
-      return this.http.get<any>(this.urlProductApi)
+      return this.http.get<any>(this.urlProductApi, { withCredentials: true })
     }
 
     public createProduct(productData: any): Observable<any> {
