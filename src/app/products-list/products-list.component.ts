@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { ApiCategoryService } from '../service/categoryApi.service.js';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from '../pipes/productFilter.pipe.js';
+import { FooterComponent } from "../footer/footer.component";
 
 interface Price {
   id: number;
@@ -20,7 +21,7 @@ interface Price {
 @Component({
   selector: 'app-products-list',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, RouterModule, ReactiveFormsModule, FormsModule, FilterPipe],
+  imports: [NavbarComponent, CommonModule, RouterModule, ReactiveFormsModule, FormsModule, FilterPipe, FooterComponent],
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.scss'
 })

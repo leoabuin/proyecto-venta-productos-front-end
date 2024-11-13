@@ -27,7 +27,7 @@ export const routes: Routes = [
     {path: 'brand-list', component: BrandListComponent, canActivate: [authGuard]},
     {path: 'addBrands', component: AddbrandsComponent, canActivate: [authGuard]},
     {path: 'addCategories', component: AddcategoriesComponent, canActivate: [authGuard]},
-    {path: 'categories-list', component: CategoriesListComponent, canActivate: [authGuard]},
+    {path: 'categories-list', component: CategoriesListComponent},
     {path: 'aboutUs', component: NosotrosComponent},
     {path: 'distributors-list', component: DistributorListComponent, canActivate: [authGuard]},
     {path: 'register', component: RegisterUserComponent},

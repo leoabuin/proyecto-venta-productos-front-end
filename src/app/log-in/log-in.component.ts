@@ -45,16 +45,19 @@ export class LogInComponent {
       },
       error: (error) => {
         console.error('Error al inicio de sesión:', error);
-        const errors = error.error?.error || []; // Usar el operador de encadenamiento opcional
+        const errors = error.error?.error || []
       
-        if (error.status === 500 || error.status === 400 || (Array.isArray(errors) && errors.length > 0)) {
+        if (error.status === 400 || (Array.isArray(errors) && errors.length > 0)) {
           this.errorMessages = errors.map((err: any) => {
             if (err.path) {
               return `Error en ${err.path[0]}: ${err.message}`;
             } else {
               return `Error: ${err.message}`;
             }
-          });
+          })}
+          else if (error.status === 500 ) {
+            // Si no hay un mensaje específico, maneja el error basado en el código de estado
+            this.errorMessages.push('Contraseña invalida.');
         } else {
           this.errorMessages.push('Error desconocido. Intente nuevamente.');
         }

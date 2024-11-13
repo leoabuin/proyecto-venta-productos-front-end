@@ -1,0 +1,39 @@
+.carousel-container {
+    width: 100%;
+    overflow: hidden; /* Oculta el contenido fuera del área visible */
+  }
+  
+  .carousel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .carousel-images {
+    display: flex;
+    transition: transform 0.3s ease-in-out; /* Animación suave para la transición */
+  }
+  
+  .carousel-image {
+    width: 100%;
+    height: auto;
+  }
+  
+  button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  button:first-of-type {
+    left: 0;
+  }
+  
+  button:last-of-type {
+    right: 0;
+  }

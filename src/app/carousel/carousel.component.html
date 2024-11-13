@@ -1,0 +1,11 @@
+<div class="carousel-container" *ngIf="images.length > 0">
+    <div class="carousel">
+      <div class="carousel-images" [style.transform]="'translateX(' + (-currentSlide * 100) + '%)'">
+        <img *ngFor="let image of images" [src]="image" alt="Carrusel de imágenes" class="carousel-image" />
+      </div>
+      
+      <!-- Botones de navegación -->
+      <button (click)="prevSlide()"> < </button>
+      <button (click)="nextSlide()"> > </button>
+    </div>
+  </div>

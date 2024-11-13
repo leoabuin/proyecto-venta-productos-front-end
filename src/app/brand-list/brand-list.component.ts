@@ -6,11 +6,12 @@ import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from '../../navbar/navbar.component.js';
 import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
+import { FooterComponent } from "../footer/footer.component";
 
 @Component({
   selector: 'app-brand-list',
   standalone: true,
-  imports: [CommonModule, FilterPipe, FormsModule, NavbarComponent,RouterLink],
+  imports: [CommonModule, FilterPipe, FormsModule, NavbarComponent, RouterLink],
   templateUrl: './brand-list.component.html',
   styleUrl: './brand-list.component.scss'
 })

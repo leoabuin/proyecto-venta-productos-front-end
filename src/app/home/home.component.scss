@@ -73,4 +73,46 @@
   .home-content p {
     font-size: 18px;
   }
+
+  .about-us {
+    background-color: #f4f4f4; /* Fondo claro */
+    padding: 40px 20px; /* Espaciado alrededor del apartado */
+    text-align: center; /* Alineación del texto al centro */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    margin: 40px 0; /* Margen superior e inferior */
+  }
+  
+  .about-us-content {
+    max-width: 800px; /* Maxima anchura */
+    margin: 0 auto; /* Centrado */
+  }
+  
+  .about-us h2 {
+    font-size: 2.5rem; /* Tamaño de fuente grande */
+    color: #333; /* Color de texto oscuro */
+    margin-bottom: 20px; /* Espacio debajo del título */
+  }
+  
+  .about-us p {
+    font-size: 1.1rem; /* Tamaño de fuente adecuado */
+    color: #555; /* Color de texto gris suave */
+    line-height: 1.6; /* Espacio entre líneas */
+    margin-bottom: 15px; /* Espacio debajo de los párrafos */
+  }
+  
+  .about-us p strong {
+    font-weight: bold; /* Negrita para el nombre del ecommerce */
+    color: #007bff; /* Color azul para resaltar el nombre */
+  }
+  
+  @media (max-width: 768px) {
+    .about-us h2 {
+      font-size: 2rem; /* Ajustar el tamaño del título en pantallas pequeñas */
+    }
+  
+    .about-us p {
+      font-size: 1rem; /* Ajustar el tamaño del texto en pantallas pequeñas */
+    }
+  }
   
