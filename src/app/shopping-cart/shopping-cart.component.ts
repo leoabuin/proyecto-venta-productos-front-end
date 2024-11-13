@@ -5,6 +5,7 @@ import { LocalStorageService } from '../service/local-storage.service.js';
 import { FooterComponent } from '../footer/footer.component.js';
 import { OrderApiService } from '../service/order-api.service.js';
 import { formatDate } from '@angular/common';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-shopping-cart',
   standalone: true,
@@ -17,9 +18,11 @@ export class ShoppingCartComponent implements OnInit {
   cartItems: any[] = [];
   orderItem:any[] = []
   total: number = 0
+  showOrderDone : boolean = false
   constructor(
     private localStorageService: LocalStorageService,
-    private orderService: OrderApiService
+    private orderService: OrderApiService,
+    private router: Router
   ){
     const cart = this.localStorageService.getItem('cartToshow');
     this.cartItems = cart ? JSON.parse(cart) : []; // Convierte el string a un array
@@ -35,24 +38,37 @@ export class ShoppingCartComponent implements OnInit {
     }, 0);
   }
 
+  removeItem(productId: number) {
+    const cartToShow = this.localStorageService.getItem('cartToshow');
+    if (cartToShow) {
+      const updatedCartToShow = JSON.parse(cartToShow).filter((item: any) => item.productId !== productId)
+      this.localStorageService.setItem('cartToshow', JSON.stringify(updatedCartToShow))
+    }
+    const cart = this.localStorageService.getItem('cart')
+    if (cart) {
+      const updatedCart = JSON.parse(cart).filter((item: any) => item.productId !== productId)
+      this.localStorageService.setItem('cart', JSON.stringify(updatedCart))
+    }
+    this.cartItems = this.cartItems.filter(item => item.productId !== productId)
+    this.calculateTotal()
+  }
+
   submitOrder(){
     
 
-    const userIdString = this.localStorageService.getItem('idUsuario') as string; // Obtener el ID de usuario como string
+    const userIdString = this.localStorageService.getItem('idUsuario') as string
+    const userId = parseInt(userIdString, 10)
 
-    // Convertir de string a int
-    const userId = parseInt(userIdString, 10);
-
-    
     const orderItem = this.localStorageService.getItem('cart')
     if (orderItem) {
-      const cartItems = JSON.parse(orderItem);
+      const cartItems = JSON.parse(orderItem)
     }
     const orderItems = this.cartItems.map(item => ({
       productId: item.productId, 
       quantity: item.quantity, 
       item_price: item.item_price
-    }));
+    }))
+
   
 
     const orderData = {
@@ -67,15 +83,17 @@ export class ShoppingCartComponent implements OnInit {
 
     this.orderService.placeOrder(orderData).subscribe({
       next: (response) => {
-        console.log('Pedido registrado:', response);
+        console.log('Pedido registrado:', response)
         this.localStorageService.removeItem('cart')
         this.localStorageService.removeItem('cartToshow')
       },
-
     })
+    this.showOrderDone = true;
+  }
 
-
-
+  closeOrderDoneSuccessMessage(){
+    this.showOrderDone = false
+    this.router.navigate(['/home'])
   }
 
   

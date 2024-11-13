@@ -51,10 +51,7 @@ export class MyOrdersComponent implements OnInit {
     this.orderService.cancelOrder(orderId).subscribe({
       next: (response) => {
         console.log('Pedido cancelado exitosamente:', response)
-        this.showCancelSuccessMessage = true;
-
-        // Ocultar el mensaje automáticamente después de 5 segundos
-
+        this.showCancelSuccessMessage = true
       },
       error: (error) => {
         console.error('Error al cancelar el pedido:', error);

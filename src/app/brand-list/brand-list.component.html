@@ -63,16 +63,6 @@
   </div>
 </div>
 
-<div *ngIf="isUnauthorizedModalOpen" class="fixed inset-0 flex items-center justify-center z-50">
-  <div class="p-4 md:p-5 text-center bg-white rounded-lg shadow-lg dark:bg-grey-800">
-    <svg class="mx-auto mb-4 text-grey-400 w-12 h-12 dark:text-grey-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-    </svg>
-    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-grey-400">Debes iniciar sesion para realizar esta operacion </h3>
-    <button (click)="closeUnauthorizedModal()" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Ok</button>
-  </div>
-</div>
-
 
 
 
@@ -127,6 +117,16 @@
         </button>
       </form>
     </div>
+  </div>
+</div>
+
+<div *ngIf="showConflictError" class="fixed inset-0 flex items-center justify-center z-50">
+  <div class="p-4 md:p-5 text-center bg-white rounded-lg shadow-lg dark:bg-red-800">
+    <svg class="mx-auto mb-4 text-red-400 w-12 h-12 dark:text-red-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+    </svg>
+    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-green-400">La marca no se puede eliminar porque hay productos de esta marca creados</h3>
+    <button (click)="closeConflictErrorMessage()" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Ok</button>
   </div>
 </div>
 

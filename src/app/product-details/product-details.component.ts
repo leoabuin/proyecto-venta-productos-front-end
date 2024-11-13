@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../footer/footer.component.js';
 import { LocalStorageService } from '../service/local-storage.service.js';
-
+import { Router } from '@angular/router';
 interface Price {
   id: number;
   dateFrom: Date;
@@ -26,17 +26,24 @@ interface Price {
 export class ProductDetailsComponent implements OnInit{
   
 
-  
+  sizes = ['S', 'M', 'L', 'XL', 'XXL']
+  selectedSize = ''
   product: any
   currentPrice: Price | undefined
   quantity: number = 1
   stock:number = 0
+  showProductAdd: boolean = false
+
+  selectSize(size: string) {
+    this.selectedSize = size;
+  }
 
   constructor(
     private route: ActivatedRoute, 
     private service: ApiProductService, 
     private brandService: ApiService, 
-    private localStorageService: LocalStorageService) {}
+    private localStorageService: LocalStorageService,
+    private router: Router) {}
 
   productId: string | null = null;
   ngOnInit(): void {
@@ -117,7 +124,7 @@ export class ProductDetailsComponent implements OnInit{
       productId: this.product.id,
       quantity: this.quantity,
       item_price: (this.currentPrice ? this.currentPrice.cost : 0) * this.quantity,
-    };
+    }
 
 
     let cart = JSON.parse(this.localStorageService.getItem('cart') || '[]')
@@ -156,9 +163,14 @@ export class ProductDetailsComponent implements OnInit{
 
     console.log('Producto agregado al carrito:', cartItem)
     console.log('Carrito actualizado:', cart)
-    console.log('Carrito a mostrar actualizado:', cartToshow);
+    console.log('Carrito a mostrar actualizado:', cartToshow)
+
+    this.showProductAdd = true
   }
 
-  
+  closeProductAddSuccessMessage(){
+    this.showProductAdd = false
+    this.router.navigate(['/products'])
+  }
 
 }

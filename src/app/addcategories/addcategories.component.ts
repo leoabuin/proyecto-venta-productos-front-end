@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ApiCategoryService } from '../service/categoryApi.service.js';
 import { NavbarComponent } from '../../navbar/navbar.component.js';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-addcategories',
@@ -18,8 +19,9 @@ export class AddcategoriesComponent {
     description: ''
   };
 
-  errorMessages: string[] = [];
-  constructor(private service: ApiCategoryService){}
+  errorMessages: string[] = []
+  showNewCategory: boolean = false 
+  constructor(private service: ApiCategoryService, private router:Router){}
 
 
   submitForm() {
@@ -27,6 +29,7 @@ export class AddcategoriesComponent {
     this.service.createCategory(this.categoryData).subscribe({
       next: (response) => {
         console.log('categoria agregada:', response);
+        this.showNewCategory = true
       },
       error: (error) => {
         console.error('Error al agregar la categoria:', error);
@@ -42,6 +45,11 @@ export class AddcategoriesComponent {
       }
       
     });
+  }
+
+  closeNewCategorySuccessMessage(){
+    this.showNewCategory = false
+    this.router.navigate(['/categories-list'])
   }
 
 }

@@ -3,6 +3,7 @@ import { ApiDistributorService } from '../service/distributorApi.service.js';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../../navbar/navbar.component.js';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,7 +15,6 @@ import { NavbarComponent } from '../../navbar/navbar.component.js';
 })
 export class AddDistributorComponent {
   distributorData = {
-    id: 0,
     name: '',
     CUIL: 0,
     surname: '',
@@ -24,17 +24,18 @@ export class AddDistributorComponent {
     
   };
 
-  isSuccessModalOpen = false;
-  errorMessages: string[] = [];
+  isSuccessModalOpen = false
+  errorMessages: string[] = []
+  showNewDistributor:boolean = false
   
-  constructor(private service: ApiDistributorService){}
+  constructor(private service: ApiDistributorService, private router: Router){}
 
   submitForm() {
     this.errorMessages = [];
     this.service.createDistributor(this.distributorData).subscribe({
       next: (response) => {
         console.log('Distribuidor agregado:', response);
-        this.openSuccessModal();
+        this.showNewDistributor = true
 
       },
       error: (error) => {
@@ -57,6 +58,12 @@ export class AddDistributorComponent {
 
   closeSuccessModal() {
     this.isSuccessModalOpen = false;
+  }
+
+  closeNewDistributorSuccessMessage(){
+
+    this.showNewDistributor = false
+    this.router.navigate(['/distributors-list'])
   }
 
 

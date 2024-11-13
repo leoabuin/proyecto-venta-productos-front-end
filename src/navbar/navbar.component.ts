@@ -46,13 +46,14 @@ export class NavbarComponent {
     this.service.logOut().subscribe({
       next: (response) => {
         localStorage.clear()
-        console.log(response.message);
-        this.username = null;
+        console.log(response.message)
+        this.username = null
         //this.localStorageService.removeItem('username'); 
         console.log(this.username);  
         console.log(this.username)
+        this.router.navigate(['/home'])
       },
-      error: (error: unknown) => { // Cambia aquí
+      error: (error: unknown) => { 
         console.error('Error durante el logout:', error);
       }
     });

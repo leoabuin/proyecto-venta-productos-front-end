@@ -1,9 +1,9 @@
 <app-navbar></app-navbar>
-<section class="bg-red-500 py-8 antialiased dark:bg-gray-900 md:py-16">
+<section  class="bg-red-500 py-8 antialiased dark:bg-gray-900 md:py-16">
     <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
       <h2 class="text-xl font-bold text-white dark:text-white sm:text-2xl">Carrito de Compras</h2>
       <div class="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
-        <div *ngIf="cartItems.length > 0" class="flex flex-col  lg:flex-wrap">
+      <div *ngIf="cartItems.length > 0; else emptyCart" class="flex flex-col  lg:flex-wrap">
         <div *ngFor="let item of cartItems" class="flex flex-col items-center justify-between border-b border-gray-200 py-4">
           <div class="mx-auto  w-full flex-none lg:max-w-2xl xl:max-w-4xl">
             <div class="space-y-6">
@@ -24,7 +24,7 @@
                   <div class="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
                     <a href="#" class="text-base font-medium text-gray-900 hover:underline dark:text-white">{{item.name}}</a>
                     <div class="flex items-center gap-4">
-                      <button type="button" class="inline-flex items-center text-sm font-medium text-red-600 hover:underline dark:text-red-500">
+                      <button (click)="removeItem(item.productId)" type="button" class="inline-flex items-center text-sm font-medium text-red-600 hover:underline dark:text-red-500">
                         <svg class="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
                         </svg>
@@ -39,7 +39,7 @@
         </div>
       </div>
       
-        <div class="mx-auto mt-6 max-w-xl flex-1 space-y-6 lg:mt-0 lg:w-full">
+        <div *ngIf="cartItems.length > 0;" class="mx-auto mt-6 max-w-xl flex-1 space-y-6 lg:mt-0 lg:w-full">
           <div class="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
             <p class="text-xl font-semibold text-gray-900 dark:text-white">Resumen de Compra</p>
   
@@ -75,7 +75,36 @@
           </div>
         </div>
       </div>
+
+      <ng-template #emptyCart>
+        <div class="flex items-center justify-center min-h-screen"> <!-- Cambiado a min-h-screen -->
+          <div class="p-4 md:p-5 text-center bg-white rounded-lg shadow-lg dark:bg-blue-800">
+            <svg class="mx-auto mb-4 text-blue-400 w-12 h-12 dark:text-green-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+            <h3 class="mb-5 text-lg font-normal text-blue-500 dark:text-green-400">Añadir productos al carrito</h3>
+            <button (click)="closeOrderDoneSuccessMessage()" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+              Ok
+            </button>
+          </div>
+        </div>
+      </ng-template>
+
+
     </div>
+
+    <div *ngIf="showOrderDone" class="fixed inset-0 flex items-center justify-center z-50">
+      <div class="p-4 md:p-5 text-center bg-white rounded-lg shadow-lg dark:bg-green-800">
+        <svg class="mx-auto mb-4 text-green-400 w-12 h-12 dark:text-green-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+        </svg>
+        <h3 class="mb-5 text-lg font-normal text-green-500 dark:text-green-400">Pedido Realizado con éxito</h3>
+        <button (click)="closeOrderDoneSuccessMessage()" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Ok</button>
+      </div>
+    </div>
+
+
   </section>
+
 
   <app-footer></app-footer>

@@ -15,34 +15,19 @@ import { Router } from '@angular/router';
   styleUrl: './brand-list.component.scss'
 })
 export class BrandListComponent {
-  filterBrand: string = '';
+  filterBrand: string = ''
   brands: any[] = []
-  selectedBrand: any = {}; // Este es el objeto original que no se modifica
-  tempBrand: any = {};     // Este es el objeto temporal que se usa en el formulario
-  isUnauthorizedModalOpen = false 
+  selectedBrand: any = {}
+  tempBrand: any = {} 
   constructor(private service: ApiService, private router: Router){
-    this.service.getData().subscribe({
-      next: (response) => {
-      this.brands = response.data
-    },
-    error: (err) => {
-      if(err.status === 401){
-        console.log('HOLAAAA como va')
-        this.openUnauthorizedModal()
-      }
-    }
+    this.service.getData().subscribe(response =>{
+      this.brands = response.data;
     })
   }
 
   brandToDelete: number | null = null
+  showConflictError: boolean = false
 
-  openUnauthorizedModal(){
-    this.isUnauthorizedModalOpen = true
-  }
-  closeUnauthorizedModal(){
-    this.isUnauthorizedModalOpen = true
-    this.router.navigate(['/login'])
-  }
 
   openModalDelete(brandId: number) {
     this.brandToDelete = brandId;
@@ -75,7 +60,11 @@ export class BrandListComponent {
         this.brands = this.brands.filter(brand => brand.id !== brandId);
       },
       error: error => {
-        console.error('Error al eliminar la marca:', error);
+        if(error.status === 500){
+          console.log('No se puede elimnar porque existen productos con esta marca')
+          this.showConflictError = true
+
+        }
       }
     });
   }
@@ -119,6 +108,10 @@ export class BrandListComponent {
   closeModal() {
     this.isModalOpen = false;
     this.selectedBrand = null;
+  }
+
+  closeConflictErrorMessage(){
+    this.showConflictError = false
   }
 
 }

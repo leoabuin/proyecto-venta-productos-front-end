@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { ApiCategoryService } from '../service/categoryApi.service.js';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FilterPipe } from '../pipes/productFilter.pipe.js';
 
 interface Price {
   id: number;
@@ -19,12 +20,13 @@ interface Price {
 @Component({
   selector: 'app-products-list',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, RouterModule, ReactiveFormsModule, FormsModule],
+  imports: [NavbarComponent, CommonModule, RouterModule, ReactiveFormsModule, FormsModule, FilterPipe],
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.scss'
 })
 export class ProductsListComponent {
   currentPrice: Price | undefined;
+  filterProduct: string = '';
 
   
   products: any[] = []
