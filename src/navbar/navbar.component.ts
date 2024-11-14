@@ -42,7 +42,6 @@ export class NavbarComponent {
   
   
   logOut() {
-    console.log('PROBANDO'); 
     this.service.logOut().subscribe({
       next: (response) => {
         localStorage.clear()

@@ -7,6 +7,7 @@ import { ApiService } from '../service/api.service.js';
 import { ApiDistributorService } from '../service/distributorApi.service.js';
 import { ApiCategoryService } from '../service/categoryApi.service.js';
 import { response } from 'express';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -33,15 +34,17 @@ export class AddProductComponent {
     }
   }
 
-  brands:any[] = [];
-  distributors: any[] = [];
-  categories: any[] = [];
+  brands:any[] = []
+  distributors: any[] = []
+  categories: any[] = []
+  showAddProduct:boolean = false
 
   constructor
   (private service: ApiProductService,
    private brandService: ApiService,
    private distributorService: ApiDistributorService,
-   private categoryService: ApiCategoryService
+   private categoryService: ApiCategoryService,
+   private router:Router
   ){}
 
   ngOnInit(): void {
@@ -60,10 +63,16 @@ export class AddProductComponent {
   submitForm() {
     this.service.createProduct(this.productData).subscribe({
       next: (response) => {
-        console.log('Producto agregada:', response);
+        console.log('Producto agregada:', response)
+        this.showAddProduct = true
       },
       
     });
+  }
+
+  closeAddProductSuccesfulMessage(){
+    this.showAddProduct = false
+    this.router.navigate(['/products'])
   }
 
 }

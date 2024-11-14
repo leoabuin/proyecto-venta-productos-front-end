@@ -16,6 +16,9 @@ import { Observable } from "rxjs";
     public getUsersData(): Observable<any>{
       return this.http.get<any>(this.urlUserApi)
     }
+    public getUserbyId(id:number): Observable<any> {
+      return this.http.get<any>(`${this.urlUserApi}/${id}`);
+  }
 
     public createUser(userData: any): Observable<any> {
         return this.http.post<any>(this.urlUserApi, userData);
@@ -26,6 +29,9 @@ import { Observable } from "rxjs";
     }
     public logOut(): Observable<any> {
       return this.http.post<any>(`${this.urlUserApi}/logOut`, {}, { withCredentials: true });
+    }
+    public update(id:number,userData:any):Observable<any>{
+      return this.http.patch<any>(`${this.urlUserApi}/${id}`,userData)
     }
     
   }

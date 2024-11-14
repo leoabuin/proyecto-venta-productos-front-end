@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-<section class="bg-red-500 py-8 antialiased dark:bg-gray-900 md:py-16">
+<section class="bg-red-500 py-8 antialiased dark:bg-gray-900 md:py-16 min-height: 100vh display: flex">
     <div class="mx-auto max-w-screen-xl px-4 :px-0">
       <h2 class="text-xl font-bold text-white dark:text-white sm:text-2xl">Mis pedidos</h2>
       <div class="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8 ">
@@ -54,8 +54,8 @@
 
       </div>
 
-
       </div>
+      
     </div>
     <div *ngIf="showCancelSuccessMessage" class="fixed inset-0 flex items-center justify-center z-50">
       <div class="p-4 md:p-5 text-center bg-white rounded-lg shadow-lg dark:bg-green-800">
@@ -66,7 +66,12 @@
         <button (click)="closeCancelSuccessMessage()" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Ok</button>
       </div>
     </div>
+
+    
   </section>
 
-
   <app-footer></app-footer>
+
+
+
+

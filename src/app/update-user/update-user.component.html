@@ -1,0 +1,43 @@
+<div class="w-full max-w-lg bg-white rounded-lg shadow-lg p-4 mx-auto mt-10">
+    <h2 class="text-2xl font-bold mb-4 text-center">Update Informacion Personal </h2>
+  
+    <form (ngSubmit)="onSubmit()">
+      <div *ngIf="errorMessages.length > 0" class="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded mb-4">
+        <ul>
+          <li *ngFor="let error of errorMessages">{{ error }}</li>
+        </ul>
+      </div>
+  
+      <div class="mb-3">
+        <label for="name" class="block">Nombre de usuario</label>
+        <input type="text" id="name" [(ngModel)]="user.userName" name="nombreCategoria" class="w-full border p-2 rounded" placeholder="Nombre de usuario" required>
+      </div>
+  
+      <div class="mb-3">
+        <label for="description" class="block">mail</label>
+        <input name="email" type="text" [(ngModel)]="user.mail" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter email" />
+      </div>
+
+      <div>    
+        <label class="text-gray-800 text-sm mb-2 block">Telefono</label>
+        <input name="telefono" type="text" [(ngModel)]="user.phoneNumber" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Ingrese telefono" />
+    </div>
+
+    <div>
+        <label class="text-gray-800 text-sm mb-2 block">Direccion</label>
+        <input name="direccion" type="text" [(ngModel)]="user.adress" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter Direccion" />
+    </div>   
+  
+      <button type="submit" class="w-full p-2 text-white bg-red-500 rounded hover:bg-red-600">Actualizar Categoría</button>
+    </form>
+  </div>
+
+  <div *ngIf="showUpdateUser" class="fixed inset-0 flex items-center justify-center z-50">
+    <div class="p-4 md:p-5 text-center bg-white rounded-lg shadow-lg dark:bg-green-800">
+      <svg class="mx-auto mb-4 text-green-400 w-12 h-12 dark:text-green-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+      </svg>
+      <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-green-400">Informacion de usuario actualizada correctamente</h3>
+      <button (click)="closeUpdateUserSuccesfulMessage()" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Ok</button>
+    </div>
+  </div>

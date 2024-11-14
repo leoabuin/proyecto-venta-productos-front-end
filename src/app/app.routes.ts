@@ -19,6 +19,7 @@ import { AddDistributorComponent } from './add-distributor/add-distributor.compo
 import { FooterComponent } from './footer/footer.component.js';
 import { MyOrdersComponent } from './my-orders/my-orders.component.js';
 import { authGuard } from './auth.guard.js';
+import { UpdateUserComponent } from './update-user/update-user.component.js';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -41,7 +42,8 @@ export const routes: Routes = [
     {path: 'addDistributor', component: AddDistributorComponent, canActivate: [authGuard]},
     {path: 'shopping-cart', component: ShoppingCartComponent, canActivate: [authGuard]},
     {path: 'footer', component: FooterComponent},
-    {path: 'myOrders/:idUser', component: MyOrdersComponent, canActivate: [authGuard]}
+    {path: 'myOrders/:idUser', component: MyOrdersComponent, canActivate: [authGuard]},
+    {path: 'updateUser/:idUser', component: UpdateUserComponent, canActivate: [authGuard]}
 
 
 ];
