@@ -8,6 +8,7 @@ import { ApiCategoryService } from '../service/categoryApi.service.js';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from '../pipes/productFilter.pipe.js';
 import { FooterComponent } from "../footer/footer.component";
+import { NgxPaginationModule } from 'ngx-pagination';
 
 interface Price {
   id: number;
@@ -21,7 +22,7 @@ interface Price {
 @Component({
   selector: 'app-products-list',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, RouterModule, ReactiveFormsModule, FormsModule, FilterPipe, FooterComponent],
+  imports: [NavbarComponent, CommonModule, RouterModule, ReactiveFormsModule, FormsModule, FilterPipe, FooterComponent,NgxPaginationModule],
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.scss'
 })
@@ -34,6 +35,7 @@ export class ProductsListComponent {
   filteredProducts: any[] = []
   categories: any[] = []
   selectedCategory: number = 0
+  public page: number = 0
 
   constructor(private service: ApiProductService, private router: Router, private categoryService: ApiCategoryService){
     this.service.getProductsData().subscribe(response =>{

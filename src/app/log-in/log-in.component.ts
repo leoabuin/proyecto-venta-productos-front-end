@@ -56,7 +56,6 @@ export class LogInComponent {
             }
           })}
           else if (error.status === 500 ) {
-            // Si no hay un mensaje específico, maneja el error basado en el código de estado
             this.errorMessages.push('Contraseña invalida.');
         } else {
           this.errorMessages.push('Error desconocido. Intente nuevamente.');

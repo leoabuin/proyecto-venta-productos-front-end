@@ -1,0 +1,39 @@
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; 
+  }
+  
+  .pagination-container pagination-controls {
+    display: flex;
+  }
+  
+  .pagination-container .ngx-pagination button {
+    background-color: #007bff; 
+    color: white; 
+    border: none; 
+    padding: 10px 15px; 
+    margin: 0 5px;
+    cursor: pointer; 
+    border-radius: 5px;
+    transition: background-color 0.3s ease; 
+  }
+  
+  .pagination-container .ngx-pagination button:hover {
+    background-color: #0056b3; 
+  }
+  
+  .pagination-container .ngx-pagination button:disabled {
+    background-color: #e0e0e0; 
+    color: #a0a0a0; 
+    cursor: not-allowed; 
+  }
+  
+  .pagination-container .ngx-pagination .current {
+    background-color: #28a745;
+    color: white; 
+  }
+  
+  .pagination-container .ngx-pagination .current:hover {
+    background-color: #218838; 
+  }
