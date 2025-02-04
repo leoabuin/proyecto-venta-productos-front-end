@@ -28,7 +28,6 @@ import { UpdateUserComponent } from './update-user/update-user.component.js';
   imports: [RouterOutlet,
     HomeComponent,
     LogInComponent,
-    NosotrosComponent,
     AddbrandsComponent,
     AddcategoriesComponent,
     BrandListComponent,

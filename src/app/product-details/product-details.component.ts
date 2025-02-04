@@ -8,6 +8,8 @@ import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../footer/footer.component.js';
 import { LocalStorageService } from '../service/local-storage.service.js';
 import { Router } from '@angular/router';
+import { ApiCommentService } from '../service/commentApi.service.js';
+
 interface Price {
   id: number;
   dateFrom: Date;
@@ -38,18 +40,27 @@ export class ProductDetailsComponent implements OnInit{
     this.selectedSize = size;
   }
 
+  comments: any[] = [];
+
+
+  newCommentName: string = '';
+  newCommentText: string = '';
+
+
   constructor(
     private route: ActivatedRoute, 
     private service: ApiProductService, 
     private brandService: ApiService, 
     private localStorageService: LocalStorageService,
+    private commentService: ApiCommentService,
     private router: Router) {}
 
   productId: string | null = null;
   ngOnInit(): void {
-    const productId = this.route.snapshot.paramMap.get('id')
-    if (productId) {
-      this.loadProductDetails(productId);
+    this.productId = this.route.snapshot.paramMap.get('id')
+    if (this.productId) {
+      this.loadProductDetails(this.productId);
+      this.loadComments(this.productId);
     }
     
   }
@@ -171,6 +182,79 @@ export class ProductDetailsComponent implements OnInit{
   closeProductAddSuccessMessage(){
     this.showProductAdd = false
     this.router.navigate(['/products'])
+  }
+
+
+  loadComments(id:string): void {
+
+    this.commentService.findCommentsByProduct(id).subscribe({
+      next: (response) => {
+        // Suponiendo que el backend devuelve { message: '...', data: comments }
+        this.comments = response.data;
+      },
+      error: (err) => {
+        console.error('Error loading comments', err);
+      }
+    });
+  }
+
+  submitComment(): void {
+    // Construir el objeto con la data que espera el backend
+
+    if (!this.newCommentText || this.newCommentText.trim() === '') {
+      console.error('El comentario no puede estar vacío.');
+      return;
+    }
+
+
+    const storedUserId = localStorage.getItem('idUsuario');
+  if (!storedUserId) {
+    console.error('No se encontró el idUsuario en el localStorage.');
+    return;
+  }
+
+    const userId = Number(storedUserId);
+    if (isNaN(userId)) {
+      console.error('El idUsuario almacenado no es un número válido.');
+      return;
+    }
+
+    if (!this.productId) {
+      console.error('Error: productId no está definido.');
+      return;
+    }
+  
+    const productIdNumber = Number(this.productId);
+    if (isNaN(productIdNumber) || productIdNumber <= 0) {
+      console.error('Error: productId no es un número válido:', this.productId);
+      return;
+    }
+    console.log('ID PRODUCTO:',productIdNumber)
+
+    const commentData = {
+      productId: productIdNumber,
+      userId: userId,
+      comment: this.newCommentText.trim()
+    
+    };
+
+    console.log('Enviando comentario:', commentData);
+
+    // Opcional: podrías incluir también el nombre si el backend lo requiere
+    // Por ejemplo, podrías agregarlo a sanitizedCommentInput o enviarlo en otro atributo
+
+    this.commentService.add(commentData).subscribe({
+      next: (response) => {
+        console.log('Comment created', response);
+        // Agrega el comentario recién creado a la lista de comentarios
+        this.comments.push(response.data);
+        // Limpia los campos del formulario
+        this.newCommentText = '';
+      },
+      error: (err) => {
+        console.error('Error creating comment', err);
+      }
+    });
   }
 
 }

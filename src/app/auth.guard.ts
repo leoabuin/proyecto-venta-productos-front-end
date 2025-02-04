@@ -6,14 +6,13 @@ export const authGuard = () => {
   const router = inject(Router);
   const cookieService = inject(CookieService);
 
-  // Verifica si la cookie 'token' existe
   const token = cookieService.get('token');
   console.log('Token en guard:', token);
 
   if (token) {
-    return true;  // Si el token existe, permite la navegación
+    return true;  
   } else {
-    router.navigate(['/login']);  // Si no hay token, redirige a login
-    return false;  // Bloquea la navegación
+    router.navigate(['/login']);  
+    return false;  
   }
 };
