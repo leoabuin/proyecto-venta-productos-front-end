@@ -50,6 +50,14 @@
     </div>
 
     <div class="mt-6">
+    <label for="gender" class="block">Público (Género):</label>
+    <select id="gender" name="gender" class="w-full border p-2 rounded" [(ngModel)]="productData.gender" required>
+      <option [ngValue]="null" disabled>Seleccione el género</option>
+      <option *ngFor="let g of genders" [value]="g.id">{{ g.name }}</option>
+    </select>
+    </div>
+
+    <div class="mt-6">
       <label for="dateFrom">Fecha Desde:</label>
       <input type="date" id="dateFrom" [(ngModel)]="productData.price.dateFrom" name="dateFrom" class="w-full border p-2 rounded" required>
     </div>

@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from '../pipes/productFilter.pipe.js';
 import { FooterComponent } from "../footer/footer.component";
 import { NgxPaginationModule } from 'ngx-pagination';
+import { AuthService } from '../service/auth.service.js';
 
 interface Price {
   id: number;
@@ -22,7 +23,7 @@ interface Price {
 @Component({
   selector: 'app-products-list',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, RouterModule, ReactiveFormsModule, FormsModule, FilterPipe, FooterComponent,NgxPaginationModule],
+  imports: [NavbarComponent, CommonModule, RouterModule, ReactiveFormsModule, FormsModule, FilterPipe, FooterComponent, NgxPaginationModule],
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.scss'
 })
@@ -30,15 +31,15 @@ export class ProductsListComponent {
   currentPrice: Price | undefined;
   filterProduct: string = '';
 
-  
+
   products: any[] = []
   filteredProducts: any[] = []
   categories: any[] = []
   selectedCategory: number = 0
   public page: number = 0
 
-  constructor(private service: ApiProductService, private router: Router, private categoryService: ApiCategoryService){
-    this.service.getProductsData().subscribe(response =>{
+  constructor(private service: ApiProductService, private router: Router, private categoryService: ApiCategoryService, public authService: AuthService) {
+    this.service.getProductsData().subscribe(response => {
       this.products = response.data
       this.filteredProducts = this.products
     })
@@ -52,12 +53,11 @@ export class ProductsListComponent {
 
 
   getCurrentPrice(prices: Price[]): Price | undefined {
-    const today = new Date();
-    return prices.find(price => {
-      const priceStart = new Date(price.dateFrom);
-      const priceEnd = new Date(price.dateUntil);
-      return priceStart <= today && priceEnd >= today; 
-    })
+    if (!prices || prices.length === 0) return undefined;
+    const sortedPrices = [...prices].sort((a, b) => b.id - a.id);
+    const newestPrice = sortedPrices[0];
+    console.log('El precio más nuevo (por ID) es:', newestPrice);
+    return newestPrice;
   }
 
 
@@ -74,5 +74,5 @@ export class ProductsListComponent {
   goToProductDetails(product: any): void {
     this.router.navigate(['/product-details', product.id]);
   }
-  
+
 }

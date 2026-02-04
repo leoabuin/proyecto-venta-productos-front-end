@@ -4,6 +4,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../app/service/local-storage.service.js';
 import { ApiUserService } from '../app/service/userApi.service.js';
+import { AuthService } from '../app/service/auth.service.js';
 
 @Component({
   selector: 'app-navbar',
@@ -27,7 +28,10 @@ export class NavbarComponent {
   }
 
   
-  constructor(private localStorageService: LocalStorageService, private service: ApiUserService, private router: Router) {
+  constructor(private localStorageService: LocalStorageService,
+              private service: ApiUserService, 
+              private router: Router,
+              public authService: AuthService) {
 
   }
 

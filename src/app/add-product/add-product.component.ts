@@ -8,6 +8,7 @@ import { ApiDistributorService } from '../service/distributorApi.service.js';
 import { ApiCategoryService } from '../service/categoryApi.service.js';
 import { response } from 'express';
 import { Router } from '@angular/router';
+import { ApiGenderService } from '../service/genderApi.service.js';
 
 
 @Component({
@@ -23,10 +24,12 @@ export class AddProductComponent {
     description: '',
     waist: '',
     stock: '',
+    isOffer: false,
     imagen:'',
     brand:'',
     distributor:'',
     category: '',
+    gender: '',
     price: {
       dateFrom: '',
       dateUntil: '',
@@ -37,6 +40,7 @@ export class AddProductComponent {
   brands:any[] = []
   distributors: any[] = []
   categories: any[] = []
+  genders: any[] = []
   showAddProduct:boolean = false
 
   constructor
@@ -44,7 +48,10 @@ export class AddProductComponent {
    private brandService: ApiService,
    private distributorService: ApiDistributorService,
    private categoryService: ApiCategoryService,
-   private router:Router
+   private router:Router,
+   private genderService: ApiGenderService
+
+
   ){}
 
   ngOnInit(): void {
@@ -56,6 +63,9 @@ export class AddProductComponent {
     })
     this.categoryService.getCategoriesData().subscribe(response =>{
       this.categories = response.data
+    })
+    this.genderService.getAll().subscribe(response =>{
+      this.genders = response.data
     })
   }
 

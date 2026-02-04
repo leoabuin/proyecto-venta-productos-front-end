@@ -4,24 +4,32 @@ import { Observable } from "rxjs";
 
 
 @Injectable({
-    providedIn: 'root'
-  })
-  export class ApiProductService {
-  
-    private urlProductApi = 'http://localhost:3000/api/products';
-  
-  
-    constructor(private http: HttpClient) { }
-  
-    public getProductsData(): Observable<any>{
-      return this.http.get<any>(this.urlProductApi, { withCredentials: true })
-    }
+  providedIn: 'root'
+})
+export class ApiProductService {
 
-    public createProduct(productData: any): Observable<any> {
-        return this.http.post<any>(this.urlProductApi, productData)
-      }
+  private urlProductApi = 'http://localhost:3000/api/products';
 
-    public getProductbyId(id:string): Observable<any>{
-      return this.http.get<any>(`${this.urlProductApi}/${id}`)
-    }
+
+  constructor(private http: HttpClient) { }
+
+  public getProductsData(): Observable<any> {
+    return this.http.get<any>(this.urlProductApi, { withCredentials: true })
   }
+
+  public createProduct(productData: any): Observable<any> {
+    return this.http.post<any>(this.urlProductApi, productData)
+  }
+
+  public getProductbyId(id: string): Observable<any> {
+    return this.http.get<any>(`${this.urlProductApi}/${id}`)
+  }
+
+  public updateProduct(id: number, data: { isOffer: boolean }): Observable<any> {
+    return this.http.patch(`${this.urlProductApi}/${id}`, data);
+  }
+
+  public updateOnlyOffer(id: number, isOffer: boolean): Observable<any> {
+    return this.http.patch(`${this.urlProductApi}/${id}/toggle-offer`, { isOffer });
+  }
+}

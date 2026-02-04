@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router,ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ApiPriceService } from '../service/priceApi.service.js';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -8,11 +8,11 @@ import { NavbarComponent } from '../../navbar/navbar.component.js';
 @Component({
   selector: 'app-change-price',
   standalone: true,
-  imports: [FormsModule,CommonModule,NavbarComponent],
+  imports: [FormsModule, CommonModule, NavbarComponent],
   templateUrl: './change-price.component.html',
   styleUrl: './change-price.component.scss'
 })
-export class ChangePriceComponent{
+export class ChangePriceComponent {
   productId: number = 0;
   dateFrom: Date | null = null;
   dateUntil: Date | null = null;
@@ -24,7 +24,10 @@ export class ChangePriceComponent{
     private priceService: ApiPriceService, // Inyectar el servicio de precios
     private router: Router
   ) {
-    //this.productId = Number(this.route.snapshot.paramMap.get('idProduct')); // Obtener el ID del producto de la ruta
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.productId = Number(id);
+    }
   }
 
   async submitForm() {
@@ -38,9 +41,11 @@ export class ChangePriceComponent{
     try {
       // Envía la solicitud para agregar el precio al producto
       await this.priceService.addPriceToProduct(this.productId, priceData).toPromise();
-      
+
       alert('Precio añadido exitosamente');
-      this.router.navigate(['/products']); // Redirigir a la lista de productos
+      this.router.navigate(['/products']).then(() => {
+        window.location.reload();
+      });
     } catch (error) {
       console.error(error);
       alert('Error al añadir el precio');

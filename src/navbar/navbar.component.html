@@ -12,10 +12,10 @@
         <!-- Lista de categorías (Alineadas a la derecha) -->
         <div class="flex space-x-12">
         <div class= "relative flex items-center">
-            <a routerLink="/distributors-list" class="py-4 px-0 hover:bg-red-700 font-bold">Distribuidores</a>
+            <a *ngIf="authService.isEmpleado()" routerLink="/distributors-list" class="py-4 px-0 hover:bg-red-700 font-bold">Distribuidores</a>
         </div>
-            <a routerLink="/categories-list" class="py-4 px-0 hover:bg-red-700 font-bold">Categorias</a>
-            <a routerLink="/brand-list" class="py-4 px-2 hover:bg-red-700 font-bold">Marcas</a>
+            <a *ngIf="authService.isEmpleado()" routerLink="/categories-list" class="py-4 px-0 hover:bg-red-700 font-bold">Categorias</a>
+            <a *ngIf="authService.isEmpleado()" routerLink="/brand-list" class="py-4 px-2 hover:bg-red-700 font-bold">Marcas</a>
             <div class="relative flex items-center">
                 <a  class="py-4 px-2 hover:bg-red-700 font-bold cursor-pointer">Productos</a>
                 <div class="absolute bg-white text-black shadow-lg rounded-lg top-full left-0 z-30 transition-opacity duration-300" [ngClass]="{'hidden': !showMenu}">
