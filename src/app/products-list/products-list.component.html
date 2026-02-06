@@ -26,6 +26,11 @@
          [routerLink]="['/product-details', product.id]" 
          class="group relative border border-transparent hover:border-gray-200 p-2 rounded-lg transition">
         
+        <div *ngIf="!product.isContinued && authService.isEmpleado()" 
+           class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 bg-black/70 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase">
+        Fuera de Catálogo
+        </div>
+
         <div *ngIf="product.isOffer" class="absolute top-4 right-4 z-10 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded shadow-sm">
           SALE %
         </div>

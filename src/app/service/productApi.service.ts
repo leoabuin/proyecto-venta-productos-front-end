@@ -29,6 +29,11 @@ export class ApiProductService {
     return this.http.patch(`${this.urlProductApi}/${id}`, data);
   }
 
+  public updateDiscontinuedStatus(id: number, isContinued: boolean): Observable<any> {
+  // Envolvemos el dato en un objeto 'input' si es lo que el middleware busca
+  return this.http.patch(`${this.urlProductApi}/${id}`, { isContinued });
+  }
+  
   public updateOnlyOffer(id: number, isOffer: boolean): Observable<any> {
     return this.http.patch(`${this.urlProductApi}/${id}/toggle-offer`, { isOffer });
   }

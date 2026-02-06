@@ -276,12 +276,23 @@ export class ProductDetailsComponent implements OnInit {
     });
   }
 
-  discontinuarProducto() {
-    const confirmar = confirm("¿Estás seguro de que quieres discontinuar este producto? Dejará de ser visible para los clientes.");
-    if (confirmar) {
-      console.log("Producto discontinuado (lógica pendiente)");
-      // Aquí llamarías al servicio para poner isDiscontinued en true
-    }
+discontinuarProducto() {
+  const nuevoEstado = !this.product.isContinued; // Calculamos el opuesto al actual
+  const accion = nuevoEstado ? 'ACTIVAR' : 'DISCONTINUAR';
+  
+  const confirmar = confirm(`¿Estás seguro de que quieres ${accion} este producto?`);
+  
+  if (confirmar) {
+    this.service.updateDiscontinuedStatus(this.product.id, nuevoEstado).subscribe({
+      next: (res) => {
+        this.product.isContinued = nuevoEstado; // Actualizamos la vista con el nuevo valor
+        alert(`Producto ${nuevoEstado ? 'activado' : 'discontinuado'} con éxito.`);
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Error al cambiar el estado del producto');
+      }
+    });
   }
-
+}
 }
