@@ -9,6 +9,7 @@ import { FilterPipe } from '../pipes/productFilter.pipe.js';
 import { FooterComponent } from "../footer/footer.component";
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AuthService } from '../service/auth.service.js';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component.js';
 
 interface Price {
   id: number;
@@ -21,14 +22,14 @@ interface Price {
 @Component({
   selector: 'app-products-list',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, RouterModule, ReactiveFormsModule, FormsModule, FilterPipe, FooterComponent, NgxPaginationModule],
+  imports: [NavbarComponent, CommonModule, RouterModule, ReactiveFormsModule, FormsModule, FilterPipe, FooterComponent, NgxPaginationModule, LoadingSpinnerComponent],
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.scss'
 })
 export class ProductsListComponent {
   currentPrice: Price | undefined;
   filterProduct: string = '';
-
+  isLoading: boolean = false;
   products: any[] = []
   filteredProducts: any[] = []
   categories: any[] = []
@@ -54,33 +55,43 @@ export class ProductsListComponent {
   }
 
   private cargarYFiltrar(params: any): void {
-    this.service.getProductsData().subscribe(response => {
+  this.isLoading = true
+  this.filterProduct = params['search'] || ''
+  this.service.getProductsData().subscribe({
+    next: (response) => {
       let data = response.data;
-      console.log('DATOS QUE VIENEN DE LA API:', data); // <--- MIRA ESTO EN LA CONSOLA
-      console.log('FILTRO QUE RECIBO DE NAVBAR:', params); // <--- Y ESTO
-
+      
+      // Lógica de filtrado por Rol
       if (this.authService.getRole() !== 'Empleado') {
         data = data.filter((p: any) => p.isContinued === true);
       }
 
+      // Lógica de filtrado por Género
       if (params['gender']) {
-        const genderFilter = params['gender'].toLowerCase();
-        data = data.filter((p: any) => {
-          // Probamos con p.gender directamente
-          const val = String(p.gender).toLowerCase();
-          console.log(`Comparando producto: ${p.name} | Género: ${val} | Buscando: ${genderFilter}`);
-          return val === genderFilter;
-        });
+        const genderTarget = String(params['gender']).toLowerCase();
+        data = data.filter((p: any) => String(p.gender).toLowerCase() === genderTarget);
       }
 
+      // Lógica de filtrado por Oferta
       if (params['offer'] === 'true') {
         data = data.filter((p: any) => p.isOffer === true);
       }
 
       this.products = data;
       this.filterProducts();
-    });
-  }
+
+      // 2. Apagamos el spinner con un pequeño delay opcional
+      // para que la transición no sea brusca (UX)
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 500);
+    },
+    error: (err) => {
+      console.error('Error al cargar productos:', err);
+      this.isLoading = false; // 3. También lo apagamos si hay error
+    }
+  });
+}
 
   getCurrentPrice(prices: Price[]): Price | undefined {
     if (!prices || prices.length === 0) return undefined;
@@ -97,6 +108,17 @@ export class ProductsListComponent {
     } else {
       this.filteredProducts = this.products;
     }
+  }
+
+  resetFilters(): void {
+    this.filterProduct = ''; // Limpia el buscador de texto
+    this.selectedCategory = 0; // Vuelve el select a "Todas"
+
+    // Si estás usando parámetros de ruta ( gender/offer ), los limpiamos navegando a la ruta base
+    this.router.navigate(['/products'], { queryParams: {} });
+
+    // Opcional: Si el filtro de categoría no se dispara solo con la navegación, forzalo:
+    this.filterProducts();
   }
 
   goToProductDetails(product: any): void {

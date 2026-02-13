@@ -10,6 +10,7 @@ import { LocalStorageService } from '../service/local-storage.service.js';
 import { Router } from '@angular/router';
 import { ApiCommentService } from '../service/commentApi.service.js';
 import { AuthService } from '../service/auth.service.js';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component.js';
 
 interface Price {
   id: number;
@@ -22,7 +23,7 @@ interface Price {
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [NavbarComponent, FormsModule, CommonModule, FooterComponent, RouterModule],
+  imports: [NavbarComponent, FormsModule, CommonModule, FooterComponent, RouterModule,LoadingSpinnerComponent],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.scss'
 })
@@ -36,6 +37,7 @@ export class ProductDetailsComponent implements OnInit {
   quantity: number = 1
   stock: number = 0
   showProductAdd: boolean = false
+  isLoading: boolean = false;
 
   selectSize(size: string) {
     this.selectedSize = size;
@@ -68,14 +70,18 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   loadProductDetails(id: string): void {
+    this.isLoading = true
     this.service.getProductbyId(id).subscribe({
       next: (response) => {
         this.product = response.data;
         this.currentPrice = this.getCurrentPrice(this.product.prices)
         this.stock = this.product.stock
-        console.log('Detalles del producto cargados con éxito:', this.product);
+        console.log('Detalles del producto cargados con éxito:', this.product)
 
-        this.loadBrandName(this.product.brand);
+        this.loadBrandName(this.product.brand)
+        setTimeout(() => {
+        this.isLoading = false;
+      }, 500)
       },
       error: (err) => {
         console.error('Error al cargar los detalles del producto:', err);
@@ -129,6 +135,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   addToCart(): void {
+    this.isLoading = true
     const cartItem = {
       productId: this.product.id,
       quantity: this.quantity,
@@ -174,7 +181,10 @@ export class ProductDetailsComponent implements OnInit {
     console.log('Carrito actualizado:', cart)
     console.log('Carrito a mostrar actualizado:', cartToshow)
 
-    this.showProductAdd = true
+    setTimeout(() => {
+    this.isLoading = false;   // <--- SE APAGA AQUÍ
+    this.showProductAdd = true; // Se muestra el mensaje "Producto añadido"
+  }, 500);
   }
 
   closeProductAddSuccessMessage() {

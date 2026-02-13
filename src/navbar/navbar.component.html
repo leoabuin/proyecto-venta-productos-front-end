@@ -1,80 +1,94 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-<nav class="bg-gradient-to-t flow-root from-red-500 to-red-700 text-white shadow-lg sticky top-0 z-10">
-    <div class="max-w-7xl mx-auto flex justify-between items-center px-4">
-        <a routerLink="/home" class="flex items-center">
-            <img src="https://flowbite.com/docs/images/logo.svg" alt="Logo de la empresa" class="h-10 w-auto">
-            <span class="text-white text-xl ml-2 font-bold">SPORTIFY</span>
-        </a>
+<nav class="bg-gradient-to-t flow-root from-red-500 to-red-700 text-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-4 h-16">
+        <div class="flex items-center gap-6 flex-1">
+            <a routerLink="/home" class="flex items-center shrink-0">
+                <img src="https://flowbite.com/docs/images/logo.svg" alt="Logo" class="h-10 w-auto">
+                <span class="text-white text-xl ml-2 font-bold tracking-tighter">SPORTIFY</span>
+            </a>
 
-        <div class="flex space-x-12 items-center">
+            <div class="flex relative items-center w-full max-w-xs lg:max-w-md mx-4">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    
+                </div>
+                <input type="text" [(ngModel)]="searchTerm" (input)="onSearchChange()"
+                    class="block w-full bg-white border border-red-400 text-gray-900 text-xs rounded-full py-2 pl-9 pr-4 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all shadow-md"
+                    placeholder="Buscar productos...">
+            </div>
+        </div>
+
+        <div class="flex space-x-4 lg:space-x-8 items-center">
 
             <ng-container *ngIf="authService.isEmpleado()">
-                <div class="relative flex items-center">
-                    <a routerLink="/distributors-list" class="py-4 px-0 hover:bg-red-700 font-bold">Distribuidores</a>
-                </div>
-                <a routerLink="/categories-list" class="py-4 px-0 hover:bg-red-700 font-bold">Categorias</a>
-                <a routerLink="/brand-list" class="py-4 px-2 hover:bg-red-700 font-bold">Marcas</a>
+                <a routerLink="/distributors-list"
+                    class="py-2 px-1 hover:text-red-200 font-bold text-sm">Distribuidores</a>
+                <a routerLink="/categories-list" class="py-2 px-1 hover:text-red-200 font-bold text-sm">Categorias</a>
 
                 <div class="relative flex items-center group">
-                    <a class="py-4 px-2 hover:bg-red-700 font-bold cursor-pointer">Gestionar Productos</a>
+                    <a class="py-2 px-1 hover:text-red-200 font-bold text-sm cursor-pointer">Gestionar <i
+                            class="fa fa-chevron-down text-[10px]"></i></a>
                     <div
-                        class="absolute hidden group-hover:block bg-white text-black shadow-lg rounded-lg top-full left-0 z-30 transition-all duration-300">
-                        <a routerLink="/products" class="block px-4 py-2 hover:bg-red-500 hover:text-white">Lista de
-                            Productos</a>
-                        <a routerLink="/addProduct" class="block px-4 py-2 hover:bg-red-500 hover:text-white">Agregar
-                            Producto</a>
+                        class="absolute hidden group-hover:block bg-white text-black shadow-xl rounded-lg top-full left-0 w-48 py-2 z-50 mt-1 border border-gray-100">
+                        <a routerLink="/products"
+                            class="block px-4 py-2 hover:bg-red-500 hover:text-white transition">Lista de Productos</a>
+                        <a routerLink="/addProduct"
+                            class="block px-4 py-2 hover:bg-red-500 hover:text-white transition">Agregar Producto</a>
                         <a routerLink="/change-price"
-                            class="block px-4 py-2 hover:bg-red-500 hover:text-white">Actualizar Precio</a>
+                            class="block px-4 py-2 hover:bg-red-500 hover:text-white transition">Actualizar Precio</a>
                     </div>
                 </div>
             </ng-container>
 
             <ng-container *ngIf="!authService.isEmpleado()">
                 <a [routerLink]="['/products']" [queryParams]="{ gender: '1' }"
-                    class="py-4 px-2 hover:bg-red-700 font-bold">Hombre</a>
-
+                    class="py-2 px-1 hover:text-red-200 font-bold text-sm">Hombre</a>
                 <a [routerLink]="['/products']" [queryParams]="{ gender: '2' }"
-                    class="py-4 px-2 hover:bg-red-700 font-bold">Mujer</a>
-
+                    class="py-2 px-1 hover:text-red-200 font-bold text-sm">Mujer</a>
                 <a [routerLink]="['/products']" [queryParams]="{ gender: '3' }"
-                    class="py-4 px-2 hover:bg-red-700 font-bold">Niños</a>
-
+                    class="py-2 px-1 hover:text-red-200 font-bold text-sm">Niños</a>
                 <a [routerLink]="['/products']" [queryParams]="{ offer: 'true' }"
-                    class="py-4 px-2 bg-yellow-400 text-red-700 hover:bg-yellow-300 font-black rounded-sm shadow-inner italic">🔥
+                    class="py-1 px-3 bg-yellow-400 text-red-700 hover:bg-yellow-300 font-black rounded shadow-sm italic text-xs">🔥
                     SALE</a>
             </ng-container>
 
             <button *ngIf="!authService.isEmpleado()" [routerLink]="['/shopping-cart']"
-                class="flex text-white items-center hover:bg-red-700 font-bold py-2 px-4 rounded">
+                class="relative p-2 hover:bg-red-600 rounded-full transition">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                     class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M3 3h2l.4 2M7 13h10l4-8H5.4m.6 8h9.25m-10 0H3M16 16a2 2 0 100 4 2 2 0 000-4zm-8 0a2 2 0 100 4 2 2 0 000-4z" />
                 </svg>
+
+                <span *ngIf="cartCount > 0"
+                    class="absolute -top-1 -right-1 bg-yellow-400 text-red-700 text-[10px] font-black px-1.5 py-0.5 rounded-full border-2 border-red-600 flex items-center justify-center min-w-[18px] h-[18px] shadow-sm">
+                    {{ cartCount }}
+                </span>
             </button>
 
             <a *ngIf="!username; else userProfile" routerLink="/login"
-                class="flex items-center py-4 px-2 hover:bg-red-700 font-bold">
+                class="p-2 hover:bg-red-600 rounded-full transition">
                 <i class="fa fa-user text-xl"></i>
             </a>
 
             <ng-template #userProfile>
                 <div class="relative">
-                    <button (click)="toggleMenu()" class="flex items-center py-2 hover:bg-red-700 font-bold">
-                        {{ username }}
-                        <i class="fa fa-chevron-down ml-1"></i>
+                    <button (click)="toggleMenu()"
+                        class="flex items-center py-2 px-3 hover:bg-red-600 rounded-lg font-bold transition">
+                        <span class="max-w-[100px] truncate">{{ username }}</span>
+                        <i class="fa fa-chevron-down ml-2 text-xs"></i>
                     </button>
-                    <div class="absolute right-0 mt-2 bg-white text-black shadow-lg rounded-lg transition-opacity duration-300"
+                    <div class="absolute right-0 mt-2 w-48 bg-white text-black shadow-2xl rounded-lg py-2 z-50 border border-gray-100"
                         [ngClass]="{'hidden': !showMenu}">
                         <button [routerLink]="['/myOrders', userId]"
-                            class="block w-full text-left px-4 py-2 hover:bg-red-500 hover:text-white">Mis
+                            class="block w-full text-left px-4 py-2 hover:bg-red-500 hover:text-white transition">Mis
                             pedidos</button>
                         <button [routerLink]="['/updateUser', userId]"
-                            class="block w-full text-left px-4 py-2 hover:bg-red-500 hover:text-white">Cambiar
-                            Información</button>
+                            class="block w-full text-left px-4 py-2 hover:bg-red-500 hover:text-white transition">Mi
+                            Perfil</button>
+                        <hr class="my-1 border-gray-100">
                         <button (click)="logOut()"
-                            class="block w-full text-left px-4 py-2 hover:bg-red-500 hover:text-white">Cerrar
+                            class="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-500 hover:text-white transition font-bold">Cerrar
                             sesión</button>
                     </div>
                 </div>

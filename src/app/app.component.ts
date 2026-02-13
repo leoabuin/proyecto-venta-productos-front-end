@@ -22,29 +22,11 @@ import { RegisterUserComponent } from './register-user/register-user.component.j
 import { FooterComponent } from './footer/footer.component.js';
 import { MyOrdersComponent } from './my-orders/my-orders.component.js';
 import { UpdateUserComponent } from './update-user/update-user.component.js';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component.js';
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet,
-    HomeComponent,
-    LogInComponent,
-    AddbrandsComponent,
-    AddcategoriesComponent,
-    BrandListComponent,
-    CategoriesListComponent,
-    RouterLink,
-    NavbarComponent,
-    DistributorListComponent,
-    ProductsListComponent,
-    AddProductComponent,
-    ProductDetailsComponent, 
-    ShoppingCartComponent,
-    UpdateCategoryComponent,
-    ChangePriceComponent,
-    RegisterUserComponent,
-    FooterComponent,
-    MyOrdersComponent,
-    UpdateUserComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

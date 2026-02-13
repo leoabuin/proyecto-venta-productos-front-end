@@ -5,11 +5,11 @@ import { LocalStorageService } from '../service/local-storage.service.js';
 import { FooterComponent } from '../footer/footer.component.js';
 import { OrderApiService } from '../service/order-api.service.js';
 import { formatDate } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-shopping-cart',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, FooterComponent],
+  imports: [NavbarComponent, CommonModule, FooterComponent, RouterModule],
   templateUrl: './shopping-cart.component.html',
   styleUrl: './shopping-cart.component.scss'
   
