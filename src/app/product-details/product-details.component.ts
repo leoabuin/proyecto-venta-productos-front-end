@@ -182,8 +182,8 @@ export class ProductDetailsComponent implements OnInit {
     console.log('Carrito a mostrar actualizado:', cartToshow)
 
     setTimeout(() => {
-    this.isLoading = false;   // <--- SE APAGA AQUÍ
-    this.showProductAdd = true; // Se muestra el mensaje "Producto añadido"
+    this.isLoading = false
+    this.showProductAdd = true
   }, 500);
   }
 
