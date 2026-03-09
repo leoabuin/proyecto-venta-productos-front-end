@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { RouterLink, RouterModule, Router } from '@angular/router';
 import { LocalStorageService } from '../app/service/local-storage.service.js';
 import { ApiUserService } from '../app/service/userApi.service.js';
 import { AuthService } from '../app/service/auth.service.js';
@@ -10,55 +9,64 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, CommonModule, RouterModule,FormsModule],
+  imports: [RouterLink, CommonModule, RouterModule, FormsModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
-export class NavbarComponent {
-  showMenu: boolean = false
-  username: string | null = null
-  userId: number | null = null
-  errorMessages: string[] = []
-  cartCount: number = 0
-  searchTerm: string = ''
+export class NavbarComponent implements OnInit {
+  showMenu: boolean = false;           // Controla el menú de Perfil
+  showGestionMenu: boolean = false;    // Controla el menú de Gestión (Nuevo)
+  
+  username: string | null = null;
+  userId: number | null = null;
+  errorMessages: string[] = [];
+  cartCount: number = 0;
+  searchTerm: string = '';
 
-  toggleMenu() {
-    this.showMenu = !this.showMenu;
-  }
-
-  closeMenu() {
-    this.showMenu = false; // Cerrar el menú
-  }
-
-
-  constructor(private localStorageService: LocalStorageService,
+  constructor(
+    private localStorageService: LocalStorageService,
     private service: ApiUserService,
     private router: Router,
-    public authService: AuthService) {
-
-  }
+    public authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.username = this.localStorageService.getItem('username');
     const userIdFromStorage = this.localStorageService.getItem('idUsuario');
     this.userId = userIdFromStorage ? parseInt(userIdFromStorage, 10) : null;
     this.updateCartCount();
-    console.log(this.username)
+    
+    // Escuchar cambios en el carrito si se dispara un evento personalizado
+    window.addEventListener('cart-updated', () => this.updateCartCount());
   }
 
+  // --- LÓGICA DE MENÚS POR CLIC ---
 
+  toggleMenu() {
+    this.showMenu = !this.showMenu;
+    if (this.showMenu) this.showGestionMenu = false; // Cerramos el otro si abrimos este
+  }
 
+  toggleGestionMenu() {
+    this.showGestionMenu = !this.showGestionMenu;
+    if (this.showGestionMenu) this.showMenu = false; // Cerramos el otro si abrimos este
+  }
+
+  closeAllMenus() {
+    this.showMenu = false;
+    this.showGestionMenu = false;
+  }
+
+  // --- ACCIONES ---
 
   logOut() {
     this.service.logOut().subscribe({
       next: (response) => {
-        localStorage.clear()
-        console.log(response.message)
-        this.username = null
-        //this.localStorageService.removeItem('username'); 
-        console.log(this.username);
-        console.log(this.username)
-        this.router.navigate(['/home'])
+        localStorage.clear();
+        this.username = null;
+        this.userId = null;
+        this.closeAllMenus();
+        this.router.navigate(['/home']);
       },
       error: (error: unknown) => {
         console.error('Error durante el logout:', error);
@@ -77,8 +85,4 @@ export class NavbarComponent {
       queryParamsHandling: 'merge'
     });
   }
-
-
-
-
 }

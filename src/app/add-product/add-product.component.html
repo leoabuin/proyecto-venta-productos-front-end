@@ -1,89 +1,124 @@
 <app-navbar></app-navbar>
-<div class="flex bg-red-600">
 
-<div class="w-full max-w-lg bg-white rounded-lg shadow-xl p-4 mx-auto mt-10">
-  <h2 class="text-2xl font-semibold mb-4 text-center">Alta de producto</h2>
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 py-12 px-4">
   
-  <form (ngSubmit)="submitForm()">
-    <div class="mb-3">
-      <label for="name" class="block">Nombre del Producto</label>
-      <input type="text" id="name" [(ngModel)]="productData.name" name="nombreProducto" class="w-full border p-2 rounded" placeholder="Nombre del producto" required>
+  <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden">
+    <div class="bg-red-600 p-6 text-white text-center">
+      <h2 class="text-3xl font-bold uppercase tracking-tighter">Registrar Nuevo Producto</h2>
+      <p class="text-red-100 text-sm mt-1">Complete los datos para ingresar stock al sistema de Sportify</p>
     </div>
 
-    <div class="mb-3">
-      <label for="description" class="block">Descripción del producto</label>
-      <textarea id="description" [(ngModel)]="productData.description" name="descripcion" rows="3" class="w-full border p-2 rounded" placeholder="Describe tu producto" required></textarea>
-    </div>
-    
-    <div class="mb-3">
-      <label for="stock" class="block">Stock</label>
-      <input type="number" id="stock" [(ngModel)]="productData.stock" name="stock" class="w-full border p-2 rounded" placeholder="Stock" required>
-    </div>
+    <form (ngSubmit)="submitForm()" class="p-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <div class="space-y-4">
+          <h3 class="text-lg font-bold text-gray-700 border-b pb-2 flex items-center gap-2">
+            <i class="fas fa-info-circle text-red-500"></i> Información General
+          </h3>
+          
+          <div>
+            <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Nombre del Producto</label>
+            <input type="text" [(ngModel)]="productData.name" name="nombreProducto" class="w-full border border-gray-200 p-3 rounded-xl focus:ring-2 focus:ring-red-500 outline-none transition-all bg-gray-50" placeholder="Ej: Botines Predator 24" required>
+          </div>
 
-    <div class="mb-3">
-        <label for="waist" class="block">Talle</label>
-        <input type="text" id="waist" [(ngModel)]="productData.waist" name="stock" class="w-full border p-2 rounded" placeholder="Talle" required>
-    </div>
-    <div class="mb-3">
-      <input type="url" id="website" [(ngModel)]="productData.imagen" name="imagen" class="w-full border p-2 rounded" placeholder="https://imagen.com" required>
-    </div>
+          <div>
+            <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Descripción</label>
+            <textarea [(ngModel)]="productData.description" name="descripcion" rows="3" class="w-full border border-gray-200 p-3 rounded-xl focus:ring-2 focus:ring-red-500 outline-none transition-all bg-gray-50" placeholder="Detalles del producto..." required></textarea>
+          </div>
 
-    <div class="mt-6">
-    <label for="brand">Marca:</label>
-    <select id="brand" name="brand" class="w-full border p-2 rounded" [(ngModel)]="productData.brand" required>
-      <option *ngFor="let brand of brands" [value]="brand.id">{{ brand.name }}</option>
-    </select>
-    </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Stock Inicial</label>
+              <input type="number" [(ngModel)]="productData.stock" name="stock" class="w-full border border-gray-200 p-3 rounded-xl focus:ring-2 focus:ring-red-500 outline-none bg-gray-50" required>
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Talle</label>
+              <input type="text" [(ngModel)]="productData.waist" name="talle" class="w-full border border-gray-200 p-3 rounded-xl focus:ring-2 focus:ring-red-500 outline-none bg-gray-50" placeholder="M, 42, etc." required>
+            </div>
+          </div>
 
-    <div class="mt-6">
-    <label for="distributor">Distribuidor:</label>
-    <select id="distributor" name="distributor" class="w-full border p-2 rounded" [(ngModel)]="productData.distributor" required>
-        <option *ngFor="let distributor of distributors" [value]="distributor.id">{{distributor.name}}</option>
-    </select>
-    </div>
+          <div>
+            <label class="block text-xs font-bold uppercase text-gray-400 mb-1">URL de Imagen</label>
+            <div class="relative">
+              <input type="url" [(ngModel)]="productData.imagen" name="imagen" class="w-full border border-gray-200 p-3 pl-10 rounded-xl focus:ring-2 focus:ring-red-500 outline-none bg-gray-50" placeholder="https://..." required>
+              <i class="fas fa-image absolute left-3 top-4 text-gray-300"></i>
+            </div>
+          </div>
+        </div>
 
-    <div class="mt-6">
-    <label for="category">Categoria:</label>
-    <select id="category" name="category" class="w-full border p-2 rounded" [(ngModel)]="productData.category" required>
-        <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
-    </select>
-    </div>
+        <div class="space-y-4">
+          <h3 class="text-lg font-bold text-gray-700 border-b pb-2 flex items-center gap-2">
+            <i class="fas fa-tags text-red-500"></i> Clasificación y Costos
+          </h3>
 
-    <div class="mt-6">
-    <label for="gender" class="block">Público (Género):</label>
-    <select id="gender" name="gender" class="w-full border p-2 rounded" [(ngModel)]="productData.gender" required>
-      <option [ngValue]="null" disabled>Seleccione el género</option>
-      <option *ngFor="let g of genders" [value]="g.id">{{ g.name }}</option>
-    </select>
-    </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Marca</label>
+              <select name="brand" [(ngModel)]="productData.brand" class="w-full border border-gray-200 p-3 rounded-xl focus:ring-2 focus:ring-red-500 bg-gray-50 outline-none" required>
+                <option *ngFor="let brand of brands" [value]="brand.id">{{ brand.name }}</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Categoría</label>
+              <select name="category" [(ngModel)]="productData.category" class="w-full border border-gray-200 p-3 rounded-xl focus:ring-2 focus:ring-red-500 bg-gray-50 outline-none" required>
+                <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+              </select>
+            </div>
+          </div>
 
-    <div class="mt-6">
-      <label for="dateFrom">Fecha Desde:</label>
-      <input type="date" id="dateFrom" [(ngModel)]="productData.price.dateFrom" name="dateFrom" class="w-full border p-2 rounded" required>
-    </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Distribuidor</label>
+              <select name="distributor" [(ngModel)]="productData.distributor" class="w-full border border-gray-200 p-3 rounded-xl focus:ring-2 focus:ring-red-500 bg-gray-50 outline-none" required>
+                <option *ngFor="let d of distributors" [value]="d.id">{{ d.name }}</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Público</label>
+              <select name="gender" [(ngModel)]="productData.gender" class="w-full border border-gray-200 p-3 rounded-xl focus:ring-2 focus:ring-red-500 bg-gray-50 outline-none" required>
+                <option *ngFor="let g of genders" [value]="g.id">{{ g.name }}</option>
+              </select>
+            </div>
+          </div>
 
-    <div class="mt-6">
-      <label for="dateUntil">Fecha Hasta:</label>
-      <input type="date" id="dateUntil" [(ngModel)]="productData.price.dateUntil" name="dateUntil" class="w-full border p-2 rounded" required>
-    </div>
+          <div class="p-4 bg-red-50 rounded-2xl border border-red-100 space-y-3">
+            <p class="text-sm font-bold text-red-700 uppercase">Configuración de Precio</p>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[10px] font-bold text-red-400 uppercase">Vigencia Desde</label>
+                <input type="date" [(ngModel)]="productData.price.dateFrom" name="dateFrom" class="w-full border border-red-200 p-2 rounded-lg text-sm outline-none">
+              </div>
+              <div>
+                <label class="block text-[10px] font-bold text-red-400 uppercase">Vigencia Hasta</label>
+                <input type="date" [(ngModel)]="productData.price.dateUntil" name="dateUntil" class="w-full border border-red-200 p-2 rounded-lg text-sm outline-none">
+              </div>
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-red-400 uppercase">Costo Base ($)</label>
+              <input type="number" [(ngModel)]="productData.price.cost" name="cost" class="w-full border border-red-200 p-2.5 rounded-lg font-bold text-red-700 outline-none" placeholder="0.00">
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <div class="mt-6">
-      <label for="cost">Costo:</label>
-      <input type="number" id="cost" [(ngModel)]="productData.price.cost" name="cost" class="w-full border p-2 rounded" placeholder="Costo" required>
-    </div>
-
-
-    <button type="submit" class="w-full mt-4 p-2.5 text-white bg-red-500 rounded hover:bg-red-600">Registrar Producto</button>
-  </form>
+      <div class="mt-10 flex justify-center">
+        <button type="submit" class="w-full md:w-2/3 bg-red-600 hover:bg-red-700 text-white font-bold py-4 rounded-2xl shadow-lg transform transition-all active:scale-95 flex items-center justify-center gap-2">
+          <i class="fas fa-plus-circle"></i> REGISTRAR PRODUCTO EN STOCK
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
-</div>
 
-<div *ngIf="showAddProduct" class="fixed inset-0 flex items-center justify-center z-50">
-  <div class="p-4 md:p-5 text-center bg-white rounded-lg shadow-lg dark:bg-green-800">
-    <svg class="mx-auto mb-4 text-red-400 w-12 h-12 dark:text-green-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-    </svg>
-    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-green-400">Producto creado con exito</h3>
-    <button (click)="closeAddProductSuccesfulMessage()" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Ok</button>
+<div *ngIf="showAddProduct" class="fixed inset-0 flex items-center justify-center z-[100] bg-black bg-opacity-60 backdrop-blur-sm p-4">
+  <div class="bg-white p-8 rounded-3xl shadow-2xl text-center max-w-sm border-t-8 border-green-500">
+    <div class="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+      <i class="fas fa-check-circle text-4xl"></i>
+    </div>
+    <h3 class="text-2xl font-bold text-gray-800 mb-2">¡Excelente!</h3>
+    <p class="text-gray-500 mb-6">El producto ha sido creado y dado de alta en el sistema correctamente.</p>
+    <button (click)="closeAddProductSuccesfulMessage()" class="w-full bg-gray-800 hover:bg-black text-white py-3 rounded-xl font-bold transition-colors">
+      Entendido
+    </button>
   </div>
 </div>

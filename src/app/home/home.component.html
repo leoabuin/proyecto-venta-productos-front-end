@@ -1,29 +1,106 @@
 
 <app-navbar></app-navbar>
-<div class="relative w-full h-64">
+
+<main class="bg-white min-h-screen">
   
-    <!-- Carrusel de imágenes -->
+  <section class="relative w-full overflow-hidden shadow-2xl">
     <app-carousel [images]="carouselImages"></app-carousel>
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-white/10 pointer-events-none"></div>
+  </section>
 
-
-
-    <section class="about-us">
-        <div class="about-us-content">
-          <h2>¿Quiénes somos?</h2>
-          <p>
-            En <strong>Sportify</strong>, somos un ecommerce especializado en ofrecer la mejor ropa deportiva para todos los entusiastas del deporte. 
-            Contamos con una amplia gama de productos de alta calidad, diseñados para brindarte comodidad y rendimiento en cada actividad deportiva.
-            Ya sea que practiques fútbol, running, yoga o cualquier otra disciplina, tenemos lo que necesitas para sentirte bien y rendir al máximo.
-          </p>
-          <p>
-            Nos apasiona el deporte y estamos comprometidos a ofrecerte solo lo mejor, con un servicio rápido y seguro, porque tu experiencia 
-            de compra es nuestra prioridad.
-          </p>
+  <section class="py-12 bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+      
+      <div class="flex flex-col items-center group">
+        <div class="w-16 h-16 bg-red-600 rounded-2xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110 shadow-lg shadow-red-500/20">
+          <i class="fas fa-shipping-fast text-2xl"></i>
         </div>
-      </section>
+        <h3 class="font-black uppercase tracking-tighter">Envío Rápido</h3>
+        <p class="text-xs text-gray-400 mt-2">Recibí tu equipo en tiempo récord.</p>
+      </div>
 
+      <div class="flex flex-col items-center group">
+        <div class="w-16 h-16 bg-red-600 rounded-2xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110 shadow-lg shadow-red-500/20">
+          <i class="fas fa-shield-alt text-2xl"></i>
+        </div>
+        <h3 class="font-black uppercase tracking-tighter">Compra Segura</h3>
+        <p class="text-xs text-gray-400 mt-2">Protección total en cada transacción.</p>
+      </div>
 
-    <app-footer></app-footer>
- </div>
+      <div class="flex flex-col items-center group">
+        <div class="w-16 h-16 bg-red-600 rounded-2xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110 shadow-lg shadow-red-500/20">
+          <i class="fas fa-award text-2xl"></i>
+        </div>
+        <h3 class="font-black uppercase tracking-tighter">Calidad Premium</h3>
+        <p class="text-xs text-gray-400 mt-2">Solo las mejores marcas del mercado.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="py-24 bg-gray-50 relative overflow-hidden">
+    <div class="absolute -right-24 -top-24 w-96 h-96 bg-red-500/5 rounded-full blur-3xl"></div>
+    
+    <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+      <span class="text-red-600 font-black uppercase tracking-[0.3em] text-[10px]">La Mística Sportify</span>
+      <h2 class="text-5xl font-black text-gray-900 mt-4 mb-8 tracking-tighter uppercase italic">
+        ¿Quiénes somos?
+      </h2>
+      
+      <div class="space-y-6 text-gray-600 text-lg leading-relaxed font-medium">
+        <p class="text-left md:text-center">
+          En <span class="text-red-600 font-bold">Sportify</span>, somos un ecommerce especializado en ofrecer la mejor ropa deportiva para todos los entusiastas del deporte. 
+          Contamos con una amplia gama de productos de alta calidad, diseñados para brindarte comodidad y rendimiento en cada actividad deportiva.
+        </p>
+        <p class="bg-white p-10 rounded-[2.5rem] shadow-sm border border-gray-100 italic text-gray-500">
+          "Nos apasiona el deporte y estamos comprometidos a ofrecerte solo lo mejor, con un servicio rápido y seguro, porque tu experiencia 
+          de compra es nuestra prioridad."
+        </p>
+      </div>
+
+      <div class="mt-12">
+        <button routerLink="/products" 
+                class="bg-gray-900 text-white px-12 py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-red-600 transition-all shadow-xl active:scale-95">
+          Ver Catálogo Completo
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      
+      <div class="relative h-96 rounded-[2.5rem] overflow-hidden group cursor-pointer shadow-lg" 
+          [routerLink]="['/products']" [queryParams]="{ gender: '1' }">
+        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070" 
+             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+             alt="Categoría Hombre">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-12">
+          <h4 class="text-4xl font-black text-white uppercase italic tracking-tighter">Hombre</h4>
+          <span class="text-red-500 font-bold uppercase text-xs tracking-widest mt-2 group-hover:translate-x-2 transition-transform inline-block">
+            Explorar ahora <i class="fas fa-arrow-right ml-1"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="relative h-96 rounded-[2.5rem] overflow-hidden group cursor-pointer shadow-lg" 
+          [routerLink]="['/products']" [queryParams]="{ gender: '2' }">
+        <img src="https://images.unsplash.com/photo-1518310383802-640c2de311b2?q=80&w=2070" 
+             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+             alt="Categoría Mujer">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-12">
+          <h4 class="text-4xl font-black text-white uppercase italic tracking-tighter">Mujer</h4>
+          <span class="text-red-500 font-bold uppercase text-xs tracking-widest mt-2 group-hover:translate-x-2 transition-transform inline-block">
+            Explorar ahora <i class="fas fa-arrow-right ml-1"></i>
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<app-footer></app-footer>
 
 

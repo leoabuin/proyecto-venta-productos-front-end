@@ -72,31 +72,32 @@ export class BrandListComponent {
 
   errorMessages: string[] = [];
   updateBrand() {
-    // Aquí llamas al backend para actualizar la marca
-    this.service.updateBrand(this.selectedBrand.id, this.tempBrand).subscribe({
-      next: response => {
-        this.selectedBrand = { ...this.tempBrand };
-        this.closeModal();
-      },
-      error: (error) => {
-        console.error('Error al agregar la categoria:', error);
-      
-        this.errorMessages = [];
-      
-        // Verificar si el error tiene el formato esperado
-        if (error.status === 400 && error.error && error.error.error) {
-          // Si existe el campo 'error.error' y tiene detalles de validación
-          const backendErrors = error.error.error;
-          this.errorMessages = backendErrors.map((err: any) => {
-            return `Error en ${err.path ? err.path[0] : 'desconocido'}: ${err.message}`;
-          });
-        } else {
-          // Manejo de otros errores o respuestas inesperadas
-          this.errorMessages.push('Error desconocido. Intente nuevamente.');
-        }
+  const { products, ...brandData } = this.tempBrand;
+  this.service.updateBrand(this.selectedBrand.id, brandData).subscribe({
+    next: response => {
+      const index = this.brands.findIndex(b => b.id === this.selectedBrand.id);
+      if (index !== -1) {
+        this.brands[index] = { ...this.tempBrand };
       }
-    });
-  }
+      
+      this.closeModal()
+      console.log('Marca actualizada correctamente')
+    },
+    error: (error) => {
+      console.error('Error al actualizar la marca:', error);
+      
+      this.errorMessages = []
+      if (error.status === 400 && error.error && error.error.error) {
+        const backendErrors = error.error.error
+        this.errorMessages = backendErrors.map((err: any) => {
+          return `Error en ${err.path ? err.path[0] : 'campo'}: ${err.message}`
+        })
+      } else {
+        this.errorMessages.push('Error al procesar la actualización. Verifique los datos.')
+      }
+    }
+  });
+}
 
   isModalOpen: boolean = false;
   isModalOpenDelete: boolean = false;

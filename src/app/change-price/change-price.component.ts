@@ -4,11 +4,12 @@ import { ApiPriceService } from '../service/priceApi.service.js';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../../navbar/navbar.component.js';
+import { FooterComponent } from '../footer/footer.component.js';
 
 @Component({
   selector: 'app-change-price',
   standalone: true,
-  imports: [FormsModule, CommonModule, NavbarComponent],
+  imports: [FormsModule, CommonModule, NavbarComponent, FooterComponent],
   templateUrl: './change-price.component.html',
   styleUrl: './change-price.component.scss'
 })

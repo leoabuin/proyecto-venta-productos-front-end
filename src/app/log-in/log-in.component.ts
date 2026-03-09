@@ -15,28 +15,30 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrl: './log-in.component.scss'
 })
 export class LogInComponent {
- 
+
   userData = {
     userName: '',
-    password:''
+    password: ''
   }
 
   errorMessages: string[] = [];
-  constructor(private service: ApiUserService, 
-  private router:Router,
-  private localStorageService: LocalStorageService,
-  private cookieService: CookieService
-  ){}
+  constructor(private service: ApiUserService,
+    private router: Router,
+    private localStorageService: LocalStorageService,
+    private cookieService: CookieService
+  ) { }
 
-  submitForm(){
+  submitForm() {
     this.errorMessages = [];
     this.service.logInUser(this.userData).subscribe({
       next: (response) => {
         console.log('Inicio de sesion con exito:', response);
         this.localStorageService.setItem('username', response.data.userName)
-        this.localStorageService.setItem('idUsuario', response.data.id )
+        this.localStorageService.setItem('idUsuario', response.data.id)
         console.log(this.localStorageService.getItem('username'))
         console.log(this.localStorageService.getItem('userId'))
+        this.localStorageService.setItem('username', response.data.name)
+        this.localStorageService.setItem('userEmail', response.data.mail)
         this.router.navigate(['/home'])
         const token = this.cookieService.get('token');
         console.log('Token guardado en cookie:', this.cookieService.get('token'))
@@ -46,7 +48,7 @@ export class LogInComponent {
       error: (error) => {
         console.error('Error al inicio de sesión:', error);
         const errors = error.error?.error || []
-      
+
         if (error.status === 400 || (Array.isArray(errors) && errors.length > 0)) {
           this.errorMessages = errors.map((err: any) => {
             if (err.path) {
@@ -54,15 +56,16 @@ export class LogInComponent {
             } else {
               return `Error: ${err.message}`;
             }
-          })}
-          else if (error.status === 500 ) {
-            this.errorMessages.push('Contraseña invalida.');
+          })
+        }
+        else if (error.status === 500) {
+          this.errorMessages.push('Contraseña invalida.');
         } else {
           this.errorMessages.push('Error desconocido. Intente nuevamente.');
         }
       }
     })
-    
+
   }
 
 

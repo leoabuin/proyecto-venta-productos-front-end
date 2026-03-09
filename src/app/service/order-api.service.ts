@@ -12,6 +12,10 @@ export class OrderApiService {
   
   constructor(private http: HttpClient) { }
 
+  public getAllOrders(): Observable<any> {
+    return this.http.get<any>(this.urlOrderApi, { withCredentials: true })
+  }
+
   public placeOrder(orderData: any): Observable<any> {
     return this.http.post<any>(this.urlOrderApi, orderData)
   }

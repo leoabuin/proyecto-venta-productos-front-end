@@ -55,43 +55,43 @@ export class ProductsListComponent {
   }
 
   private cargarYFiltrar(params: any): void {
-  this.isLoading = true
-  this.filterProduct = params['search'] || ''
-  this.service.getProductsData().subscribe({
-    next: (response) => {
-      let data = response.data;
-      
-      // Lógica de filtrado por Rol
-      if (this.authService.getRole() !== 'Empleado') {
-        data = data.filter((p: any) => p.isContinued === true);
+    this.isLoading = true
+    this.filterProduct = params['search'] || ''
+    this.service.getProductsData().subscribe({
+      next: (response) => {
+        let data = response.data;
+
+        // Lógica de filtrado por Rol
+        if (this.authService.getRole() !== 'Empleado') {
+          data = data.filter((p: any) => p.isContinued === true);
+        }
+
+        // Lógica de filtrado por Género
+        if (params['gender']) {
+          const genderTarget = String(params['gender']).toLowerCase();
+          data = data.filter((p: any) => String(p.gender).toLowerCase() === genderTarget);
+        }
+
+        // Lógica de filtrado por Oferta
+        if (params['offer'] === 'true') {
+          data = data.filter((p: any) => p.isOffer === true);
+        }
+
+        this.products = data;
+        this.filterProducts();
+
+        // 2. Apagamos el spinner con un pequeño delay opcional
+        // para que la transición no sea brusca (UX)
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 500);
+      },
+      error: (err) => {
+        console.error('Error al cargar productos:', err);
+        this.isLoading = false; // 3. También lo apagamos si hay error
       }
-
-      // Lógica de filtrado por Género
-      if (params['gender']) {
-        const genderTarget = String(params['gender']).toLowerCase();
-        data = data.filter((p: any) => String(p.gender).toLowerCase() === genderTarget);
-      }
-
-      // Lógica de filtrado por Oferta
-      if (params['offer'] === 'true') {
-        data = data.filter((p: any) => p.isOffer === true);
-      }
-
-      this.products = data;
-      this.filterProducts();
-
-      // 2. Apagamos el spinner con un pequeño delay opcional
-      // para que la transición no sea brusca (UX)
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 500);
-    },
-    error: (err) => {
-      console.error('Error al cargar productos:', err);
-      this.isLoading = false; // 3. También lo apagamos si hay error
-    }
-  });
-}
+    });
+  }
 
   getCurrentPrice(prices: Price[]): Price | undefined {
     if (!prices || prices.length === 0) return undefined;
@@ -100,14 +100,19 @@ export class ProductsListComponent {
   }
 
   filterProducts(): void {
-    // Usamos 'products' como base porque ya viene filtrado por Género/Oferta/Rol
-    if (Number(this.selectedCategory) !== 0) {
+    const selectedId = Number(this.selectedCategory);
+
+    if (selectedId !== 0) {
       this.filteredProducts = this.products.filter(product => {
-        return Number(product.category) === Number(this.selectedCategory);
+        // Accedemos al .id de la categoría poblada
+        const productCategoryId = product.category?.id || product.category;
+        return Number(productCategoryId) === selectedId;
       });
     } else {
       this.filteredProducts = this.products;
     }
+    // Importante: Reiniciar a la primera página para ver los resultados
+    this.page = 1;
   }
 
   resetFilters(): void {

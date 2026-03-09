@@ -1,0 +1,121 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<app-navbar></app-navbar>
+
+<div class="p-6 bg-gray-100 min-h-screen">
+  <h2 class="text-3xl font-bold text-red-700 mb-6 uppercase tracking-tighter">Panel de Control - Sportify</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    
+    <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-green-500">
+      <p class="text-gray-500 font-semibold uppercase text-xs tracking-wider italic text-left">Ingresos Reales</p>
+      <p class="text-2xl font-black text-gray-800">${{ stats.totalVentas | number:'1.2-2' }}</p>
+      <p class="text-[10px] text-green-600 font-bold mt-1 tracking-tighter uppercase text-left">Excluye pedidos cancelados</p>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-blue-500">
+      <p class="text-gray-500 font-semibold uppercase text-xs tracking-wider text-left">Pedidos Totales</p>
+      <div class="flex items-center justify-between">
+        <p class="text-2xl font-bold text-gray-800">{{ stats.totalPedidosCount }}</p>
+        <div class="text-right">
+          <p class="text-[10px] font-black text-red-600 uppercase">{{ stats.porcentajeCancelados | number:'1.0-1' }}% Cancelados</p>
+          <div class="w-16 h-1.5 bg-gray-100 rounded-full mt-1">
+            <div class="h-full bg-red-500 rounded-full" [style.width.%]="stats.porcentajeCancelados"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-orange-500">
+      <p class="text-gray-500 font-semibold uppercase text-xs tracking-wider text-left">Alertas de Stock</p>
+      <p class="text-2xl font-bold text-orange-600">{{ stats.productosBajoStock.length }} productos</p>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-purple-500">
+      <p class="text-gray-500 font-semibold uppercase text-xs tracking-wider text-left">Ticket Promedio</p>
+      <p class="text-2xl font-bold text-gray-800">
+        ${{ (stats.totalVentas / (stats.totalPedidosCount - (stats.totalPedidosCount * stats.porcentajeCancelados / 100)) || 0) | number:'1.2-2' }}
+      </p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+    
+    <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-lg font-bold mb-4 text-gray-700 border-b pb-2">📦 Niveles de Inventario</h3>
+      <div class="relative h-[250px]">
+        <canvas #stockChart></canvas>
+      </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-lg font-bold mb-4 text-gray-700 border-b pb-2">🏷️ Variedad por Marca</h3>
+      <div class="relative h-[250px] flex justify-center">
+        <canvas #brandChart></canvas>
+      </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-lg font-bold mb-4 text-gray-700 border-b pb-2">📊 Estado de Pedidos</h3>
+      <div class="relative h-[250px] flex justify-center">
+        <canvas #orderStatusChart></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    
+    <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-lg font-bold mb-4 text-gray-700 flex items-center gap-2">
+        <span class="text-red-500">⚠️</span> Reposición Urgente
+      </h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead>
+            <tr class="border-b text-gray-400">
+              <th class="py-2">Producto</th>
+              <th class="py-2">Marca</th>
+              <th class="py-2">Stock</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let prod of stats.productosBajoStock" class="border-b hover:bg-red-50 transition-colors">
+              <td class="py-2 font-medium">{{ prod.name }}</td>
+              <td class="py-2">{{ prod.brand?.name || 'S/M' }}</td>
+              <td class="py-2 text-red-600 font-bold">{{ prod.stock }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow-md">
+      <h3 class="text-lg font-bold mb-4 text-gray-700 flex items-center gap-2">
+        <span class="text-blue-500">📦</span> Últimos Movimientos
+      </h3>
+      <div *ngFor="let pedido of stats.pedidosRecientes" class="flex justify-between items-center mb-3 p-3 hover:bg-gray-50 rounded-lg border-b last:border-0 transition-all">
+        <div class="flex flex-col text-left">
+          <p class="font-semibold text-gray-800 text-sm">Pedido #{{ pedido.id }}</p>
+          <p class="text-[10px] text-gray-400 uppercase font-bold">{{ pedido.fecha_pedido | date:'medium' }}</p>
+        </div>
+        
+        <div class="flex items-center gap-4">
+          <span [ngClass]="{
+            'bg-red-100 text-red-600 border border-red-200': pedido.estado === 'Cancelado',
+            'bg-green-100 text-green-600 border border-green-200': pedido.estado === 'Entregado',
+            'bg-yellow-100 text-yellow-600 border border-yellow-200': pedido.estado === 'pending'
+          }" class="px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-tighter">
+            {{ pedido.estado }}
+          </span>
+          
+          <div class="text-right min-w-[80px]">
+            <p [ngClass]="pedido.estado === 'Cancelado' ? 'text-gray-400 line-through' : 'text-green-600'" class="font-black">
+              ${{ pedido.total | number:'1.2-2' }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

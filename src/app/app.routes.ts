@@ -21,6 +21,7 @@ import { MyOrdersComponent } from './my-orders/my-orders.component.js';
 
 import { roleGuard } from './auth.guard';
 import { UpdateUserComponent } from './update-user/update-user.component.js';
+import { DahsboardComponent } from './dahsboard/dahsboard.component.js';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -50,6 +51,8 @@ export const routes: Routes = [
     { path: 'update-distributor/:id', component: UpdateDistributorComponent, canActivate: [roleGuard(['Empleado'])] },
     { path: 'addDistributor', component: AddDistributorComponent, canActivate: [roleGuard(['Empleado'])] },
     { path: 'change-price/:id', component: ChangePriceComponent, canActivate: [roleGuard(['Empleado'])]},
+    { path: 'brand-list', component: BrandListComponent, canActivate: [roleGuard(['Empleado'])]},
+    {path: 'dashboard', component: DahsboardComponent, canActivate: [roleGuard(['Empleado'])]},
     
 
     // --- RUTAS COMUNES (Ambos necesitan estar logueados) ---

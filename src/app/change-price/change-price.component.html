@@ -1,31 +1,114 @@
 <app-navbar></app-navbar>
 
-<div class="flex"></div>
+<div class="bg-gray-50 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-lg mx-auto">
+    
+    <div class="bg-white rounded-[2.5rem] shadow-xl border border-gray-100 overflow-hidden">
+      
+      <div class="bg-gray-900 p-8 text-white text-center">
+        <div class="w-16 h-16 bg-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg rotate-3 group-hover:rotate-0 transition-transform">
+          <i class="fas fa-tag text-2xl"></i>
+        </div>
+        <h2 class="text-2xl font-black uppercase tracking-tighter">Actualizar Precio</h2>
+        <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mt-1">Gestión de Tarifas - Sportify</p>
+      </div>
 
-<div class="w-full max-w-lg bg-white rounded-lg shadow-lg p-4 mx-auto mt-10">
-  <h2 class="text-2xl font-bold mb-4 text-center">Creación de Precio</h2>
+      <form (ngSubmit)="submitForm()" class="p-8 space-y-6">
+        
+        <div class="space-y-1">
+          <label for="productId" class="block text-xs font-black text-gray-400 uppercase tracking-wider ml-1">
+            ID del Producto
+          </label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <i class="fas fa-fingerprint text-gray-300"></i>
+            </div>
+            <input type="number" 
+                   id="productId" 
+                   [(ngModel)]="productId" 
+                   name="idProduct" 
+                   [readonly]="true"
+                   class="block w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-100 text-gray-400 font-bold rounded-2xl cursor-not-allowed focus:outline-none" 
+                   placeholder="ID del producto">
+            <div class="absolute inset-y-0 right-0 pr-4 flex items-center">
+              <i class="fas fa-lock text-gray-300 text-xs"></i>
+            </div>
+          </div>
+          <p class="text-[9px] text-gray-400 italic ml-1">* El identificador no es editable por seguridad.</p>
+        </div>
 
-  <form (ngSubmit)="submitForm()">
-    <div class="mb-3">
-      <label for="productId" class="block">ID del Producto</label>
-      <input type="number" id="productId" [(ngModel)]="productId" name="idProduct" class="w-full border p-2 rounded" placeholder="ID del producto" required>
+        <div class="space-y-1">
+          <label for="dateFrom" class="block text-xs font-black text-gray-500 uppercase tracking-wider ml-1">
+            Fecha Desde
+          </label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <i class="fas fa-calendar-alt text-red-500/50"></i>
+            </div>
+            <input type="date" 
+                   id="dateFrom" 
+                   [(ngModel)]="dateFrom" 
+                   name="dateFrom" 
+                   class="block w-full pl-11 pr-4 py-3 bg-white border border-gray-200 text-gray-900 font-medium rounded-2xl focus:ring-4 focus:ring-red-500/10 focus:border-red-500 transition-all outline-none" 
+                   required>
+          </div>
+        </div>
+
+        <div class="space-y-1">
+          <label for="dateUntil" class="block text-xs font-black text-gray-500 uppercase tracking-wider ml-1">
+            Fecha Hasta
+          </label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <i class="fas fa-calendar-check text-red-500/50"></i>
+            </div>
+            <input type="date" 
+                   id="dateUntil" 
+                   [(ngModel)]="dateUntil" 
+                   name="dateUntil" 
+                   class="block w-full pl-11 pr-4 py-3 bg-white border border-gray-200 text-gray-900 font-medium rounded-2xl focus:ring-4 focus:ring-red-500/10 focus:border-red-500 transition-all outline-none" 
+                   required>
+          </div>
+        </div>
+
+        <div class="space-y-1">
+          <label for="cost" class="block text-xs font-black text-gray-500 uppercase tracking-wider ml-1">
+            Nuevo Precio de Venta
+          </label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <i class="fas fa-dollar-sign text-green-500"></i>
+            </div>
+            <input type="number" 
+                   id="cost" 
+                   [(ngModel)]="cost" 
+                   name="price" 
+                   class="block w-full pl-11 pr-4 py-4 bg-white border border-gray-200 text-gray-900 text-xl font-black rounded-2xl focus:ring-4 focus:ring-red-500/10 focus:border-red-500 transition-all outline-none" 
+                   placeholder="0.00" 
+                   required>
+          </div>
+        </div>
+
+        <div class="pt-4">
+          <button type="submit" 
+                  class="w-full relative group flex items-center justify-center bg-red-600 py-4 px-6 text-white font-black uppercase tracking-widest rounded-2xl hover:bg-red-700 transition-all shadow-lg hover:shadow-red-200 active:scale-95">
+            Confirmar Nuevo Precio
+            <i class="fas fa-check-circle ml-2 text-lg"></i>
+          </button>
+        </div>
+
+      </form>
+
+      <div class="px-8 pb-8 text-center">
+        <button type="button" 
+                routerLink="/products"
+                class="text-xs font-bold text-gray-400 hover:text-gray-600 transition-colors uppercase tracking-widest">
+          <i class="fas fa-arrow-left mr-1"></i> Cancelar y Volver
+        </button>
+      </div>
+
     </div>
-
-    <div class="mb-3">
-      <label for="dateFrom" class="block">Fecha Desde</label>
-      <input type="date" id="dateFrom" [(ngModel)]="dateFrom" name="dateFrom" class="w-full border p-2 rounded" required>
-    </div>
-
-    <div class="mb-3">
-      <label for="dateUntil" class="block">Fecha Hasta</label>
-      <input type="date" id="dateUntil" [(ngModel)]="dateUntil" name="dateUntil" class="w-full border p-2 rounded" required>
-    </div>
-
-    <div class="mb-3">
-      <label for="cost" class="block">Precio</label>
-      <input type="number" id="cost" [(ngModel)]="cost" name="price" class="w-full border p-2 rounded" placeholder="Precio" required>
-    </div>
-
-    <button type="submit" class="w-full p-2 text-white bg-red-500 rounded hover:bg-red-600">Crear Precio</button>
-  </form>
+  </div>
 </div>
+
+<app-footer></app-footer>

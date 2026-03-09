@@ -1,30 +1,87 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 <app-navbar></app-navbar>
-<div class="w-[30%] max-w-xl min-w-[200px] relative mt-4" style="position: absolute; top: 10px; left: 100%; transform: translateX(-50%); z-index: 1000;">
 
-  <div class="relative mt-10" style="width: 50%;">
-    <button routerLink="/addCategories" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-800">Crear una nueva categoria</button>
+<div class="max-w-5xl mx-auto px-4 py-8">
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
+    <h2 class="text-2xl font-bold text-gray-800 uppercase tracking-tighter">Gestión de Categorías</h2>
+    
+    <div class="flex items-center gap-2 w-full md:max-w-md">
+      <div class="relative w-full">
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <i class="fas fa-search text-gray-400 text-sm"></i>
+        </div>
+        <input type="text" 
+               name="filterCategory" 
+               class="block w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 pr-3 py-2.5 focus:ring-red-500 focus:border-red-500 shadow-sm transition-all" 
+               placeholder="Buscar categorías..." 
+               [(ngModel)]="filterCategory"/>
+      </div>
+      
+      <button routerLink="/addCategories" 
+              class="shrink-0 inline-flex items-center justify-center w-11 h-11 rounded-lg bg-red-600 text-white hover:bg-red-700 shadow-md transition-transform active:scale-95"
+              title="Crear nueva categoría">
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <ul role="list" class="divide-y divide-gray-100">
+      <li *ngFor="let category of categories" 
+          class="flex flex-col sm:flex-row justify-between gap-x-6 p-6 items-center hover:bg-gray-50 transition-colors">
+        
+        <div class="flex min-w-0 gap-x-6 items-center w-full">
+          <div class="h-16 w-16 flex-none bg-red-50 rounded-xl border border-red-100 flex items-center justify-center">
+            <i class="fas fa-tags text-red-500 text-xl"></i>
+          </div>
+          
+          <div class="min-w-0 flex-auto">
+            <p class="text-lg font-bold leading-6 text-gray-900">{{ category.name }}</p>
+            <p class="mt-1 text-sm text-gray-500 italic">{{ category.description }}</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-x-4 mt-4 sm:mt-0 border-t sm:border-t-0 pt-4 sm:pt-0 w-full sm:w-auto justify-end">
+          <button [routerLink]="['/update-category', category.id]" 
+                  class="relative z-10 flex items-center justify-center w-10 h-10 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all shadow-sm">
+            <i class="fas fa-pencil-alt text-sm pointer-events-none"></i>
+          </button>
+          <button (click)="openModalDelete(category.id)" 
+                  class="relative z-10 flex items-center justify-center w-10 h-10 rounded-full bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all shadow-sm">
+            <i class="fas fa-trash text-sm pointer-events-none"></i>
+          </button>
+        </div>
+      </li>
+    </ul>
   </div>
 </div>
 
-<ul role="list" class="divide-y divide-gray-100 max-w-xl mx-auto" style="margin-top: 100px;">
-    <li *ngFor="let category of categories" class="flex justify-between gap-x-4 py-4 items-center">
-      <div class="flex min-w-0 gap-x-4">         
-        <div class="min-w-0 flex-auto">
-          <p class="text-sm font-semibold leading-6 text-gray-900">{{ category.name }}</p>
-          <p class="mt-1 truncate text-xs leading-5 text-gray-500">{{ category.description }}</p>
-        </div>
-      </div>
-      <div class="flex items-center gap-x-2 mt-2">
-        <button [routerLink]="['/update-category', category.id]" class="text-blue-500 hover:text-blue-700">
-          <i class="fas fa-pencil-alt"></i>
-        </button>
-        <button  class="text-red-500 hover:text-red-700">
-          <i class="fas fa-trash"></i>
-        </button>
-      </div>
+<div *ngIf="isModalOpenDelete" class="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm p-4">
+  <div class="relative bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 text-center">
+    <div class="mx-auto mb-4 text-red-500 bg-red-50 w-16 h-16 rounded-full flex items-center justify-center">
+      <i class="fas fa-exclamation-triangle text-2xl"></i>
+    </div>
+    <h3 class="mb-5 text-lg font-bold text-gray-800">¿Estás seguro de eliminar esta categoría?</h3>
+    <div class="flex justify-center gap-3">
+      <button (click)="confirmDelete()" class="text-white bg-red-600 hover:bg-red-700 font-bold rounded-lg px-5 py-2.5 transition-all shadow-md">
+        Sí, eliminar
+      </button>
+      <button (click)="closeModalDelete()" class="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold rounded-lg px-5 py-2.5 transition-all">
+        Cancelar
+      </button>
+    </div>
+  </div>
+</div>
 
-    </li>
-</ul>
-
+<div *ngIf="showConflictError" class="fixed inset-0 z-[110] flex items-center justify-center bg-black bg-opacity-70 p-4">
+  <div class="bg-white p-8 rounded-2xl shadow-2xl text-center max-w-sm border-t-4 border-red-500">
+    <div class="flex justify-center mb-4 text-red-500">
+      <i class="fas fa-times-circle text-5xl"></i>
+    </div>
+    <h3 class="text-lg font-bold text-gray-800 mb-2">No se puede eliminar</h3>
+    <p class="text-gray-500 mb-6">Esta categoría no se puede eliminar porque tiene productos vinculados en el stock.</p>
+    <button (click)="closeConflictErrorMessage()" class="w-full bg-gray-800 text-white py-2.5 rounded-lg font-bold hover:bg-gray-900 transition-colors">
+      Entendido
+    </button>
+  </div>
+</div>

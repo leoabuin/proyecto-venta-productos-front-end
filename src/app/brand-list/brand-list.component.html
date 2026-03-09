@@ -1,135 +1,126 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <app-navbar></app-navbar>
 
-
-<div class="w-[30%] max-w-xl min-w-[200px] relative mt-10" style="position: absolute;left: 1200px; top: 10px; z-index: 1000;">
-  <div class="relative flex items-center" style="width: 60%; transform: translateY(30px); "> <!-- Ajustar el ancho al 50% -->
-    <input type="text" name="filterBrand" class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-10 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" placeholder="Buscar marcas" [(ngModel)]="filterBrand"/> 
-    <button routerLink="/addBrands" class="ml-2 rounded bg-slate-800 p-1.5 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none" type="button"> <!-- Usar margin-left para separarlo -->
-      <i class="fas fa-plus" style="font-size: 1.2rem;"></i> 
-    </button>
-  </div>
-</div>
-
-<ul role="list" class="divide-y divide-gray-100 max-w-xl mx-auto" style="margin-top: 100px;">
-    <li *ngFor="let brand of brands | filter: filterBrand" class="flex justify-between gap-x-4 py-4 items-center">
-      <div class="flex min-w-0 gap-x-4">
-        <div class="shrink-0 sm:flex sm:flex-col sm:items-end">
-          <img [src]="brand.logo" alt="{{ brand.logo }} logo" class="w-16 h-16 object-contain rounded-full">
-        </div>          
-        <div class="min-w-0 flex-auto">
-          <p class="text-sm font-semibold leading-6 text-gray-900">{{ brand.name }}</p>
-          <p class="mt-1 truncate text-xs leading-5 text-gray-500">{{ brand.description }}</p>
+<div class="max-w-5xl mx-auto px-4 py-8">
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
+    <h2 class="text-2xl font-bold text-gray-800 uppercase tracking-tighter">Gestión de Marcas</h2>
+    
+    <div class="flex items-center gap-2 w-full md:max-w-md">
+      <div class="relative w-full">
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <i class="fas fa-search text-gray-400 text-sm"></i>
         </div>
+        <input type="text" 
+               name="filterBrand" 
+               class="block w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 pr-3 py-2.5 focus:ring-red-500 focus:border-red-500 shadow-sm transition-all" 
+               placeholder="Buscar marcas por nombre..." 
+               [(ngModel)]="filterBrand"/>
       </div>
-      <div class="shrink-0 sm:flex sm:flex-col sm:items-end">
-        <p class="text-sm leading-6 text-gray-900">{{ brand.website }}</p>
-        <p class="text-sm leading-6 text-gray-900">{{ brand.countryOfOrigin}}</p>
-      </div>
-
-      <div class="flex items-center gap-x-2 mt-2">
-        <button (click)="openModal(brand)" data-modal-target="updateBrand" data-modal-toggle="updateBrand" class="text-blue-500 hover:text-blue-700">
-          <i class="fas fa-pencil-alt"></i>
-        </button>
-        <button (click)="openModalDelete(brand.id)" id="deleteButton" class="text-red-500 hover:text-red-700">
-          <i class="fas fa-trash"></i>
-        </button>
-        
-      </div>
-
-    </li>
-</ul>
-
-<div *ngIf="isModalOpenDelete" id="deleteBrand" tabindex="-1" class="fixed overflow-y-auto overflow-x-hidden inset-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-gray-900 bg-opacity-50">
-  <div class="relative p-4 w-full max-w-md max-h-full">
-    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-      <button (click)="closeModalDelete()" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
-        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-        </svg>
-        <span class="sr-only">Close modal</span>
+      
+      <button routerLink="/addBrands" 
+              class="shrink-0 inline-flex items-center justify-center w-11 h-11 rounded-lg bg-red-600 text-white hover:bg-red-700 shadow-md transition-transform active:scale-95">
+        <i class="fas fa-plus"></i>
       </button>
-      <div class="p-4 md:p-5 text-center">
-        <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-        </svg>
-        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">¿Está seguro de que quiere eliminar esta marca?</h3>
-        <button (click)="confirmDelete()" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-          Sí, estoy seguro
-        </button>
-        <button (click)="closeModalDelete()" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No, cancelar</button>
-      </div>
     </div>
   </div>
-</div>
 
-
-
-
-<div *ngIf="isModalOpen" id="updateBrand" class="fixed inset-0 z-100 flex items-center justify-center w-full h-full bg-gray-900 bg-opacity-50 backdrop-blur-md">
-  <div class="relative p-4 w-full max-w-md max-h-full bg-white rounded-lg shadow dark:bg-gray-700 mt-20" >
-    <!-- Modal content -->
-    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-      <!-- Modal header -->
-      <div *ngIf="errorMessages.length > 0" class="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded mb-4">
-        <ul>
-          <li *ngFor="let error of errorMessages">{{ error }}</li>
-        </ul>
-      </div>
-      <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-          Editar Marca: {{ selectedBrand?.name }}
-        </h3>
-        <button (click)="closeModal()" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
-          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-          </svg>
-          <span class="sr-only">Close modal</span>
-        </button>
-      </div>
-      <!-- Modal body -->
-      <form class="p-4 md:p-5" (ngSubmit)="updateBrand()">
-        <div class="grid gap-4 mb-4 grid-cols-2">
-          <div class="col-span-2">
-            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-            <input [(ngModel)]="tempBrand.name" type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required>
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <ul role="list" class="divide-y divide-gray-100">
+      <li *ngFor="let brand of brands | filter: filterBrand" 
+          class="flex flex-col sm:flex-row justify-between gap-x-6 p-6 items-center hover:bg-gray-50 transition-colors">
+        
+        <div class="flex min-w-0 gap-x-6 items-center w-full">
+          <div class="h-20 w-20 flex-none bg-gray-50 rounded-xl border border-gray-100 p-2 flex items-center justify-center">
+            <img [src]="brand.logo" alt="{{ brand.name }} logo" class="max-h-full max-w-full object-contain">
           </div>
-          <div class="col-span-2">
-            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">description</label>
-            <input [(ngModel)]="tempBrand.description" type="text" name="description" id="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required>
+          
+          <div class="min-w-0 flex-auto">
+            <p class="text-lg font-bold leading-6 text-gray-900">{{ brand.name }}</p>
+            <p class="mt-1 text-sm text-gray-500 italic">{{ brand.description }}</p>
+            <div class="mt-2 flex items-center gap-4 text-xs text-gray-400">
+              <span class="flex items-center gap-1"><i class="fas fa-globe text-[10px]"></i> {{ brand.website }}</span>
+              <span class="flex items-center gap-1"><i class="fas fa-map-marker-alt text-[10px]"></i> {{ brand.countryOfOrigin }}</span>
+            </div>
           </div>
-          <div class="col-span-2">
-            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Website</label>
-            <input [(ngModel)]="tempBrand.website" type="url" name="website" id="website" placeholder="https://tusitio.com" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required>
-          </div>
-          <div class="col-span-2">
-            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pais de origen</label>
-            <input [(ngModel)]="tempBrand.countryOfOrigin" type="text" name="countryOfOrigin" id="countryOfOrigin" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required>
-          </div>
-          <div class="col-span-2">
-            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Logo</label>
-            <input [(ngModel)]="tempBrand.logo" type="url" name="logo" id="logo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required>
-          </div>
-
         </div>
-        <button type="submit" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-          Guardar cambios
-        </button>
-      </form>
+
+        <div class="flex items-center gap-x-4 mt-4 sm:mt-0 border-t sm:border-t-0 pt-4 sm:pt-0 w-full sm:w-auto justify-end">
+          <button (click)="openModal(brand)" 
+                  class="relative z-10 flex items-center justify-center w-10 h-10 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all shadow-sm">
+            <i class="fas fa-pencil-alt text-sm pointer-events-none"></i>
+          </button>
+          <button (click)="openModalDelete(brand.id)" 
+                  class="relative z-10 flex items-center justify-center w-10 h-10 rounded-full bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all shadow-sm">
+            <i class="fas fa-trash text-sm pointer-events-none"></i>
+          </button>
+        </div>
+      </li>
+      
+      <li *ngIf="(brands | filter: filterBrand).length === 0" class="p-10 text-center text-gray-500 italic">
+        No se encontraron marcas para "{{ filterBrand }}"
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div *ngIf="isModalOpenDelete" class="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm p-4">
+  <div class="relative bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 text-center">
+    <div class="mx-auto mb-4 text-red-500 bg-red-50 w-16 h-16 rounded-full flex items-center justify-center">
+      <i class="fas fa-exclamation-triangle text-2xl"></i>
+    </div>
+    <h3 class="mb-5 text-lg font-bold text-gray-800">¿Estás seguro de eliminar esta marca?</h3>
+    <div class="flex justify-center gap-3">
+      <button (click)="confirmDelete()" class="text-white bg-red-600 hover:bg-red-700 font-bold rounded-lg px-5 py-2.5 transition-all">Sí, eliminar</button>
+      <button (click)="closeModalDelete()" class="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold rounded-lg px-5 py-2.5 transition-all">Cancelar</button>
     </div>
   </div>
 </div>
 
-<div *ngIf="showConflictError" class="fixed inset-0 flex items-center justify-center z-50">
-  <div class="p-4 md:p-5 text-center bg-white rounded-lg shadow-lg dark:bg-red-800">
-    <svg class="mx-auto mb-4 text-red-400 w-12 h-12 dark:text-red-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-    </svg>
-    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-green-400">La marca no se puede eliminar porque hay productos de esta marca creados</h3>
-    <button (click)="closeConflictErrorMessage()" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Ok</button>
+<div *ngIf="isModalOpen" class="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm p-4">
+  <div class="relative bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden">
+    <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+      <h3 class="text-xl font-bold text-gray-800">Editar: {{ selectedBrand?.name }}</h3>
+      <button (click)="closeModal()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+    </div>
+    
+    <form (ngSubmit)="updateBrand()" class="p-6 space-y-4">
+      <div>
+        <label class="block mb-1 text-xs font-bold uppercase text-gray-400">Nombre de la Marca</label>
+        <input [(ngModel)]="tempBrand.name" name="name" type="text" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+      </div>
+      <div>
+        <label class="block mb-1 text-xs font-bold uppercase text-gray-400">Descripción</label>
+        <textarea [(ngModel)]="tempBrand.description" name="description" rows="2" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none"></textarea>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block mb-1 text-xs font-bold uppercase text-gray-400">Sitio Web</label>
+          <input [(ngModel)]="tempBrand.website" name="website" type="url" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+        </div>
+        <div>
+          <label class="block mb-1 text-xs font-bold uppercase text-gray-400">País</label>
+          <input [(ngModel)]="tempBrand.countryOfOrigin" name="countryOfOrigin" type="text" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+        </div>
+      </div>
+      <div>
+        <label class="block mb-1 text-xs font-bold uppercase text-gray-400">URL del Logo</label>
+        <input [(ngModel)]="tempBrand.logo" name="logo" type="url" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+      </div>
+      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-all shadow-md">
+        Guardar cambios
+      </button>
+    </form>
   </div>
 </div>
 
+<div *ngIf="showConflictError" class="fixed inset-0 z-[110] flex items-center justify-center bg-black bg-opacity-70 p-4">
+  <div class="bg-white p-8 rounded-2xl shadow-2xl text-center max-w-sm">
+    <i class="fas fa-exclamation-circle text-5xl text-red-500 mb-4"></i>
+    <h3 class="text-lg font-bold text-gray-800 mb-2">No se puede eliminar</h3>
+    <p class="text-gray-500 mb-6">Esta marca tiene productos asociados en el stock.</p>
+    <button (click)="closeConflictErrorMessage()" class="w-full bg-gray-800 text-white py-2 rounded-lg font-bold">Entendido</button>
+  </div>
+</div>
 
 
 

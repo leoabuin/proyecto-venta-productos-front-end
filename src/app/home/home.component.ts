@@ -10,7 +10,7 @@ import { CarouselComponent } from '../carousel/carousel.component.js';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FormsModule, NavbarComponent, FooterComponent,CarouselComponent],
+  imports: [FormsModule, NavbarComponent, FooterComponent,CarouselComponent, RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

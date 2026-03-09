@@ -13,7 +13,7 @@ import { environment } from '../environment';
 @Component({
   selector: 'app-shopping-cart',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, FooterComponent, RouterModule,LoadingSpinnerComponent],
+  imports: [NavbarComponent, CommonModule, FooterComponent, RouterModule, LoadingSpinnerComponent],
   templateUrl: './shopping-cart.component.html',
   styleUrl: './shopping-cart.component.scss'
 
@@ -46,9 +46,14 @@ export class ShoppingCartComponent implements OnInit {
 
   //logica del envio de email con emailjs
   sendEmailInvoice(orderId: number) {
-    const username = this.localStorageService.getItem('username') || 'Cliente';
-    // Nota: Si no tenés el email guardado, podés pedirlo en un input o sacarlo del auth
-    const userEmail = this.localStorageService.getItem('userEmail') || 'tu-email-de-prueba@gmail.com';
+    const username = this.localStorageService.getItem('username') || 'Cliente'
+    const userEmail = this.localStorageService.getItem('userEmail')
+
+    // Validación de seguridad: Si no hay mail, no disparamos EmailJS
+    if (!userEmail) {
+      console.warn("No se pudo enviar la factura: Falta el email del usuario.")
+      return
+    }
 
     // Formateamos los productos para el mail
     const itemsHTML = this.cartItems.map(item =>
@@ -66,7 +71,7 @@ export class ShoppingCartComponent implements OnInit {
 
     emailjs.send(
       environment.emailjs_service_id,
-      environment.emailjs_template_id,   
+      environment.emailjs_template_id,
       templateParams,
       environment.emailjs_public_key
     )
