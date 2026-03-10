@@ -1,0 +1,11 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "startCommand": "node dist/proyecto-venta-productos-front-end/server/server.mjs",
+    "restartPolicyType": "ON_FAILURE",
+    "healthcheckPath": "/"
+  }
+}
