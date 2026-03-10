@@ -7,5 +7,8 @@
     "startCommand": "node dist/proyecto-venta-productos-front-end/server/server.mjs",
     "restartPolicyType": "ON_FAILURE",
     "healthcheckPath": "/"
+  },
+  "environments": {
+    "NODE_VERSION": "20"
   }
 }
