@@ -7,14 +7,14 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 
-# Copiamos el código
+# Copiamos todo el código
 COPY . .
 
 # Buildeamos la aplicación
 RUN npm run build
 
-# Exponemos el puerto
+# Exponemos el puerto 4000
 EXPOSE 4000
 
-# RUTA EXACTA basada en tu VS Code:
-CMD ["node", "dist/proyecto-venta-productos-front-end/server/server.mjs"]
+# Usamos el script que ya tienes en tu package.json
+CMD ["npm", "run", "serve:ssr:proyecto-venta-productos-front-end"]
