@@ -10,11 +10,11 @@ RUN npm ci
 # Copiamos el código
 COPY . .
 
-# Buildeamos
+# Buildeamos la aplicación
 RUN npm run build
 
 # Exponemos el puerto
 EXPOSE 4000
 
-# ESTE COMANDO BUSCA EL ARCHIVO Y LO EJECUTA
-CMD ["sh", "-c", "node $(find dist -name server.mjs | head -n 1)"]
+# RUTA EXACTA basada en tu VS Code:
+CMD ["node", "dist/proyecto-venta-productos-front-end/server/server.mjs"]
