@@ -1,0 +1,8 @@
+[phases.setup]
+nixPkgs = ["nodePackages.npm", "nodejs_20"]
+
+[phases.build]
+cmds = ["npm install", "npm run build"]
+
+[start]
+cmd = "node dist/proyecto-venta-productos-front-end/server/server.mjs"
