@@ -121,7 +121,7 @@ export class DahsboardComponent implements OnInit {
     const lowStockProducts = products.filter(p => p.stock > 0).slice(0, 6);
 
     new Chart(ctx, {
-      type: 'bar', // Mantenemos bar
+      type: 'bar',
       data: {
         labels: lowStockProducts.map(p => p.name), // Nombres completos
         datasets: [{
@@ -134,9 +134,9 @@ export class DahsboardComponent implements OnInit {
         }]
       },
       options: {
-        indexAxis: 'y', // <--- ESTA ES LA CLAVE PARA GIRARLO
+        indexAxis: 'y', 
         responsive: true,
-        maintainAspectRatio: false, // Permite que ocupe el alto del contenedor
+        maintainAspectRatio: false, 
         plugins: {
           legend: { display: false },
           tooltip: {
@@ -155,7 +155,6 @@ export class DahsboardComponent implements OnInit {
             grid: { display: false },
             ticks: {
               font: { size: 10 },
-              // Esta función corta el texto si es muy largo para que no rompa el diseño
               callback: function (value) {
                 const label = this.getLabelForValue(value as number);
                 if (label.length > 25) {

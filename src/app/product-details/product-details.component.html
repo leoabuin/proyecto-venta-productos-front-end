@@ -1,76 +1,82 @@
 <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 <app-navbar></app-navbar>
+
 <div class="bg-gray-100 dark:bg-gray-800 py-8">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row -mx-4">
-            <div class="md:flex-1 px-4">
-                <div class="h-[460px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
-                    <img class="w-full h-full object-cover" img [src]="product.imagen" alt="Product Image">
+            
+            <div class="md:flex-1 px-4 mb-6 md:mb-0">
+                <div class="h-auto md:h-[460px] rounded-lg bg-gray-300 dark:bg-gray-700 overflow-hidden shadow-md">
+                    <img class="w-full h-full object-cover" [src]="product.imagen" alt="Product Image">
                 </div>
             </div>
-            <div class="md:flex-1 px-4 h-14">
-                <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">{{product.name}}</h2>
+
+            <div class="md:flex-1 px-4">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white mb-2">{{product.name}}</h2>
                 <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
                     {{product.brandName}}
                 </p>
-                <div class="flex mb-4 h-14" *ngIf="currentPrice">
-                    <div class="mr-4">
-                        <span class="font-bold text-gray-700 dark:text-gray-300">Price:</span>
+
+                <div class="flex flex-wrap gap-4 mb-4" *ngIf="currentPrice">
+                    <div class="flex items-center">
+                        <span class="font-bold text-gray-700 dark:text-gray-300 mr-1">Price:</span>
                         <span class="text-gray-600 dark:text-gray-300"> {{ currentPrice.cost | currency }}</span>
                     </div>
-                    <div>
-                        <span class="font-bold text-gray-700 dark:text-gray-300">Availability:</span>
+                    <div class="flex items-center">
+                        <span class="font-bold text-gray-700 dark:text-gray-300 mr-1">Availability:</span>
                         <span class="text-gray-600 dark:text-gray-300">In Stock</span>
                     </div>
                 </div>
-                <div *ngIf="!currentPrice">
-                    <h2>No hay precio disponible actualmente.</h2>
+
+                <div *ngIf="!currentPrice" class="mb-4">
+                    <h2 class="text-red-500 font-bold">No hay precio disponible actualmente.</h2>
                 </div>
-                <div class="mb-4" *ngIf="!authService.isEmpleado()">
-                    <span class="font-bold text-gray-700 dark:text-gray-300">Seleccione talle:</span>
-                    <div class="flex items-center mt-2">
+
+                <div class="mb-6" *ngIf="!authService.isEmpleado()">
+                    <span class="font-bold text-gray-700 dark:text-gray-300 block mb-2">Seleccione talle:</span>
+                    <div class="flex flex-wrap gap-2">
                         <button *ngFor="let size of sizes" (click)="selectSize(size)"
                             [ngClass]="{'bg-green-500 text-white': selectedSize === size, 'bg-gray-300 dark:bg-gray-700': selectedSize !== size}"
-                            class="py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600">
+                            class="py-2 px-5 rounded-full font-bold hover:bg-gray-400 dark:hover:bg-gray-600 transition-colors">
                             {{ size }}
                         </button>
                     </div>
                 </div>
-                <div class="h-24">
-                    <span class="font-bold text-gray-700 dark:text-gray-300 ">Product Description:</span>
-                    <p class="text-gray-600 dark:text-gray-300 text-sm mt-2 min-with:600px">
+
+                <div class="mb-6">
+                    <span class="font-bold text-gray-700 dark:text-gray-300">Product Description:</span>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm mt-2 leading-relaxed">
                         {{product.description}}
                     </p>
                 </div>
 
                 <div *ngIf="!authService.isEmpleado()">
-                    <div class="mb-4 h-14">
-                        <form class="max-w-xs mx-left">
-                            <div class="relative flex items-center max-w-[8rem]">
-                                <button type="button" (click)="decrementQuantity()"
-                                    class="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11">
-                                    <svg class="w-3 h-3 text-gray-900 dark:text-white" fill="none" viewBox="0 0 18 2">
-                                        <path stroke="currentColor" stroke-width="2" d="M1 1h16" />
-                                    </svg>
-                                </button>
-                                <input type="text" [value]="quantity"
-                                    class="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm block w-full py-2.5 dark:bg-gray-700"
-                                    readonly />
-                                <button type="button" (click)="incrementQuantity()"
-                                    [disabled]="quantity >= product.stock"
-                                    class="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11">
-                                    <svg class="w-3 h-3 text-gray-900 dark:text-white" fill="none" viewBox="0 0 18 18">
-                                        <path stroke="currentColor" stroke-width="2" d="M9 1v16M1 9h16" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </form>
+                    <div class="mb-6">
+                        <div class="relative flex items-center max-w-[8rem] shadow-sm">
+                            <button type="button" (click)="decrementQuantity()"
+                                class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded-s-lg p-3 h-11 flex items-center justify-center transition-colors">
+                                <svg class="w-3 h-3 text-gray-900 dark:text-white" fill="none" viewBox="0 0 18 2">
+                                    <path stroke="currentColor" stroke-width="2" d="M1 1h16" />
+                                </svg>
+                            </button>
+                            <input type="text" [value]="quantity"
+                                class="bg-gray-50 border-y border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm block w-full py-2.5 dark:bg-gray-700 dark:text-white dark:border-gray-500"
+                                readonly />
+                            <button type="button" (click)="incrementQuantity()"
+                                [disabled]="quantity >= product.stock"
+                                class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded-e-lg p-3 h-11 flex items-center justify-center transition-colors disabled:opacity-50">
+                                <svg class="w-3 h-3 text-gray-900 dark:text-white" fill="none" viewBox="0 0 18 18">
+                                    <path stroke="currentColor" stroke-width="2" d="M9 1v16M1 9h16" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
-                    <div class="flex -mx-2 mb-4">
-                        <div class="w-1/2 px-2">
+                    <div class="flex mb-4">
+                        <div class="w-full sm:w-1/2">
                             <button (click)="addToCart()"
-                                class="w-full bg-green-600 text-white py-2 px-4 rounded-full font-bold hover:bg-green-700 transition">Add
-                                to Cart</button>
+                                class="w-full bg-green-600 text-white py-3 px-4 rounded-full font-bold hover:bg-green-700 transition shadow-lg">
+                                Add to Cart
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -82,47 +88,45 @@
                         Gestión de Producto
                     </h3>
 
-                    <div class="grid grid-cols-1 gap-3">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
                         <button [routerLink]="['/change-price', product.id]"
-                            class="flex items-center justify-between w-full bg-blue-50 text-blue-700 dark:bg-gray-600 p-3 rounded-lg border border-blue-200">
-                            <span class="font-semibold">💰 Modificar Precio</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            class="flex items-center justify-between bg-blue-50 text-blue-700 dark:bg-gray-600 dark:text-blue-300 p-3 rounded-lg border border-blue-200">
+                            <span class="font-semibold text-sm">💰 Modificar Precio</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path d="M9 5l7 7-7 7" />
                             </svg>
                         </button>
 
                         <button (click)="toggleOferta()"
                             [ngClass]="product.isOffer ? 'bg-red-50 text-red-700 border-red-200' : 'bg-gray-50 text-gray-700 border-gray-200'"
-                            class="flex items-center justify-between w-full p-3 rounded-lg hover:brightness-95 transition border">
-                            <span class="font-semibold">{{ product.isOffer ? '🔥 Quitar de Oferta' : '✨ Poner en Oferta'
-                                }}</span>
+                            class="flex items-center justify-between p-3 rounded-lg hover:brightness-95 transition border">
+                            <span class="font-semibold text-sm">{{ product.isOffer ? '🔥 Quitar de Oferta' : '✨ Poner en Oferta' }}</span>
                             <div class="w-10 h-5 bg-gray-300 rounded-full relative">
-                                <div class="absolute w-4 h-4 bg-white rounded-full top-0.5 transition-all"
+                                <div class="absolute w-4 h-4 bg-white rounded-full top-0.5 transition-all shadow-sm"
                                     [ngStyle]="{'left': product.isOffer ? '22px' : '2px'}"></div>
                             </div>
                         </button>
 
                         <button (click)="discontinuarProducto()"
                             [ngClass]="product.isContinued ? 'bg-gray-800 hover:bg-black' : 'bg-green-700 hover:bg-green-800'"
-                            class="flex items-center justify-between w-full text-white p-3 rounded-lg transition">
-
-                            <span class="font-semibold">
+                            class="flex items-center justify-between w-full text-white p-3 rounded-lg transition sm:col-span-2 lg:col-span-1">
+                            <span class="font-semibold text-sm">
                                 {{ product.isContinued ? '🚫 Discontinuar' : '✅ Reactivar' }}
                             </span>
-
                             <span class="text-[10px] border border-gray-400 px-1 rounded">
                                 {{ product.isContinued ? 'DE-LIST' : 'RE-LIST' }}
                             </span>
                         </button>
-
-                        <p *ngIf="!product.isContinued" class="text-red-500 text-xs mt-2 text-center font-bold">
-                            Este producto no es visible para los clientes.
-                        </p>
                     </div>
 
+                    <p *ngIf="!product.isContinued" class="text-red-500 text-xs mt-3 text-center font-bold italic">
+                        Este producto no es visible para los clientes.
+                    </p>
+
                     <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
-                        <p class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase">Stock disponible:
-                            <span class="text-gray-800 dark:text-white font-bold">{{product.stock}} unidades</span>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase">
+                            Stock disponible:
+                            <span class="text-gray-800 dark:text-white font-bold ml-1">{{product.stock}} unidades</span>
                         </p>
                     </div>
                 </div>
@@ -132,52 +136,49 @@
     </div>
 </div>
 
-<div *ngIf="showProductAdd" class="fixed inset-0 flex items-center justify-center z-50">
-    <div class="p-4 md:p-5 text-center bg-white rounded-lg shadow-lg dark:bg-green-800">
-        <svg class="mx-auto mb-4 text-green-400 w-12 h-12 dark:text-green-200" aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-        </svg>
-        <h3 class="mb-5 text-lg font-normal text-green-500 dark:text-green-400">Producto añadido al carrito</h3>
-        <button (click)="closeProductAddSuccessMessage()" type="button"
-            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Ok</button>
-    </div>
-</div>
-
-<!-- Sección de comentarios -->
-<div class="bg-gray-100 p-6">
-    <h2 class="text-lg font-bold mb-4">Comments</h2>
-    <div class="flex flex-col space-y-4">
-        <!-- Aquí se listan los comentarios existentes -->
-        <div *ngFor="let comment of comments" class="bg-white p-4 rounded-lg shadow-md">
-            <h3 class="text-lg font-bold">{{ comment.user.userName }}</h3>
-            <p class="text-gray-700 text-sm mb-2">Posted on {{ comment.date | date:'longDate' }}</p>
-            <p class="text-gray-700">
-                {{ comment.comment }}
-            </p>
+<div *ngIf="showProductAdd" class="fixed inset-0 flex items-center justify-center z-[100] px-4 bg-black bg-opacity-50 backdrop-blur-sm">
+    <div class="p-6 text-center bg-white rounded-2xl shadow-2xl dark:bg-gray-800 max-w-sm w-full animate-bounce-short">
+        <div class="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="text-green-500 w-10 h-10" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+            </svg>
         </div>
-
-
-        <!-- Formulario para agregar un nuevo comentario -->
-        <form (ngSubmit)="submitComment()" #commentForm="ngForm" class="bg-white p-4 rounded-lg shadow-md mt-6">
-            <h3 class="text-lg font-bold mb-2">Add a comment</h3>
-            <!-- Si ya tienes el usuario logueado y el id se recupera del localStorage, no es necesario pedir el nombre -->
-            <div class="mb-4">
-                <label class="block text-gray-700 font-bold mb-2" for="comment">
-                    Comment
-                </label>
-                <textarea id="comment" rows="3" placeholder="Enter your comment" required [(ngModel)]="newCommentText"
-                    name="comment"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
-            </div>
-            <button type="submit"
-                class="bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                Submit
-            </button>
-        </form>
+        <h3 class="mb-5 text-xl font-bold text-gray-800 dark:text-white">¡Añadido con éxito!</h3>
+        <button (click)="closeProductAddSuccessMessage()" type="button"
+            class="w-full py-3 px-5 text-sm font-bold text-white bg-green-600 rounded-xl hover:bg-green-700 transition-colors shadow-lg">
+            Genial
+        </button>
     </div>
 </div>
 
+<div class="bg-gray-100 dark:bg-gray-900 p-4 md:p-8">
+    <div class="max-w-4xl mx-auto">
+        <h2 class="text-xl font-bold mb-6 dark:text-white">Comentarios del Producto</h2>
+        <div class="flex flex-col space-y-4">
+            <div *ngFor="let comment of comments" class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700">
+                <div class="flex justify-between items-center mb-2">
+                    <h3 class="text-md font-bold dark:text-white">{{ comment.user.userName }}</h3>
+                    <span class="text-xs text-gray-400 italic">{{ comment.date | date:'mediumDate' }}</span>
+                </div>
+                <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                    {{ comment.comment }}
+                </p>
+            </div>
+
+            <form (ngSubmit)="submitComment()" #commentForm="ngForm" class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md mt-6 border border-gray-100 dark:border-gray-700">
+                <h3 class="text-lg font-bold mb-4 dark:text-white">Deja tu opinión</h3>
+                <div class="mb-4">
+                    <textarea id="comment" rows="3" placeholder="¿Qué te pareció el producto?" required [(ngModel)]="newCommentText"
+                        name="comment"
+                        class="w-full py-3 px-4 text-gray-700 dark:text-white bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:outline-none transition-all"></textarea>
+                </div>
+                <button type="submit"
+                    class="w-full sm:w-auto bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-3 px-8 rounded-xl transition shadow-md">
+                    Enviar Comentario
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
 
 <app-footer></app-footer>

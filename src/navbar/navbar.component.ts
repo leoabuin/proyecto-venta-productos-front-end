@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
 export class NavbarComponent implements OnInit {
   showMenu: boolean = false;           // Controla el menú de Perfil
   showGestionMenu: boolean = false;    // Controla el menú de Gestión (Nuevo)
-  
+
   username: string | null = null;
   userId: number | null = null;
   errorMessages: string[] = [];
@@ -28,14 +28,14 @@ export class NavbarComponent implements OnInit {
     private service: ApiUserService,
     private router: Router,
     public authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.username = this.localStorageService.getItem('username');
     const userIdFromStorage = this.localStorageService.getItem('idUsuario');
     this.userId = userIdFromStorage ? parseInt(userIdFromStorage, 10) : null;
     this.updateCartCount();
-    
+
     // Escuchar cambios en el carrito si se dispara un evento personalizado
     window.addEventListener('cart-updated', () => this.updateCartCount());
   }
@@ -84,5 +84,11 @@ export class NavbarComponent implements OnInit {
       queryParams: { search: this.searchTerm },
       queryParamsHandling: 'merge'
     });
+  }
+
+  isMenuOpen = false;
+
+  toggleMobileMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 }

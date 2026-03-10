@@ -1,104 +1,114 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <nav class="bg-gradient-to-t from-red-500 to-red-700 text-white shadow-lg sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto flex justify-between items-center px-4 h-16">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-4 h-16">
 
-        <div class="flex items-center gap-6 flex-1">
-            <a routerLink="/home" class="flex items-center shrink-0">
-                <img src="https://flowbite.com/docs/images/logo.svg" alt="Logo" class="h-10 w-auto">
-                <span class="text-white text-xl ml-2 font-black tracking-tighter uppercase italic">SPORTIFY</span>
-            </a>
+    <div class="flex items-center gap-2 sm:gap-6 flex-1">
+      <a routerLink="/home" class="flex items-center shrink-0">
+        <img src="https://flowbite.com/docs/images/logo.svg" alt="Logo" class="h-8 md:h-10 w-auto">
+        <span class="text-white text-lg md:text-xl ml-2 font-black tracking-tighter uppercase italic">SPORTIFY</span>
+      </a>
 
-            <div class="flex relative items-center w-full max-w-xs lg:max-w-md mx-4">
-                <input type="text" [(ngModel)]="searchTerm" (input)="onSearchChange()"
-                    class="block w-full bg-white border border-red-400 text-gray-900 text-xs rounded-full py-2 px-4 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all shadow-md"
-                    placeholder="Buscar productos...">
-            </div>
-        </div>
+      <div class="hidden sm:!flex relative items-center w-full max-w-xs lg:max-w-md mx-4">
+        <input type="text" [(ngModel)]="searchTerm" (input)="onSearchChange()"
+          class="block w-full bg-white border border-red-400 text-gray-900 text-xs rounded-full py-2 px-4 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all shadow-md"
+          placeholder="Buscar productos...">
+      </div>
+    </div>
 
-        <div class="flex space-x-4 lg:space-x-8 items-center">
+    <div class="flex items-center space-x-2 sm:space-x-6">
+      
+      <div class="hidden sm:!flex space-x-2 md:space-x-4 lg:space-x-8 items-center">
+        
+        <ng-container *ngIf="authService.isEmpleado()">
+          <a routerLink="/dashboard" class="py-2 px-1 hover:text-red-200 font-bold text-sm transition-colors">Dashboard</a>
+          <a routerLink="/distributors-list" class="py-2 px-1 hover:text-red-200 font-bold text-sm transition-colors text-nowrap">Distribuidores</a>
+          <a routerLink="/brand-list" class="py-2 px-1 hover:text-red-200 font-bold text-sm transition-colors">Marcas</a>
+          <a routerLink="/categories-list" class="py-2 px-1 hover:text-red-200 font-bold text-sm transition-colors">Categorias</a>
 
-            <ng-container *ngIf="authService.isEmpleado()">
-                <a routerLink="/dashboard"
-                    class="py-2 px-1 hover:text-red-200 font-bold text-sm transition-colors">Dashboard</a>
-                <a routerLink="/distributors-list"
-                    class="py-2 px-1 hover:text-red-200 font-bold text-sm transition-colors text-nowrap">Distribuidores</a>
-                <a routerLink="/brand-list"
-                    class="py-2 px-1 hover:text-red-200 font-bold text-sm transition-colors">Marcas</a>
-                <a routerLink="/categories-list"
-                    class="py-2 px-1 hover:text-red-200 font-bold text-sm transition-colors">Categorias</a>
-
-                <div class="relative flex items-center">
-                    <button (click)="toggleGestionMenu()"
-                        class="py-2 px-1 hover:text-red-200 font-bold text-sm flex items-center gap-1 focus:outline-none">
-                        Gestionar <i class="fa fa-chevron-down text-[8px]" [class.rotate-180]="showGestionMenu"></i>
-                    </button>
-
-                    <div *ngIf="showGestionMenu"
-                        class="absolute bg-white text-black shadow-2xl rounded-2xl top-full left-0 w-52 py-3 z-50 mt-2 border border-gray-100 overflow-hidden">
-                        <a routerLink="/products" (click)="showGestionMenu = false"
-                            class="block px-6 py-2.5 hover:bg-red-500 hover:text-white transition-all text-sm font-bold">Lista
-                            de Productos</a>
-                        <a routerLink="/addProduct" (click)="showGestionMenu = false"
-                            class="block px-6 py-2.5 hover:bg-red-500 hover:text-white transition-all text-sm font-bold">Agregar
-                            Producto</a>
-                    </div>
-                </div>
-            </ng-container>
-
-            <ng-container *ngIf="!authService.isEmpleado()">
-                <a [routerLink]="['/products']" [queryParams]="{ gender: '1' }"
-                    class="py-2 px-1 hover:text-red-200 font-bold text-sm">Hombre</a>
-                <a [routerLink]="['/products']" [queryParams]="{ gender: '2' }"
-                    class="py-2 px-1 hover:text-red-200 font-bold text-sm">Mujer</a>
-                <a [routerLink]="['/products']" [queryParams]="{ gender: '3' }"
-                    class="py-2 px-1 hover:text-red-200 font-bold text-sm">Unisex</a>
-                <a [routerLink]="['/products']" [queryParams]="{ offer: 'true' }"
-                    class="py-1 px-3 bg-yellow-400 text-red-700 hover:bg-yellow-300 font-black rounded shadow-sm italic text-[10px] animate-pulse">🔥
-                    SALE</a>
-            </ng-container>
-
-            <button *ngIf="!authService.isEmpleado()" [routerLink]="['/shopping-cart']"
-                class="relative p-2 hover:bg-red-600 rounded-full transition-all flex items-center justify-center">
-                <i class="fas fa-shopping-cart text-lg"></i>
-                <span *ngIf="cartCount > 0"
-                    class="absolute -top-1 -right-1 bg-yellow-400 text-red-700 text-[10px] font-black rounded-full border-2 border-red-600 flex items-center justify-center w-5 h-5 shadow-sm z-10">
-                    {{ cartCount }}
-                </span>
+          <div class="relative flex items-center">
+            <button (click)="toggleGestionMenu()" class="py-2 px-1 hover:text-red-200 font-bold text-sm flex items-center gap-1 focus:outline-none">
+              Gestionar <i class="fa fa-chevron-down text-[8px]" [class.rotate-180]="showGestionMenu"></i>
             </button>
+            <div *ngIf="showGestionMenu" class="absolute bg-white text-black shadow-2xl rounded-2xl top-full left-0 w-52 py-3 z-50 mt-2 border border-gray-100 overflow-hidden">
+              <a routerLink="/products" (click)="showGestionMenu = false" class="block px-6 py-2.5 hover:bg-red-500 hover:text-white transition-all text-sm font-bold">Lista de Productos</a>
+              <a routerLink="/addProduct" (click)="showGestionMenu = false" class="block px-6 py-2.5 hover:bg-red-500 hover:text-white transition-all text-sm font-bold">Agregar Producto</a>
+            </div>
+          </div>
+        </ng-container>
 
-            <a *ngIf="!username; else userProfile" routerLink="/login"
-                class="p-2 hover:bg-red-600 rounded-full transition-all">
+        <ng-container *ngIf="!authService.isEmpleado()">
+          <a [routerLink]="['/products']" [queryParams]="{ gender: '1' }" class="py-2 px-1 hover:text-red-200 font-bold text-sm">Hombre</a>
+          <a [routerLink]="['/products']" [queryParams]="{ gender: '2' }" class="py-2 px-1 hover:text-red-200 font-bold text-sm">Mujer</a>
+          <a [routerLink]="['/products']" [queryParams]="{ gender: '3' }" class="py-2 px-1 hover:text-red-200 font-bold text-sm">Unisex</a>
+          <a [routerLink]="['/products']" [queryParams]="{ offer: 'true' }" class="py-1 px-3 bg-yellow-400 text-red-700 hover:bg-yellow-300 font-black rounded shadow-sm italic text-[10px] animate-pulse">🔥 SALE</a>
+        </ng-container>
+      </div>
+
+      <div class="flex items-center space-x-1 md:space-x-3">
+        <button *ngIf="!authService.isEmpleado()" [routerLink]="['/shopping-cart']" class="relative p-2 hover:bg-red-600 rounded-full transition-all">
+          <i class="fas fa-shopping-cart text-lg"></i>
+          <span *ngIf="cartCount > 0" class="absolute -top-1 -right-1 bg-yellow-400 text-red-700 text-[10px] font-black rounded-full border-2 border-red-600 flex items-center justify-center w-5 h-5 shadow-sm">
+            {{ cartCount }}
+          </span>
+        </button>
+
+        <div class="hidden sm:!block">
+            <a *ngIf="!username; else userProfile" routerLink="/login" class="p-2 hover:bg-red-600 rounded-full transition-all">
                 <i class="fa fa-user text-xl"></i>
             </a>
-
-            <ng-template #userProfile>
-                <div class="relative flex items-center">
-                    <button (click)="toggleMenu()"
-                        class="flex items-center py-2 px-3 hover:bg-red-600 rounded-lg font-bold transition-all focus:outline-none">
-                        <span class="max-w-[100px] truncate text-sm">{{ username }}</span>
-                        <i class="fa fa-chevron-down ml-2 text-[10px]" [class.rotate-180]="showMenu"></i>
-                    </button>
-
-                    <div *ngIf="showMenu"
-                        class="absolute right-0 bg-white text-black shadow-2xl rounded-2xl top-full w-52 py-3 z-50 mt-2 border border-gray-100 overflow-hidden">
-                        <button *ngIf="!authService.isEmpleado()" [routerLink]="['/myOrders', userId]"
-                            (click)="showMenu = false"
-                            class="flex items-center w-full px-6 py-2.5 hover:bg-red-500 hover:text-white transition-all text-sm font-bold text-left">
-                            <i class="fas fa-box-open mr-3 opacity-50"></i> Mis pedidos
-                        </button>
-                        <button [routerLink]="['/updateUser', userId]" (click)="showMenu = false"
-                            class="flex items-center w-full px-6 py-2.5 hover:bg-red-500 hover:text-white transition-all text-sm font-bold text-left">
-                            <i class="fas fa-user-circle mr-3 opacity-50"></i> Mi Perfil
-                        </button>
-                        <hr class="my-2 border-gray-100">
-                        <button (click)="logOut()"
-                            class="flex items-center w-full px-6 py-3 text-red-600 hover:bg-red-500 hover:text-white transition-all text-sm font-black italic text-left">
-                            <i class="fas fa-sign-out-alt mr-3"></i> Cerrar sesión
-                        </button>
-                    </div>
-                </div>
-            </ng-template>
         </div>
+
+        <button (click)="isMenuOpen = !isMenuOpen" class="sm:hidden p-2 hover:bg-red-600 rounded-lg transition-colors">
+          <i class="fas" [ngClass]="isMenuOpen ? 'fa-times' : 'fa-bars'"></i>
+        </button>
+      </div>
     </div>
+  </div>
+
+  <div *ngIf="isMenuOpen" class="sm:hidden bg-red-800 border-t border-red-400 px-4 py-4 space-y-1">
+    <ng-container *ngIf="authService.isEmpleado()">
+      <a routerLink="/dashboard" (click)="isMenuOpen=false" class="block py-3 font-bold border-b border-red-700">Dashboard</a>
+      <a routerLink="/distributors-list" (click)="isMenuOpen=false" class="block py-3 font-bold border-b border-red-700">Distribuidores</a>
+      <a routerLink="/brand-list" (click)="isMenuOpen=false" class="block py-3 font-bold border-b border-red-700">Marcas</a>
+      <a routerLink="/categories-list" (click)="isMenuOpen=false" class="block py-3 font-bold border-b border-red-700">Categorias</a>
+      <a routerLink="/products" (click)="isMenuOpen=false" class="block py-3 font-bold">Lista de Productos</a>
+    </ng-container>
+
+    <ng-container *ngIf="!authService.isEmpleado()">
+      <a [routerLink]="['/products']" [queryParams]="{ gender: '1' }" (click)="isMenuOpen=false" class="block py-3 font-bold border-b border-red-700">Hombre</a>
+      <a [routerLink]="['/products']" [queryParams]="{ gender: '2' }" (click)="isMenuOpen=false" class="block py-3 font-bold border-b border-red-700">Mujer</a>
+      <a [routerLink]="['/products']" [queryParams]="{ gender: '3' }" (click)="isMenuOpen=false" class="block py-3 font-bold border-b border-red-700">Unisex</a>
+      <a [routerLink]="['/products']" [queryParams]="{ offer: 'true' }" (click)="isMenuOpen=false" class="block py-3 text-yellow-400 font-black italic">🔥 SALE</a>
+    </ng-container>
+
+    <div *ngIf="username; else loginBtnMobile" class="pt-4 border-t border-red-600">
+        <a [routerLink]="['/updateUser', userId]" (click)="isMenuOpen=false" class="block py-2">Mi Perfil</a>
+        <button (click)="logOut(); isMenuOpen=false" class="block py-2 text-yellow-300 font-bold">Cerrar Sesión</button>
+    </div>
+    <ng-template #loginBtnMobile>
+        <a routerLink="/login" (click)="isMenuOpen=false" class="block py-2 font-bold">Iniciar Sesión</a>
+    </ng-template>
+  </div>
+
+  <ng-template #userProfile>
+    <div class="relative flex items-center">
+      <button (click)="toggleMenu()" class="flex items-center py-2 px-3 hover:bg-red-600 rounded-lg font-bold transition-all focus:outline-none">
+        <span class="max-w-[100px] truncate text-sm">{{ username }}</span>
+        <i class="fa fa-chevron-down ml-2 text-[10px]" [class.rotate-180]="showMenu"></i>
+      </button>
+      <div *ngIf="showMenu" class="absolute right-0 bg-white text-black shadow-2xl rounded-2xl top-full w-52 py-3 z-50 mt-2 border border-gray-100 overflow-hidden">
+        <button *ngIf="!authService.isEmpleado()" [routerLink]="['/myOrders', userId]" (click)="showMenu = false" class="flex items-center w-full px-6 py-2.5 hover:bg-red-500 hover:text-white transition-all text-sm font-bold text-left">
+          <i class="fas fa-box-open mr-3 opacity-50"></i> Mis pedidos
+        </button>
+        <button [routerLink]="['/updateUser', userId]" (click)="showMenu = false" class="flex items-center w-full px-6 py-2.5 hover:bg-red-500 hover:text-white transition-all text-sm font-bold text-left">
+          <i class="fas fa-user-circle mr-3 opacity-50"></i> Mi Perfil
+        </button>
+        <hr class="my-2 border-gray-100">
+        <button (click)="logOut()" class="flex items-center w-full px-6 py-3 text-red-600 hover:bg-red-500 hover:text-white transition-all text-sm font-black italic text-left">
+          <i class="fas fa-sign-out-alt mr-3"></i> Cerrar sesión
+        </button>
+      </div>
+    </div>
+  </ng-template>
 </nav>

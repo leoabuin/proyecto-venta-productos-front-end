@@ -32,14 +32,14 @@
                     {{ item.name }}
                   </h3>
                   <p class="text-xl font-black text-gray-900">
-                    ${{ (item.item_price * item.quantity) | number:'1.2-2' }}
+                    ${{ (item.item_price) | number:'1.2-2' }}
                   </p>
                 </div>
                 
                 <div class="flex items-center gap-4 mt-1 mb-4">
                   <span class="text-xs font-bold uppercase tracking-widest text-gray-400">Cantidad:</span>
                   <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-lg text-sm font-bold">{{ item.quantity }}</span>
-                  <span class="text-xs text-gray-400">(${{ item.item_price | number:'1.2-2' }} c/u)</span>
+                  <span class="text-xs text-gray-400">(${{ item.item_price / item.quantity | number:'1.2-2' }} c/u)</span>
                 </div>
 
                 <div class="flex items-center justify-between border-t border-gray-50 pt-4">

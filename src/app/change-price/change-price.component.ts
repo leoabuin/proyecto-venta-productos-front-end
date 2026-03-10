@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { ApiPriceService } from '../service/priceApi.service.js';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -9,7 +9,7 @@ import { FooterComponent } from '../footer/footer.component.js';
 @Component({
   selector: 'app-change-price',
   standalone: true,
-  imports: [FormsModule, CommonModule, NavbarComponent, FooterComponent],
+  imports: [FormsModule, CommonModule, NavbarComponent, FooterComponent, RouterModule],
   templateUrl: './change-price.component.html',
   styleUrl: './change-price.component.scss'
 })

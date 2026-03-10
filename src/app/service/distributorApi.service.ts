@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Distributor } from "../update-distributor/update-distributor.component";
+import { environment } from "../environment";
 
 
 @Injectable({
@@ -9,7 +10,7 @@ import { Distributor } from "../update-distributor/update-distributor.component"
   })
   export class ApiDistributorService {
     
-    private urlDistributorApi = 'http://localhost:3000/api/distributors';
+    private urlDistributorApi = `${environment.apiUrl}/distributors`;
     
   
     constructor(private http: HttpClient) { }
