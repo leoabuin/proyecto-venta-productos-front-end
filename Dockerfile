@@ -7,12 +7,14 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 
-# Copiamos el resto del código y buildeamos
+# Copiamos el resto del código
 COPY . .
+
+# Buildeamos la aplicación
 RUN npm run build
 
-# Exponemos el puerto que usa tu server.ts
+# Exponemos el puerto
 EXPOSE 4000
 
-# Comando de inicio directo al archivo compilado
+# CAMBIO AQUÍ: Usamos una ruta más directa que suele ser la real en Angular 18
 CMD ["node", "dist/proyecto-venta-productos-front-end/server/server.mjs"]
