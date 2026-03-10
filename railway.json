@@ -5,7 +5,6 @@
   },
   "deploy": {
     "startCommand": "node dist/proyecto-venta-productos-front-end/server/server.mjs",
-    "restartPolicyType": "ON_FAILURE",
-    "healthcheckPath": "/"
+    "restartPolicyType": "ON_FAILURE"
   }
 }
