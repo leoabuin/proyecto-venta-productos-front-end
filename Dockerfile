@@ -1,4 +1,4 @@
-# Usamos Node 20 oficial
+# Usamos Node 20
 FROM node:20-slim
 
 WORKDIR /app
@@ -7,14 +7,14 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 
-# Copiamos el resto del código
+# Copiamos el código
 COPY . .
 
-# Buildeamos la aplicación
+# Buildeamos
 RUN npm run build
 
 # Exponemos el puerto
 EXPOSE 4000
 
-# CAMBIO AQUÍ: Usamos una ruta más directa que suele ser la real en Angular 18
-CMD ["node", "dist/proyecto-venta-productos-front-end/server/server.mjs"]
+# ESTE COMANDO BUSCA EL ARCHIVO Y LO EJECUTA
+CMD ["sh", "-c", "node $(find dist -name server.mjs | head -n 1)"]
