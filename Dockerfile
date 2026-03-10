@@ -5,8 +5,7 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-# Exponemos el puerto
 EXPOSE 4000
 
-# Este comando busca el archivo server.mjs donde sea que Angular lo haya metido
-CMD ["sh", "-c", "node $(find dist -name server.mjs | head -n 1)"]
+# Usamos la ruta exacta que Angular 18 genera por defecto
+CMD ["node", "dist/proyecto-venta-productos-front-end/server/server.mjs"]
