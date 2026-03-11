@@ -36,6 +36,7 @@ export class BrandListComponent implements OnInit { // 👈 Implementamos la int
   }
 
   getBrands(): void {
+    console.log('Llamando al servicio de marcas...');
     this.service.getData().subscribe({
       next: (response) => {
         this.brands = response.data;

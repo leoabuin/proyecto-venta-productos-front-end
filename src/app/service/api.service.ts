@@ -8,7 +8,7 @@ import { environment } from '../environment';
 })
 export class ApiService {
 
-  private urlBrandApi = `${environment.apiUrl}/brands`;
+  private urlBrandApi = 'https://proyecto-venta-productos-production.up.railway.app/api/brands';
 
 
   constructor(private http: HttpClient) { }
