@@ -18,23 +18,23 @@ export class ApiProductService {
   }
 
   public createProduct(productData: any): Observable<any> {
-    return this.http.post<any>(this.urlProductApi, productData)
+    return this.http.post<any>(this.urlProductApi, productData, { withCredentials: true });
   }
 
   public getProductbyId(id: string): Observable<any> {
-    return this.http.get<any>(`${this.urlProductApi}/${id}`)
+    return this.http.get<any>(`${this.urlProductApi}/${id}`, { withCredentials: true })
   }
 
   public updateProduct(id: number, data: { isOffer: boolean }): Observable<any> {
-    return this.http.patch(`${this.urlProductApi}/${id}`, data);
+    return this.http.patch(`${this.urlProductApi}/${id}`, data, { withCredentials: true });
   }
 
   public updateDiscontinuedStatus(id: number, isContinued: boolean): Observable<any> {
   // Envolvemos el dato en un objeto 'input' si es lo que el middleware busca
-  return this.http.patch(`${this.urlProductApi}/${id}`, { isContinued });
+  return this.http.patch(`${this.urlProductApi}/${id}`, { isContinued }, { withCredentials: true });
   }
   
   public updateOnlyOffer(id: number, isOffer: boolean): Observable<any> {
-    return this.http.patch(`${this.urlProductApi}/${id}/toggle-offer`, { isOffer });
+    return this.http.patch(`${this.urlProductApi}/${id}/toggle-offer`, { isOffer }, { withCredentials: true });
   }
 }

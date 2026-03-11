@@ -18,14 +18,14 @@ export class OrderApiService {
   }
 
   public placeOrder(orderData: any): Observable<any> {
-    return this.http.post<any>(this.urlOrderApi, orderData)
+    return this.http.post<any>(this.urlOrderApi, orderData, { withCredentials: true });
   }
 
   public findOrderbyUser(userId: number): Observable<any>{
-    return this.http.get<any>(`${this.urlOrderApi}/${userId}`)
+    return this.http.get<any>(`${this.urlOrderApi}/${userId}`, { withCredentials: true })
   }
 
   public cancelOrder(orderId: number): Observable<any>{
-    return this.http.post<any>(`${this.urlOrderApi}/${orderId}`, {})
+    return this.http.post<any>(`${this.urlOrderApi}/${orderId}`, {}, { withCredentials: true })
   }
 }

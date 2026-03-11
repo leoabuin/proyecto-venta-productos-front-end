@@ -20,19 +20,19 @@ import { environment } from "../environment";
     }
   
     public getDistributorsData(): Observable<any>{
-      return this.http.get<any>(this.urlDistributorApi)
+      return this.http.get<any>(this.urlDistributorApi, { withCredentials: true })
     }
 
     getDistributorById(id: number): Observable<any>{
-      return this.http.get<any>(`${this.urlDistributorApi}/${id}`);
+      return this.http.get<any>(`${this.urlDistributorApi}/${id}`, { withCredentials: true });
     }
   
     public updateDistributor(id: number,distributorUpdated: Partial<Distributor>): Observable<any> {
-      return this.http.put<any>(`${this.urlDistributorApi}/${id}`, distributorUpdated)
+      return this.http.put<any>(`${this.urlDistributorApi}/${id}`, distributorUpdated, { withCredentials: true })
     }
 
     public deleteDistributor(id: number): Observable<any> {
-      return this.http.delete<any>(`${this.urlDistributorApi}/${id}`);
+      return this.http.delete<any>(`${this.urlDistributorApi}/${id}`, { withCredentials: true });
     }
 
   }
