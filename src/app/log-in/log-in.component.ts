@@ -35,6 +35,8 @@ export class LogInComponent {
     this.service.logInUser(this.userData).subscribe({
       next: (response) => {
         console.log('Inicio de sesion con exito:', response);
+        console.log('¿Qué trae la data del back?:', response.data); // 👈 MIRÁ ESTO EN LA CONSOLA
+        this.localStorageService.setItem('user_role', response.data.rol);
 
         // 1. Guardamos los datos básicos en LocalStorage
         this.localStorageService.setItem('idUsuario', response.data.id);
