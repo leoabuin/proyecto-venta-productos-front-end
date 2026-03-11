@@ -40,7 +40,7 @@ export const routes: Routes = [
     {path: 'add-to-cart', component: ShoppingCartComponent, canActivate: [roleGuard(['Cliente'])]},
 
     // --- RUTAS DE GESTIÓN (Solo Empleados) ---
-    { path: 'brand-list', component: BrandListComponent },
+    { path: 'brand-list', component: BrandListComponent, canActivate: [roleGuard(['Empleado'])] },
     { path: 'addBrands', component: AddbrandsComponent, canActivate: [roleGuard(['Empleado'])] },
     { path: 'addCategories', component: AddcategoriesComponent, canActivate: [roleGuard(['Empleado'])] },
     { path: 'categories-list', component: CategoriesListComponent, canActivate: [roleGuard(['Empleado'])] },
@@ -52,7 +52,7 @@ export const routes: Routes = [
     { path: 'addDistributor', component: AddDistributorComponent, canActivate: [roleGuard(['Empleado'])] },
     { path: 'change-price/:id', component: ChangePriceComponent, canActivate: [roleGuard(['Empleado'])]},
     { path: 'brand-list', component: BrandListComponent, canActivate: [roleGuard(['Empleado'])]},
-    {path: 'dashboard', component: DahsboardComponent},
+    {path: 'dashboard', component: DahsboardComponent, canActivate: [roleGuard(['Empleado'])]},
     
 
     // --- RUTAS COMUNES (Ambos necesitan estar logueados) ---
