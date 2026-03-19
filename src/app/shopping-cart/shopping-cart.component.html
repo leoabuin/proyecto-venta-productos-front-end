@@ -67,6 +67,19 @@
           <div class="rounded-3xl border border-gray-100 bg-white p-8 shadow-xl">
             <h3 class="text-xl font-bold text-gray-900 mb-6 border-b border-gray-50 pb-4 text-left">Resumen de Compra</h3>
 
+            <div class="mb-6">
+              <label for="coupon" class="block mb-2 text-sm font-bold text-gray-700">¿Tienes un cupón?</label>
+              <div class="flex gap-2">
+                <input type="text" id="coupon" [(ngModel)]="couponCode" name="couponCode"
+                       class="block w-full rounded-xl border-gray-200 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-red-500 focus:ring-red-500" 
+                       placeholder="Código (ej. PROMO10)">
+                <button type="button" (click)="applyCoupon(couponCode)"
+                        class="rounded-xl bg-gray-900 px-4 py-2 text-xs font-bold text-white hover:bg-black transition-colors">
+                  Aplicar
+                </button>
+              </div>
+            </div>
+
             <div class="space-y-4 mb-8">
               <div class="flex items-center justify-between">
                 <dt class="text-gray-500 font-medium italic">Subtotal</dt>
@@ -81,6 +94,12 @@
               <div class="flex items-center justify-between">
                 <dt class="text-gray-500 font-medium italic">Método de pago</dt>
                 <dd class="text-[10px] font-black bg-blue-50 text-blue-600 px-2 py-1 rounded uppercase tracking-tighter">Tarjeta de débito</dd>
+              </div>
+
+              <div class="flex items-center justify-between border-t border-gray-100 pt-4">
+                <dt class="text-gray-500 font-medium italic">Cupón de Descuento</dt>
+                <dd class="text-green-600 font-bold" *ngIf="isCouponApplied">-${{ couponDiscount | number:'1.2-2' }}</dd>
+                <dd class="text-gray-400 text-sm" *ngIf="!isCouponApplied">No aplicado</dd>
               </div>
 
               <div class="flex items-center justify-between border-t border-gray-100 pt-6">

@@ -9,11 +9,12 @@ import { Router, RouterModule } from '@angular/router'
 import emailjs from '@emailjs/browser';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component'
 import { environment } from '../environment';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-shopping-cart',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, FooterComponent, RouterModule, LoadingSpinnerComponent],
+  imports: [NavbarComponent, CommonModule, FooterComponent, RouterModule, LoadingSpinnerComponent, FormsModule],
   templateUrl: './shopping-cart.component.html',
   styleUrl: './shopping-cart.component.scss'
 
@@ -24,6 +25,9 @@ export class ShoppingCartComponent implements OnInit {
   total: number = 0
   totalBeforeDiscount: number = 0
   totalDiscount: number = 0
+  couponCode: string = ''
+  couponDiscount: number = 0
+  isCouponApplied: boolean = false
   showOrderDone: boolean = false
   isLoading: boolean = false
 
@@ -52,7 +56,26 @@ export class ShoppingCartComponent implements OnInit {
       return accumulator;
     }, 0);
 
-    this.total = this.totalBeforeDiscount - this.totalDiscount;
+    const subtotalAfterVolume = this.totalBeforeDiscount - this.totalDiscount;
+    this.total = subtotalAfterVolume - this.couponDiscount;
+  }
+
+  applyCoupon(code: string) {
+    if (!code) return;
+    if (code === 'PROMO10') {
+      this.couponDiscount = this.total * 0.1;
+      this.isCouponApplied = true;
+      alert('Cupón PROMO10 aplicado: 10% de descuento');
+    } else if (code === 'PROMO20') {
+      this.couponDiscount = this.total * 0.2;
+      this.isCouponApplied = true;
+      alert('Cupón PROMO20 aplicado: 20% de descuento');
+    } else {
+      alert('Cupón inválido o expirado');
+      this.couponDiscount = 0;
+      this.isCouponApplied = false;
+    }
+    this.calculateTotal();
   }
 
   //logica del envio de email con emailjs
@@ -128,7 +151,8 @@ export class ShoppingCartComponent implements OnInit {
       total: this.total,
       estado: "pending",
       metodo_pago: "Debit_card",
-      userId: userId
+      userId: userId,
+      couponCode: this.couponCode
     }
     console.log(orderData)
 
