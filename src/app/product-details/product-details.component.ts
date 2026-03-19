@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { ApiCommentService } from '../service/commentApi.service.js';
 import { AuthService } from '../service/auth.service.js';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component.js';
+import { ApiUserService } from '../service/userApi.service.js';
 
 interface Price {
   id: number;
@@ -38,6 +39,8 @@ export class ProductDetailsComponent implements OnInit {
   stock: number = 0
   showProductAdd: boolean = false
   isLoading: boolean = false;
+  isFavorite: boolean = false;
+  isFavoriteLoading: boolean = false;
 
   selectSize(size: string) {
     this.selectedSize = size;
@@ -56,17 +59,65 @@ export class ProductDetailsComponent implements OnInit {
     private brandService: ApiService,
     private localStorageService: LocalStorageService,
     private commentService: ApiCommentService,
+    private userApiService: ApiUserService,
     private router: Router,
     public authService: AuthService) { }
 
   productId: string | null = null;
   ngOnInit(): void {
-    this.productId = this.route.snapshot.paramMap.get('id')
+    this.productId = this.route.snapshot.paramMap.get('id');
     if (this.productId) {
       this.loadProductDetails(this.productId);
       this.loadComments(this.productId);
+      
+      // Load favorites to check if this product is one of them (only if logged in as Cliente)
+      if (this.authService.isLoggedIn() && !this.authService.isEmpleado()) {
+         this.checkIfFavorite(Number(this.productId));
+      }
     }
+  }
 
+  checkIfFavorite(productId: number): void {
+      this.userApiService.getFavorites().subscribe({
+          next: (response) => {
+              const favorites = response.data || [];
+              this.isFavorite = favorites.some((fav: any) => fav.idProduct === productId);
+          },
+          error: (err) => {
+              console.error('Error checking favorite status:', err);
+          }
+      });
+  }
+
+  toggleFavorite(): void {
+      if (!this.productId) return;
+      
+      this.isFavoriteLoading = true;
+      const productIdNum = Number(this.productId);
+
+      if (this.isFavorite) {
+          this.userApiService.removeFavorite(productIdNum).subscribe({
+              next: () => {
+                  this.isFavorite = false;
+                  this.isFavoriteLoading = false;
+              },
+              error: (err) => {
+                  console.error('Error removing favorite:', err);
+                  this.isFavoriteLoading = false;
+              }
+          });
+      } else {
+          this.userApiService.addFavorite(productIdNum).subscribe({
+              next: () => {
+                  this.isFavorite = true;
+                  this.isFavoriteLoading = false;
+              },
+              error: (err) => {
+                  console.error('Error adding favorite:', err);
+                  this.isFavoriteLoading = false;
+              }
+          });
+      }
   }
 
   loadProductDetails(id: string): void {

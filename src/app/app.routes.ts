@@ -22,6 +22,7 @@ import { MyOrdersComponent } from './my-orders/my-orders.component.js';
 import { roleGuard } from './auth.guard';
 import { UpdateUserComponent } from './update-user/update-user.component.js';
 import { DahsboardComponent } from './dahsboard/dahsboard.component.js';
+import { FavoritesListComponent } from './favorites-list/favorites-list.component.js';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -38,6 +39,7 @@ export const routes: Routes = [
     { path: 'shopping-cart', component: ShoppingCartComponent, canActivate: [roleGuard(['Cliente'])] },
     { path: 'myOrders/:idUser', component: MyOrdersComponent, canActivate: [roleGuard(['Cliente'])] },
     {path: 'add-to-cart', component: ShoppingCartComponent, canActivate: [roleGuard(['Cliente'])]},
+    { path: 'favorites', component: FavoritesListComponent, canActivate: [roleGuard(['Cliente'])] },
 
     // --- RUTAS DE GESTIÓN (Solo Empleados) ---
     { path: 'brand-list', component: BrandListComponent, canActivate: [roleGuard(['Empleado'])] },
