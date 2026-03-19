@@ -31,15 +31,23 @@
                   <h3 class="text-lg font-bold text-gray-900 leading-tight text-left">
                     {{ item.name }}
                   </h3>
-                  <p class="text-xl font-black text-gray-900">
-                    ${{ (item.item_price) | number:'1.2-2' }}
-                  </p>
+                  <div class="text-right">
+                    <p class="text-xl font-black text-gray-900" [class.text-red-600]="item.quantity >= 5">
+                      ${{ (item.quantity >= 5 ? item.item_price * 0.9 : item.item_price) | number:'1.2-2' }}
+                    </p>
+                    <p *ngIf="item.quantity >= 5" class="text-sm font-medium text-gray-400 line-through">
+                      ${{ item.item_price | number:'1.2-2' }}
+                    </p>
+                  </div>
                 </div>
                 
                 <div class="flex items-center gap-4 mt-1 mb-4">
                   <span class="text-xs font-bold uppercase tracking-widest text-gray-400">Cantidad:</span>
                   <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-lg text-sm font-bold">{{ item.quantity }}</span>
                   <span class="text-xs text-gray-400">(${{ item.item_price / item.quantity | number:'1.2-2' }} c/u)</span>
+                  <span *ngIf="item.quantity >= 5" class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                    -10% Volumén
+                  </span>
                 </div>
 
                 <div class="flex items-center justify-between border-t border-gray-50 pt-4">
@@ -62,7 +70,12 @@
             <div class="space-y-4 mb-8">
               <div class="flex items-center justify-between">
                 <dt class="text-gray-500 font-medium italic">Subtotal</dt>
-                <dd class="text-gray-900 font-bold">${{ total | number:'1.2-2' }}</dd>
+                <dd class="text-gray-900 font-bold">${{ totalBeforeDiscount | number:'1.2-2' }}</dd>
+              </div>
+
+              <div *ngIf="totalDiscount > 0" class="flex items-center justify-between">
+                <dt class="text-green-600 font-medium italic">Descuento por Volumen (10%)</dt>
+                <dd class="text-green-600 font-bold">-${{ totalDiscount | number:'1.2-2' }}</dd>
               </div>
               
               <div class="flex items-center justify-between">

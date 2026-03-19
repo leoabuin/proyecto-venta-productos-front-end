@@ -22,6 +22,8 @@ export class ShoppingCartComponent implements OnInit {
   cartItems: any[] = [];
   orderItem: any[] = []
   total: number = 0
+  totalBeforeDiscount: number = 0
+  totalDiscount: number = 0
   showOrderDone: boolean = false
   isLoading: boolean = false
 
@@ -39,9 +41,18 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   calculateTotal() {
-    this.total = this.cartItems.reduce((accumulator, item) => {
+    this.totalBeforeDiscount = this.cartItems.reduce((accumulator, item) => {
       return accumulator + (item.item_price)
     }, 0);
+
+    this.totalDiscount = this.cartItems.reduce((accumulator, item) => {
+      if (item.quantity >= 5) {
+        return accumulator + (item.item_price * 0.1);
+      }
+      return accumulator;
+    }, 0);
+
+    this.total = this.totalBeforeDiscount - this.totalDiscount;
   }
 
   //logica del envio de email con emailjs
