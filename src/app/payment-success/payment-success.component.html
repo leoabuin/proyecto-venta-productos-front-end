@@ -1,0 +1,33 @@
+<app-navbar></app-navbar>
+
+<div class="payment-success-container">
+  <div class="success-card">
+    <div *ngIf="isLoading" class="loading">
+      <div class="spinner"></div>
+      <p>{{ message }}</p>
+    </div>
+
+    <div *ngIf="!isLoading" class="success-content">
+      <div class="success-icon">
+        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      
+      <h1>¡Pago Exitoso!</h1>
+      <p class="message">{{ message }}</p>
+      
+      <div class="order-info" *ngIf="orderId">
+        <p><strong>Número de orden:</strong> #{{ orderId }}</p>
+        <p>Recibirás un correo electrónico con los detalles de tu compra.</p>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" (click)="goToMyOrders()">Ver mis órdenes</button>
+        <button class="btn btn-secondary" (click)="goToHome()">Volver al inicio</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '../service/local-storage.service.js';
 import { FooterComponent } from '../footer/footer.component.js';
 import { OrderApiService } from '../service/order-api.service.js';
+import { PaymentService } from '../service/payment.service.js';
 import { formatDate } from '@angular/common';
 import { Router, RouterModule } from '@angular/router'
 import emailjs from '@emailjs/browser';
@@ -28,6 +29,7 @@ export class ShoppingCartComponent implements OnInit {
   constructor(
     private localStorageService: LocalStorageService,
     private orderService: OrderApiService,
+    private paymentService: PaymentService,
     private router: Router
   ) {
     const cart = this.localStorageService.getItem('cartToshow');
@@ -109,28 +111,69 @@ export class ShoppingCartComponent implements OnInit {
       item_price: item.item_price
     }))
 
-
-
     const orderData = {
       orderItems,
       fecha_pedido: formatDate(new Date(), 'yyyy-MM-ddTHH:mm:ssZ', 'en-US'),
       total: this.total,
       estado: "pending",
-      metodo_pago: "Debit_card",
+      metodo_pago: "Mercado Pago",
       userId: userId
     }
-    console.log(orderData)
+    console.log('Creando orden:', orderData)
 
+    // Paso 1: Crear la orden en el backend
     this.orderService.placeOrder(orderData).subscribe({
       next: (response) => {
-        console.log('Pedido registrado:', response)
-        this.sendEmailInvoice(response.id || Math.floor(Math.random() * 1000));
-        this.localStorageService.removeItem('cart')
-        this.localStorageService.removeItem('cartToshow')
+        console.log('Orden creada exitosamente:', response)
+        const orderId = response.id || response.data?.id
+        
+        if (!orderId) {
+          this.isLoading = false
+          alert('Error: No se pudo obtener el ID de la orden')
+          return
+        }
+
+        // Guardar el orderId en localStorage para usar después en la página de éxito
+        this.localStorageService.setItem('currentOrderId', String(orderId))
+
+        // Paso 2: Crear la preferencia de pago en Mercado Pago
+        const paymentItems = this.cartItems.map(item => ({
+          productId: item.productId,
+          id: String(item.productId),
+          title: item.name,
+          quantity: item.quantity,
+          unit_price: item.unit_price || (item.item_price / item.quantity)
+        }))
+
+        console.log('Creando preferencia de pago para orden #' + orderId)
+        this.paymentService.createPaymentPreference(orderId, paymentItems).subscribe({
+          next: (paymentResponse) => {
+            console.log('Preferencia de pago creada:', paymentResponse)
+            const initPoint = paymentResponse.init_point || paymentResponse.sandbox_init_point
+            
+            if (initPoint) {
+              // Redirigir a Mercado Pago
+              console.log('Redirigiendo a Mercado Pago:', initPoint)
+              window.location.href = initPoint
+              this.isLoading = false
+            } else {
+              this.isLoading = false
+              alert('Error: No se pudo obtener el enlace de pago de Mercado Pago')
+            }
+          },
+          error: (error) => {
+            console.error('Error al crear preferencia de pago:', error)
+            this.isLoading = false
+            alert('Error al procesar el pago. Por favor, intenta nuevamente.')
+          }
+        })
       },
+      error: (error) => {
+        console.error('Error al crear la orden:', error)
+        this.isLoading = false
+        alert('Error al crear la orden. Por favor, intenta nuevamente.')
+      }
     })
-    this.isLoading = false
-    this.showOrderDone = true
   }
 
   closeOrderDoneSuccessMessage() {

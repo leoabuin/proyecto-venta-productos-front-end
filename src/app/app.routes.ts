@@ -18,6 +18,9 @@ import { UpdateDistributorComponent } from './update-distributor/update-distribu
 import { AddDistributorComponent } from './add-distributor/add-distributor.component.js';
 import { FooterComponent } from './footer/footer.component.js';
 import { MyOrdersComponent } from './my-orders/my-orders.component.js';
+import { PaymentSuccessComponent } from './payment-success/payment-success.component.js';
+import { PaymentFailureComponent } from './payment-failure/payment-failure.component.js';
+import { PaymentPendingComponent } from './payment-pending/payment-pending.component.js';
 
 import { roleGuard } from './auth.guard';
 import { UpdateUserComponent } from './update-user/update-user.component.js';
@@ -40,6 +43,11 @@ export const routes: Routes = [
     { path: 'myOrders/:idUser', component: MyOrdersComponent, canActivate: [roleGuard(['Cliente'])] },
     {path: 'add-to-cart', component: ShoppingCartComponent, canActivate: [roleGuard(['Cliente'])]},
     { path: 'favorites', component: FavoritesListComponent, canActivate: [roleGuard(['Cliente'])] },
+    
+    // --- RUTAS DE PAGO (Mercado Pago) ---
+    { path: 'payment/success', component: PaymentSuccessComponent },
+    { path: 'payment/failure', component: PaymentFailureComponent },
+    { path: 'payment/pending', component: PaymentPendingComponent },
 
     // --- RUTAS DE GESTIÓN (Solo Empleados) ---
     { path: 'brand-list', component: BrandListComponent, canActivate: [roleGuard(['Empleado'])] },

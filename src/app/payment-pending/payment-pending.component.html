@@ -1,0 +1,41 @@
+<app-navbar></app-navbar>
+
+<div class="payment-pending-container">
+  <div class="pending-card">
+    <div class="pending-icon">
+      <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <polyline points="12 6 12 12 16 14"></polyline>
+      </svg>
+    </div>
+    
+    <h1>Pago Pendiente</h1>
+    <p class="message">Tu pago está siendo procesado.</p>
+    
+    <div class="pending-info">
+      <p>Por favor, espera mientras procesamos tu transacción. Esta operación puede tomar algunos minutos.</p>
+      <p><strong>No cierres esta página.</strong></p>
+    </div>
+
+    <div class="order-info" *ngIf="orderId">
+      <p><strong>Número de orden:</strong> #{{ orderId }}</p>
+      <p *ngIf="paymentStatus" class="status"><strong>Estado:</strong> {{ paymentStatus }}</p>
+    </div>
+
+    <div class="actions">
+      <button 
+        class="btn btn-primary" 
+        (click)="checkPaymentStatus()"
+        [disabled]="isCheckingStatus">
+        {{ isCheckingStatus ? 'Verificando...' : 'Verificar estado' }}
+      </button>
+      <button class="btn btn-secondary" (click)="goToHome()">Volver al inicio</button>
+    </div>
+
+    <p class="info-text">
+      Recibirás un correo de confirmación una vez que tu pago sea procesado.
+    </p>
+  </div>
+</div>
+
+<app-footer></app-footer>

@@ -1,0 +1,40 @@
+<app-navbar></app-navbar>
+
+<div class="payment-failure-container">
+  <div class="failure-card">
+    <div class="failure-icon">
+      <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="15" y1="9" x2="9" y2="15"></line>
+        <line x1="9" y1="9" x2="15" y2="15"></line>
+      </svg>
+    </div>
+    
+    <h1>Pago Rechazado</h1>
+    <p class="message">Lo sentimos, tu transacción no fue aprobada.</p>
+    
+    <div class="failure-reasons">
+      <p><strong>Posibles razones:</strong></p>
+      <ul>
+        <li>Fondos insuficientes</li>
+        <li>Datos de la tarjeta incorrectos</li>
+        <li>Tarjeta expirada o bloqueada</li>
+        <li>Límite de transacciones excedido</li>
+      </ul>
+    </div>
+
+    <div class="order-info" *ngIf="orderId">
+      <p><strong>Número de orden:</strong> #{{ orderId }}</p>
+      <p>Tu carrito sigue disponible para que intentes el pago nuevamente.</p>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" (click)="retryPayment()">Intentar nuevamente</button>
+      <button class="btn btn-secondary" (click)="goToHome()">Volver al inicio</button>
+    </div>
+
+    <p class="support-text">¿Necesitas ayuda? Contacta a nuestro equipo de soporte.</p>
+  </div>
+</div>
+
+<app-footer></app-footer>

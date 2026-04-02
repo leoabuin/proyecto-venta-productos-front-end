@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderApiService } from '../service/order-api.service.js';
+import { PaymentService } from '../service/payment.service.js';
 import { LocalStorageService } from '../service/local-storage.service.js';
 import { NavbarComponent } from '../../navbar/navbar.component.js';
 import { FooterComponent } from '../footer/footer.component.js';
@@ -26,6 +27,7 @@ export class MyOrdersComponent implements OnInit {
 
   constructor(
     private orderService: OrderApiService,
+    private paymentService: PaymentService,
     private localStorageService: LocalStorageService
   ) { }
 
@@ -38,6 +40,7 @@ export class MyOrdersComponent implements OnInit {
         next: (data) => {
           this.orders = data; // Aquí va directo, porque el back manda el array pelado
           console.log('Ahora sí, con productos:', data);
+          this.verifyPendingOrders();
         },
         error: (error) => {
           console.error('Error al obtener las órdenes:', error);
@@ -81,6 +84,31 @@ export class MyOrdersComponent implements OnInit {
     // En lugar de reload(), podrías simplemente dejar que la actualización local haga su trabajo
     // Pero si prefieres asegurar, el reload() funciona:
     window.location.reload();
+  }
+
+  private verifyPendingOrders(): void {
+    const pendingOrders = this.orders.filter(order => order.estado === 'pending' || order.estado === 'Pago Pendiente');
+    if (pendingOrders.length === 0) {
+      return;
+    }
+
+    console.log('[MyOrders] Verificando órdenes pendientes:', pendingOrders.map(o => o.id));
+
+    pendingOrders.forEach((order) => {
+      this.paymentService.verifyPayment(order.id).subscribe({
+        next: (response) => {
+          console.log('[MyOrders] verifyPayment respuesta:', order.id, response);
+          if (response.orderStatus && response.orderStatus !== order.estado) {
+            order.estado = response.orderStatus;
+          } else if (response.paymentStatus === 'approved' && order.estado !== 'Pagado') {
+            order.estado = 'Pagado';
+          }
+        },
+        error: (error) => {
+          console.error('[MyOrders] Error verificando orden', order.id, error);
+        }
+      });
+    });
   }
 
   downloadInvoice(order: any) {
