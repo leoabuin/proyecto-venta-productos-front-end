@@ -27,11 +27,13 @@ export class ShoppingCartComponent implements OnInit {
   showOrderDone: boolean = false
   isLoading: boolean = false
   
-  // Coupon properties
+  // Coupon & Discount tracking
   couponCode: string = '';
   appliedCoupon: any = null;
   couponError: string = '';
   volumeDiscountTotal: number = 0;
+  couponDiscountAmount: number = 0;
+  originalSubtotal: number = 0;
 
   constructor(
     private localStorageService: LocalStorageService,
@@ -49,25 +51,28 @@ export class ShoppingCartComponent implements OnInit {
 
   calculateTotal() {
     this.volumeDiscountTotal = 0;
-    
-    // Calculate total with volume discount (20% OFF if quantity >= 3)
-    this.total = this.cartItems.reduce((accumulator, item) => {
+    this.couponDiscountAmount = 0;
+
+    // 1. Subtotal original (sin descuentos)
+    this.originalSubtotal = this.cartItems.reduce((acc, item) => acc + item.item_price, 0);
+
+    // 2. Aplicar descuento por volumen (20% OFF si cantidad >= 3)
+    const subtotalAfterVolume = this.cartItems.reduce((accumulator, item) => {
       let itemPrice = item.item_price;
-      
       if (item.quantity >= 3) {
         const discountAmount = item.item_price * 0.2;
         this.volumeDiscountTotal += discountAmount;
         itemPrice = item.item_price - discountAmount;
       }
-      
       return accumulator + itemPrice;
     }, 0);
 
-    // Apply coupon discount if applicable
+    // 3. Aplicar descuento de cupón sobre el subtotal ya descontado por volumen
     if (this.appliedCoupon) {
-      const couponDiscount = this.total * (this.appliedCoupon.discountPercentage / 100);
-      this.total -= couponDiscount;
+      this.couponDiscountAmount = subtotalAfterVolume * (this.appliedCoupon.discountPercentage / 100);
     }
+
+    this.total = subtotalAfterVolume - this.couponDiscountAmount;
   }
 
   applyCoupon() {

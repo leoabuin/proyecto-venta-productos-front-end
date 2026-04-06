@@ -68,7 +68,7 @@
             <div class="space-y-4 mb-8">
               <div class="flex items-center justify-between">
                 <dt class="text-gray-500 font-medium italic">Subtotal</dt>
-                <dd class="text-gray-900 font-bold">${{ (total + volumeDiscountTotal + (appliedCoupon ? (total / (1 - appliedCoupon.discountPercentage/100)) * (appliedCoupon.discountPercentage/100) : 0)) | number:'1.2-2' }}</dd>
+                <dd class="text-gray-900 font-bold">${{ originalSubtotal | number:'1.2-2' }}</dd>
               </div>
 
               <!-- Volume Discount Savings -->
@@ -80,7 +80,7 @@
               <!-- Coupon Discount -->
               <div *ngIf="appliedCoupon" class="flex items-center justify-between text-blue-600">
                 <dt class="font-medium italic">Cupón: {{ appliedCoupon.code }} ({{ appliedCoupon.discountPercentage }}%)</dt>
-                <dd class="font-bold">-${{ (total * appliedCoupon.discountPercentage / (100 - appliedCoupon.discountPercentage)) | number:'1.2-2' }}</dd>
+                <dd class="font-bold">-${{ couponDiscountAmount | number:'1.2-2' }}</dd>
               </div>
               
               <div class="flex items-center justify-between">
