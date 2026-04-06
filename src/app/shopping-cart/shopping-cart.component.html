@@ -40,6 +40,12 @@
                   <span class="text-xs font-bold uppercase tracking-widest text-gray-400">Cantidad:</span>
                   <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-lg text-sm font-bold">{{ item.quantity }}</span>
                   <span class="text-xs text-gray-400">(${{ item.item_price / item.quantity | number:'1.2-2' }} c/u)</span>
+                  
+                  <!-- Volume Discount Badge -->
+                  <span *ngIf="item.quantity >= 3" 
+                        class="bg-green-100 text-green-700 text-[10px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider animate-pulse">
+                    ¡20% OFF Aplicado!
+                  </span>
                 </div>
 
                 <div class="flex items-center justify-between border-t border-gray-50 pt-4">
@@ -62,7 +68,19 @@
             <div class="space-y-4 mb-8">
               <div class="flex items-center justify-between">
                 <dt class="text-gray-500 font-medium italic">Subtotal</dt>
-                <dd class="text-gray-900 font-bold">${{ total | number:'1.2-2' }}</dd>
+                <dd class="text-gray-900 font-bold">${{ (total + volumeDiscountTotal + (appliedCoupon ? (total / (1 - appliedCoupon.discountPercentage/100)) * (appliedCoupon.discountPercentage/100) : 0)) | number:'1.2-2' }}</dd>
+              </div>
+
+              <!-- Volume Discount Savings -->
+              <div *ngIf="volumeDiscountTotal > 0" class="flex items-center justify-between text-green-600">
+                <dt class="font-medium italic">Descuento por Volumen (3+)</dt>
+                <dd class="font-bold">-${{ volumeDiscountTotal | number:'1.2-2' }}</dd>
+              </div>
+
+              <!-- Coupon Discount -->
+              <div *ngIf="appliedCoupon" class="flex items-center justify-between text-blue-600">
+                <dt class="font-medium italic">Cupón: {{ appliedCoupon.code }} ({{ appliedCoupon.discountPercentage }}%)</dt>
+                <dd class="font-bold">-${{ (total * appliedCoupon.discountPercentage / (100 - appliedCoupon.discountPercentage)) | number:'1.2-2' }}</dd>
               </div>
               
               <div class="flex items-center justify-between">
@@ -74,6 +92,27 @@
                 <dt class="text-xl font-extrabold text-gray-900">Total Final</dt>
                 <dd class="text-2xl font-black text-red-600">${{ total | number:'1.2-2' }}</dd>
               </div>
+            </div>
+
+            <!-- Coupon Input Section -->
+            <div class="mb-6 p-4 bg-gray-50 rounded-2xl border border-dashed border-gray-200">
+              <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">¿Tienes un cupón?</label>
+              <div class="flex gap-2">
+                <input type="text" [(ngModel)]="couponCode" name="couponCode" 
+                       placeholder="Ingresa código"
+                       class="flex-1 bg-white border border-gray-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition-all"
+                       [disabled]="appliedCoupon">
+                <button *ngIf="!appliedCoupon" (click)="applyCoupon()"
+                        class="bg-gray-900 text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-black transition-all">
+                  Aplicar
+                </button>
+                <button *ngIf="appliedCoupon" (click)='removeCoupon()'
+                        class="bg-red-50 text-red-600 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-red-100 transition-all">
+                  Quitar
+                </button>
+              </div>
+              <p *ngIf="couponError" class="mt-2 text-[10px] font-bold text-red-500 uppercase tracking-tighter italic">{{ couponError }}</p>
+              <p *ngIf="appliedCoupon" class="mt-2 text-[10px] font-bold text-green-600 uppercase tracking-tighter italic">¡Cupón aplicado con éxito!</p>
             </div>
 
             <button type="button" (click)="submitOrder()"

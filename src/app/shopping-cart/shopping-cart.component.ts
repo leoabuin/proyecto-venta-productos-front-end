@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from '../../navbar/navbar.component';
 import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '../service/local-storage.service.js';
@@ -14,7 +15,7 @@ import { environment } from '../environment';
 @Component({
   selector: 'app-shopping-cart',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, FooterComponent, RouterModule, LoadingSpinnerComponent],
+  imports: [NavbarComponent, CommonModule, FooterComponent, RouterModule, LoadingSpinnerComponent, FormsModule],
   templateUrl: './shopping-cart.component.html',
   styleUrl: './shopping-cart.component.scss'
 
@@ -25,6 +26,12 @@ export class ShoppingCartComponent implements OnInit {
   total: number = 0
   showOrderDone: boolean = false
   isLoading: boolean = false
+  
+  // Coupon properties
+  couponCode: string = '';
+  appliedCoupon: any = null;
+  couponError: string = '';
+  volumeDiscountTotal: number = 0;
 
   constructor(
     private localStorageService: LocalStorageService,
@@ -41,9 +48,67 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   calculateTotal() {
+    this.volumeDiscountTotal = 0;
+    
+    // Calculate total with volume discount (20% OFF if quantity >= 3)
     this.total = this.cartItems.reduce((accumulator, item) => {
-      return accumulator + (item.item_price)
+      let itemPrice = item.item_price;
+      
+      if (item.quantity >= 3) {
+        const discountAmount = item.item_price * 0.2;
+        this.volumeDiscountTotal += discountAmount;
+        itemPrice = item.item_price - discountAmount;
+      }
+      
+      return accumulator + itemPrice;
     }, 0);
+
+    // Apply coupon discount if applicable
+    if (this.appliedCoupon) {
+      const couponDiscount = this.total * (this.appliedCoupon.discountPercentage / 100);
+      this.total -= couponDiscount;
+    }
+  }
+
+  applyCoupon() {
+    if (!this.couponCode) {
+      this.couponError = 'Por favor ingrese un código';
+      return;
+    }
+
+    this.isLoading = true;
+    this.orderService.validateCoupon(this.couponCode).subscribe({
+      next: (response) => {
+        const coupon = response.data || response;
+        
+        // Basic frontend validation
+        const now = new Date();
+        const expirationDate = new Date(coupon.expirationDate);
+        
+        if (expirationDate < now) {
+          this.couponError = 'El cupón ha expirado';
+          this.appliedCoupon = null;
+        } else {
+          this.appliedCoupon = coupon;
+          this.couponError = '';
+          this.calculateTotal();
+        }
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error al validar cupón:', error);
+        this.couponError = 'Cupón inválido o no encontrado';
+        this.appliedCoupon = null;
+        this.calculateTotal();
+        this.isLoading = false;
+      }
+    });
+  }
+
+  removeCoupon() {
+    this.appliedCoupon = null;
+    this.couponCode = '';
+    this.calculateTotal();
   }
 
   //logica del envio de email con emailjs
@@ -117,7 +182,8 @@ export class ShoppingCartComponent implements OnInit {
       total: this.total,
       estado: "pending",
       metodo_pago: "Mercado Pago",
-      userId: userId
+      userId: userId,
+      couponId: this.appliedCoupon ? this.appliedCoupon.id : null
     }
     console.log('Creando orden:', orderData)
 
