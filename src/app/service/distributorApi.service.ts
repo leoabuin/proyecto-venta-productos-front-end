@@ -16,7 +16,7 @@ import { environment } from "../environment";
     constructor(private http: HttpClient) { }
   
     public createDistributor(distributorData: any): Observable<any> {
-      return this.http.post<any>(this.urlDistributorApi, distributorData);
+      return this.http.post<any>(this.urlDistributorApi, distributorData, { withCredentials: true });
     }
   
     public getDistributorsData(): Observable<any>{
