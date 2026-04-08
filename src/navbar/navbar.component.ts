@@ -93,6 +93,8 @@ export class NavbarComponent implements OnInit {
     this.closeAllMenus();
   }
 
+  isMenuOpen = false;
+
   toggleMobileMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
