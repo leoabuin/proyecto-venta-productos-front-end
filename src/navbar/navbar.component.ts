@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { RouterLink, RouterModule, Router } from '@angular/router';
 import { LocalStorageService } from '../app/service/local-storage.service.js';
 import { ApiUserService } from '../app/service/userApi.service.js';
@@ -86,7 +86,12 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  isMenuOpen = false;
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    // If the click is outside, we close the menus
+    // This is safe because the menu button itself now has stopPropagation()
+    this.closeAllMenus();
+  }
 
   toggleMobileMenu() {
     this.isMenuOpen = !this.isMenuOpen;

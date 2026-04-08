@@ -27,10 +27,10 @@
           <a routerLink="/categories-list" class="py-2 px-1 hover:text-red-200 font-bold text-sm transition-colors">Categorias</a>
 
           <div class="relative flex items-center">
-            <button (click)="toggleGestionMenu()" class="py-2 px-1 hover:text-red-200 font-bold text-sm flex items-center gap-1 focus:outline-none">
+            <button (click)="toggleGestionMenu(); $event.stopPropagation()" class="py-2 px-1 hover:text-red-200 font-bold text-sm flex items-center gap-1 focus:outline-none">
               Gestionar <i class="fa fa-chevron-down text-[8px]" [class.rotate-180]="showGestionMenu"></i>
             </button>
-            <div *ngIf="showGestionMenu" class="absolute bg-white text-black shadow-2xl rounded-2xl top-full left-0 w-52 py-3 z-50 mt-2 border border-gray-100 overflow-hidden">
+            <div *ngIf="showGestionMenu" (click)="$event.stopPropagation()" class="absolute bg-white text-black shadow-2xl rounded-2xl top-full left-0 w-52 py-3 z-50 mt-2 border border-gray-100 overflow-hidden">
               <a routerLink="/products" (click)="showGestionMenu = false" class="block px-6 py-2.5 hover:bg-red-500 hover:text-white transition-all text-sm font-bold">Lista de Productos</a>
               <a routerLink="/addProduct" (click)="showGestionMenu = false" class="block px-6 py-2.5 hover:bg-red-500 hover:text-white transition-all text-sm font-bold">Agregar Producto</a>
             </div>
@@ -94,11 +94,11 @@
 
   <ng-template #userProfile>
     <div class="relative flex items-center">
-      <button (click)="toggleMenu()" class="flex items-center py-2 px-3 hover:bg-red-600 rounded-lg font-bold transition-all focus:outline-none">
+      <button (click)="toggleMenu(); $event.stopPropagation()" class="flex items-center py-2 px-3 hover:bg-red-600 rounded-lg font-bold transition-all focus:outline-none">
         <span class="max-w-[100px] truncate text-sm">{{ username }}</span>
         <i class="fa fa-chevron-down ml-2 text-[10px]" [class.rotate-180]="showMenu"></i>
       </button>
-      <div *ngIf="showMenu" class="absolute right-0 bg-white text-black shadow-2xl rounded-2xl top-full w-52 py-3 z-50 mt-2 border border-gray-100 overflow-hidden">
+      <div *ngIf="showMenu" (click)="$event.stopPropagation()" class="absolute right-0 bg-white text-black shadow-2xl rounded-2xl top-full w-52 py-3 z-50 mt-2 border border-gray-100 overflow-hidden">
         <button *ngIf="!authService.isEmpleado()" [routerLink]="['/myOrders', userId]" (click)="showMenu = false" class="flex items-center w-full px-6 py-2.5 hover:bg-red-500 hover:text-white transition-all text-sm font-bold text-left">
           <i class="fas fa-box-open mr-3 opacity-50"></i> Mis pedidos
         </button>
