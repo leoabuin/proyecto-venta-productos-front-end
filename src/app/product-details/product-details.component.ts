@@ -31,8 +31,10 @@ interface Price {
 export class ProductDetailsComponent implements OnInit {
 
 
-  sizes = ['S', 'M', 'L', 'XL', 'XXL']
+  // Lista de talles del sistema para mostrar en UI (tachados si no disponibles)
+  allSizes = ['S', 'M', 'L', 'XL', 'XXL']
   selectedSize = ''
+  sizeError = false
   product: any
   currentPrice: Price | undefined
   quantity: number = 1
@@ -43,7 +45,11 @@ export class ProductDetailsComponent implements OnInit {
   isFavoriteLoading: boolean = false;
 
   selectSize(size: string) {
-    this.selectedSize = size;
+    // Solo permitir seleccionar si el talle es el del producto
+    if (this.product?.waist === size) {
+      this.selectedSize = size;
+      this.sizeError = false;
+    }
   }
 
   comments: any[] = [];
@@ -186,6 +192,12 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   addToCart(): void {
+    // Validar que se haya seleccionado talle
+    if (!this.selectedSize) {
+      this.sizeError = true;
+      return;
+    }
+    this.sizeError = false;
     this.isLoading = true
     const cartItem = {
       productId: this.product.id,
