@@ -64,10 +64,10 @@ export class PaymentService {
    * @param orderId ID de la orden
    * @returns Observable con el estado del pago
    */
-  verifyPayment(orderId: number): Observable<MercadoPagoPaymentResponse> {
+  verifyPayment(orderId: number, paymentId?: string): Observable<MercadoPagoPaymentResponse> {
     return this.http.post<MercadoPagoPaymentResponse>(
       `${this.apiUrl}/payment/verify-payment`,
-      { order_id: orderId },
+      { order_id: orderId, ...(paymentId ? { payment_id: paymentId } : {}) },
       { withCredentials: true }
     );
   }
