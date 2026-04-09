@@ -36,12 +36,12 @@
 
                 <div class="flex flex-wrap gap-4 mb-4" *ngIf="currentPrice">
                     <div class="flex items-center">
-                        <span class="font-bold text-gray-700 dark:text-gray-300 mr-1">Price:</span>
+                        <span class="font-bold text-gray-700 dark:text-gray-300 mr-1">Precio:</span>
                         <span class="text-gray-600 dark:text-gray-300"> {{ currentPrice.cost | currency }}</span>
                     </div>
                     <div class="flex items-center">
-                        <span class="font-bold text-gray-700 dark:text-gray-300 mr-1">Availability:</span>
-                        <span class="text-gray-600 dark:text-gray-300">In Stock</span>
+                        <span class="font-bold text-gray-700 dark:text-gray-300 mr-1">Disponibilidad:</span>
+                        <span class="text-gray-600 dark:text-gray-300">En Stock</span>
                     </div>
                 </div>
 
@@ -56,17 +56,19 @@
                         Disponible: {{ product.waist }}
                       </span>
                     </div>
-                    <div class="flex flex-wrap gap-2">
+                    <div class="flex flex-wrap gap-3">
                         <button *ngFor="let size of allSizes"
                             [disabled]="product?.waist !== size"
                             (click)="selectSize(size)"
+                            [title]="product?.waist !== size ? 'Talle agotado' : 'Seleccionar talle'"
                             [ngClass]="{
-                              'bg-green-500 text-white ring-2 ring-green-300 shadow-md': selectedSize === size,
-                              'bg-gray-100 text-gray-700 hover:bg-green-100 hover:border-green-400 border border-transparent': product?.waist === size && selectedSize !== size,
-                              'bg-gray-100 text-gray-300 line-through cursor-not-allowed opacity-60': product?.waist !== size
+                              'bg-green-600 text-white ring-4 ring-green-200 shadow-lg scale-105': selectedSize === size,
+                              'bg-white text-gray-800 border-2 border-gray-300 hover:border-green-500 hover:text-green-600 shadow-sm': product?.waist === size && selectedSize !== size,
+                              'bg-gray-50 text-gray-400 border border-gray-200 line-through decoration-red-400/50 cursor-not-allowed opacity-50': product?.waist !== size
                             }"
-                            class="py-2 px-5 rounded-full font-bold transition-all text-sm">
+                            class="py-2.5 px-6 rounded-xl font-black transition-all duration-200 text-sm flex items-center gap-1">
                             {{ size }}
+                            <i *ngIf="product?.waist !== size" class="fas fa-times text-[10px] text-red-400 ml-1"></i>
                         </button>
                     </div>
                     <!-- Error si no se seleccionó talle -->
@@ -77,7 +79,7 @@
                 </div>
 
                 <div class="mb-6">
-                    <span class="font-bold text-gray-700 dark:text-gray-300">Product Description:</span>
+                    <span class="font-bold text-gray-700 dark:text-gray-300">Descripción del Producto:</span>
                     <p class="text-gray-600 dark:text-gray-300 text-sm mt-2 leading-relaxed">
                         {{product.description}}
                     </p>
