@@ -45,7 +45,7 @@ import { environment } from "../environment";
       return this.http.post<any>(`${this.urlUserApi}/logOut`, {}, { withCredentials: true });
     }
     public update(id:number,userData:any):Observable<any>{
-      return this.http.patch<any>(`${this.urlUserApi}/${id}`,userData)
+      return this.http.patch<any>(`${this.urlUserApi}/${id}`,userData, { withCredentials: true })
     }
     
   }
