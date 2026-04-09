@@ -16,6 +16,7 @@ import { PaymentService, MercadoPagoPaymentResponse } from '../service/payment.s
 export class PaymentSuccessComponent implements OnInit {
   orderId: number | null = null;
   paymentId: string | null = null;
+  mpStatus: string | null = null;
   isLoading: boolean = true;
   message: string = 'Procesando tu pago...';
   paymentStatus: string | null = null;
@@ -34,13 +35,14 @@ export class PaymentSuccessComponent implements OnInit {
     // ?payment_id=XXX&status=approved&external_reference=ORDER_ID&...
     const params = this.route.snapshot.queryParams;
     this.paymentId = params['payment_id'] || params['collection_id'] || null;
+    this.mpStatus = params['status'] || params['collection_status'] || null;
 
     // Intentar obtener orderId desde URL o desde localStorage
     const externalRef = params['external_reference'] || params['orderId'];
     const storedOrderId = this.localStorageService.getItem('currentOrderId');
     this.orderId = externalRef ? Number(externalRef) : (storedOrderId ? Number(storedOrderId) : null);
 
-    console.log('[PaymentSuccess] payment_id:', this.paymentId, '| orderId:', this.orderId);
+    console.log('[PaymentSuccess] payment_id:', this.paymentId, '| status:', this.mpStatus, '| orderId:', this.orderId);
 
     if (this.orderId) {
       this.verifyPaymentStatus();
@@ -55,7 +57,7 @@ export class PaymentSuccessComponent implements OnInit {
 
     console.log(`[PaymentSuccess] Verificando pago para orden #${this.orderId}, payment_id: ${this.paymentId}`);
 
-    this.paymentService.verifyPayment(this.orderId, this.paymentId ?? undefined).subscribe({
+    this.paymentService.verifyPayment(this.orderId!, this.paymentId ?? undefined, this.mpStatus ?? undefined).subscribe({
       next: (response: MercadoPagoPaymentResponse) => {
         console.log('[PaymentSuccess] Respuesta:', response);
 

@@ -222,8 +222,12 @@ export class ShoppingCartComponent implements OnInit {
             console.log('Preferencia de pago creada:', paymentResponse)
             const initPoint = paymentResponse.init_point || paymentResponse.sandbox_init_point
             
-            if (initPoint) {
-              // Redirigir a Mercado Pago
+          if (initPoint) {
+              // Limpiar el carrito ANTES de salir hacia Mercado Pago
+              this.localStorageService.removeItem('cart')
+              this.localStorageService.removeItem('cartToshow')
+              // Guardar el orderId para usarlo en la página de éxito
+              this.localStorageService.setItem('currentOrderId', String(orderId))
               console.log('Redirigiendo a Mercado Pago:', initPoint)
               window.location.href = initPoint
               this.isLoading = false
