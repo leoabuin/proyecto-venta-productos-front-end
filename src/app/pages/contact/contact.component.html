@@ -1,0 +1,73 @@
+<app-navbar></app-navbar>
+
+<section class="bg-gray-50 dark:bg-gray-900 py-16 antialiased min-h-screen">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      
+      <!-- Información de Contacto -->
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-8 md:p-12">
+        <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-6">Contáctanos</h1>
+        <p class="text-lg text-gray-500 mb-10">
+          ¿Tenés alguna duda, consulta o sugerencia? Nos encantaría escucharte. Completá el formulario o usá nuestros canales directos.
+        </p>
+
+        <div class="space-y-6">
+          <div class="flex items-center">
+            <div class="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center mr-4">
+              <i class="fas fa-map-marker-alt text-xl"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-gray-900 dark:text-white">Ubicación</h3>
+              <p class="text-gray-500">Av. Corrientes 1234, CABA, Argentina</p>
+            </div>
+          </div>
+
+          <div class="flex items-center">
+            <div class="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center mr-4">
+              <i class="fas fa-phone-alt text-xl"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-gray-900 dark:text-white">Teléfono</h3>
+              <p class="text-gray-500">+54 11 4321 5678</p>
+            </div>
+          </div>
+
+          <div class="flex items-center">
+            <div class="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center mr-4">
+              <i class="fas fa-envelope text-xl"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-gray-900 dark:text-white">Email</h3>
+              <p class="text-gray-500">soporte&#64;sportify.com</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulario (Visual) -->
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-8 md:p-12">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Envianos tu mensaje</h2>
+        <form class="space-y-6" (submit)="$event.preventDefault()">
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nombre Completo</label>
+            <input type="text" id="name" placeholder="Ej. Juan Pérez" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tu Email</label>
+            <input type="email" id="email" placeholder="juan&#64;ejemplo.com" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
+          </div>
+          <div>
+            <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Mensaje</label>
+            <textarea id="message" rows="5" placeholder="¿En qué te podemos ayudar?" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"></textarea>
+          </div>
+          <button type="button" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-xl transition duration-200">
+            Enviar Mensaje
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

@@ -28,11 +28,12 @@
 
             <div class="flex items-center">
               <span [ngClass]="{
-                'bg-red-100 text-red-700': order.estado === 'Cancelado',
-                'bg-yellow-100 text-yellow-700': order.estado === 'pending',
-                'bg-green-100 text-green-700': order.estado === 'Entregado'
+                'bg-red-100 text-red-700':    order.estado === 'Cancelado',
+                'bg-yellow-100 text-yellow-700': order.estado === 'pending' || order.estado === 'Pago Pendiente',
+                'bg-green-100 text-green-700':  order.estado === 'Pagado' || order.estado === 'Entregado',
+                'bg-gray-100 text-gray-500':    order.estado !== 'Cancelado' && order.estado !== 'pending' && order.estado !== 'Pago Pendiente' && order.estado !== 'Pagado' && order.estado !== 'Entregado'
               }" class="px-3 py-1.5 rounded-full text-xs font-black uppercase tracking-tight">
-                {{ order.estado }}
+                {{ order.estado === 'pending' ? 'Pendiente' : order.estado }}
               </span>
             </div>
 
@@ -61,10 +62,11 @@
                 <i class="fas fa-eye"></i> Detalles
               </button>
 
-              <button (click)="cancelOrder(order.id)" type="button" [disabled]="order.estado === 'Cancelado'" 
+              <button (click)="cancelOrder(order.id)" type="button"
+                [disabled]="order.estado === 'Cancelado' || order.estado === 'Pagado' || order.estado === 'Entregado'"
                 [ngClass]="{
-                  'bg-red-50 text-red-600 hover:bg-red-600 hover:text-white': order.estado !== 'Cancelado',
-                  'bg-gray-50 text-gray-300 cursor-not-allowed': order.estado === 'Cancelado'
+                  'bg-red-50 text-red-600 hover:bg-red-600 hover:text-white': order.estado !== 'Cancelado' && order.estado !== 'Pagado' && order.estado !== 'Entregado',
+                  'bg-gray-50 text-gray-300 cursor-not-allowed': order.estado === 'Cancelado' || order.estado === 'Pagado' || order.estado === 'Entregado'
                 }"
                 class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all active:scale-95 shadow-sm">
                 <i class="fas fa-times-circle"></i>

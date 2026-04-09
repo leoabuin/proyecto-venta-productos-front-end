@@ -39,6 +39,7 @@ export class MyOrdersComponent implements OnInit {
       this.orderService.findOrderbyUser(this.userId).subscribe({
         next: (data) => {
           this.orders = data; // Aquí va directo, porque el back manda el array pelado
+          this.injectCartAsPendingOrder();
           console.log('Ahora sí, con productos:', data);
           this.verifyPendingOrders();
         },
@@ -49,6 +50,37 @@ export class MyOrdersComponent implements OnInit {
           console.log('La solicitud de órdenes se completó con éxito.');
         }
       });
+    }
+  }
+
+  // LÓGICA DEL CARRITO COMO PEDIDO PENDIENTE
+  injectCartAsPendingOrder() {
+    const cartStr = this.localStorageService.getItem('cartToshow');
+    if (cartStr) {
+      const cartItems = JSON.parse(cartStr);
+      if (cartItems.length > 0) {
+        let total = 0;
+        const mockOrderItems = cartItems.map((item: any) => {
+          total += item.item_price;
+          return {
+            product: item,
+            quantity: item.quantity,
+            item_price: item.item_price
+          };
+        });
+
+        const mockCartOrder = {
+          id: 'En Carrito', 
+          estado: 'pending',
+          fecha_pedido: new Date().toISOString(),
+          metodo_pago: 'A definir',
+          total: total,
+          orderItems: mockOrderItems,
+          isCartMock: true
+        };
+
+        this.orders.unshift(mockCartOrder);
+      }
     }
   }
 
@@ -63,8 +95,15 @@ export class MyOrdersComponent implements OnInit {
     this.selectedOrder = null;
   }
 
-  cancelOrder(orderId: number): void {
-    this.orderService.cancelOrder(orderId).subscribe({
+  cancelOrder(orderId: number | string): void {
+    if (orderId === 'En Carrito') {
+      this.localStorageService.removeItem('cart');
+      this.localStorageService.removeItem('cartToshow');
+      this.showCancelSuccessMessage = true;
+      return;
+    }
+
+    this.orderService.cancelOrder(orderId as number).subscribe({
       next: (response) => {
         console.log('Pedido cancelado exitosamente:', response);
         this.showCancelSuccessMessage = true;
@@ -87,7 +126,7 @@ export class MyOrdersComponent implements OnInit {
   }
 
   private verifyPendingOrders(): void {
-    const pendingOrders = this.orders.filter(order => order.estado === 'pending' || order.estado === 'Pago Pendiente');
+    const pendingOrders = this.orders.filter(order => !order.isCartMock && (order.estado === 'pending' || order.estado === 'Pago Pendiente'));
     if (pendingOrders.length === 0) {
       return;
     }

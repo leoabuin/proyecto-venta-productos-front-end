@@ -66,5 +66,10 @@ export const routes: Routes = [
     
 
     // --- RUTAS COMUNES (Ambos necesitan estar logueados) ---
-    { path: 'updateUser/:idUser', component: UpdateUserComponent, canActivate: [roleGuard(['Cliente', 'Empleado'])] }
+    { path: 'updateUser/:idUser', component: UpdateUserComponent, canActivate: [roleGuard(['Cliente', 'Empleado'])] },
+
+    // --- PÁGINAS ESTÁTICAS DE INFORMACIÓN ---
+    { path: 'privacy-policy', loadComponent: () => import('./pages/privacy-policy/privacy-policy.component').then(m => m.PrivacyPolicyComponent) },
+    { path: 'licensing', loadComponent: () => import('./pages/licensing/licensing.component').then(m => m.LicensingComponent) },
+    { path: 'contact', loadComponent: () => import('./pages/contact/contact.component').then(m => m.ContactComponent) }
 ];

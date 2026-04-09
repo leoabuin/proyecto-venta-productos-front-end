@@ -1,36 +1,51 @@
-import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
-import { HomeComponent } from "./home/home.component.js";
-import { LogInComponent } from './log-in/log-in.component.js';
-import { AddbrandsComponent } from './addbrands/addbrands.component.js';
-import { HttpClient } from '@angular/common/http';
-import { provideHttpClient } from '@angular/common/http';
-import { NosotrosComponent } from "./nosotros/nosotros.component";
+import { Component, OnInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { PaymentService } from './service/payment.service';
+import { LocalStorageService } from './service/local-storage.service';
 
-import { AddcategoriesComponent } from "./addcategories/addcategories.component";
-import { BrandListComponent } from './brand-list/brand-list.component.js';
-import { CategoriesListComponent } from "./categories-list/categories-list.component";
-import { DistributorListComponent } from './distributor-list/distributor-list.component.js';
-import { NavbarComponent } from '../navbar/navbar.component.js';
-import { ProductsListComponent } from './products-list/products-list.component.js';
-import { AddProductComponent } from './add-product/add-product.component.js';
-import { ProductDetailsComponent } from './product-details/product-details.component.js';
-import { ShoppingCartComponent } from "./shopping-cart/shopping-cart.component";
-import { UpdateCategoryComponent } from './update-category/update-category.component.js';
-import { ChangePriceComponent } from './change-price/change-price.component.js';
-import { RegisterUserComponent } from './register-user/register-user.component.js';
-import { FooterComponent } from './footer/footer.component.js';
-import { MyOrdersComponent } from './my-orders/my-orders.component.js';
-import { UpdateUserComponent } from './update-user/update-user.component.js';
-import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component.js';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,
-  ],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'proyecto-venta-productos-front-end';
+
+  constructor(
+    private paymentService: PaymentService,
+    private localStorageService: LocalStorageService
+  ) {}
+
+  ngOnInit(): void {
+    this.checkPendingPayment();
+  }
+
+  /**
+   * Si hay un pedido pendiente en localStorage (currentOrderId),
+   * verifica con el backend si el pago fue aprobado en MP.
+   * Esto cubre el caso en que MP no redirige (sandbox/prueba).
+   */
+  private checkPendingPayment(): void {
+    const storedOrderId = this.localStorageService.getItem('currentOrderId');
+    if (!storedOrderId) return;
+
+    const orderId = Number(storedOrderId);
+    console.log('[App] Verificando pago pendiente para orden #', orderId);
+
+    this.paymentService.verifyPayment(orderId).subscribe({
+      next: (response) => {
+        if (response.orderStatus === 'Pagado' || response.paymentStatus === 'approved') {
+          console.log('[App] ✅ Orden #', orderId, 'confirmada como PAGADA');
+          this.localStorageService.removeItem('currentOrderId');
+        } else {
+          console.log('[App] Orden #', orderId, 'estado:', response.orderStatus);
+        }
+      },
+      error: () => {
+        // Fallo silencioso — no se bloquea la app
+      }
+    });
+  }
 }
