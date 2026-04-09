@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ApiUserService } from '../service/userApi.service';
+import { ApiUserService } from '../service/userApi.service.js';
+import { NavbarComponent } from '../../navbar/navbar.component.js';
+import { FooterComponent } from '../footer/footer.component.js';
 
 @Component({
   selector: 'app-favorites-list',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NavbarComponent, FooterComponent],
   templateUrl: './favorites-list.component.html',
   styleUrls: ['./favorites-list.component.scss']
 })
@@ -23,13 +25,11 @@ export class FavoritesListComponent implements OnInit {
 
   loadFavorites() {
     this.isLoading = true;
+    this.errorMessage = '';
     this.userApiService.getFavorites().subscribe({
       next: (response) => {
-        if (response && response.status === 'success') {
-          this.favorites = response.data;
-        } else {
-          this.favorites = response || []; // Fallback depending on exact response structure
-        }
+        // La API devuelve { message: '...', data: [...] }
+        this.favorites = response.data || response || [];
         this.isLoading = false;
       },
       error: (error) => {
@@ -43,13 +43,19 @@ export class FavoritesListComponent implements OnInit {
   removeFavorite(productId: number) {
     this.userApiService.removeFavorite(productId).subscribe({
       next: () => {
-        // Filtrar el producto de la lista local en lugar de volver a cargar todo
-        this.favorites = this.favorites.filter(fav => fav.idProduct !== productId);
+        // Filtrar por .id que es el campo correcto de la entidad Product
+        this.favorites = this.favorites.filter(fav => fav.id !== productId);
       },
       error: (error) => {
         console.error('Error removing favorite', error);
         alert('Hubo un error al eliminar el producto de tus favoritos.');
       }
     });
+  }
+
+  getCurrentPrice(prices: any[]): number | null {
+    if (!prices || prices.length === 0) return null;
+    const sorted = [...prices].sort((a, b) => b.id - a.id);
+    return sorted[0].cost;
   }
 }
