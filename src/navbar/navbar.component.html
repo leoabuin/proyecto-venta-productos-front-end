@@ -41,7 +41,7 @@
           <a [routerLink]="['/products']" [queryParams]="{ gender: '1' }" class="py-2 px-1 hover:text-red-200 font-bold text-sm">Hombre</a>
           <a [routerLink]="['/products']" [queryParams]="{ gender: '2' }" class="py-2 px-1 hover:text-red-200 font-bold text-sm">Mujer</a>
           <a [routerLink]="['/products']" [queryParams]="{ gender: '3' }" class="py-2 px-1 hover:text-red-200 font-bold text-sm">Unisex</a>
-          <a [routerLink]="['/products']" [queryParams]="{ offer: 'true' }" class="py-1 px-3 bg-yellow-400 text-red-700 hover:bg-yellow-300 font-black rounded shadow-sm italic text-[10px] animate-pulse">🔥 SALE</a>
+          <a [routerLink]="['/products']" [queryParams]="{ offer: 'true' }" class="py-1 px-3 bg-yellow-400 text-red-700 hover:bg-yellow-300 font-black rounded shadow-sm italic text-[10px] animate-pulse">🔥 OFERTA</a>
         </ng-container>
       </div>
 
@@ -79,7 +79,7 @@
       <a [routerLink]="['/products']" [queryParams]="{ gender: '1' }" (click)="isMenuOpen=false" class="block py-3 font-bold border-b border-red-700">Hombre</a>
       <a [routerLink]="['/products']" [queryParams]="{ gender: '2' }" (click)="isMenuOpen=false" class="block py-3 font-bold border-b border-red-700">Mujer</a>
       <a [routerLink]="['/products']" [queryParams]="{ gender: '3' }" (click)="isMenuOpen=false" class="block py-3 font-bold border-b border-red-700">Unisex</a>
-      <a [routerLink]="['/products']" [queryParams]="{ offer: 'true' }" (click)="isMenuOpen=false" class="block py-3 text-yellow-400 font-black italic">🔥 SALE</a>
+      <a [routerLink]="['/products']" [queryParams]="{ offer: 'true' }" (click)="isMenuOpen=false" class="block py-3 text-yellow-400 font-black italic">🔥 OFERTA</a>
     </ng-container>
 
     <div *ngIf="username; else loginBtnMobile" class="pt-4 border-t border-red-600">

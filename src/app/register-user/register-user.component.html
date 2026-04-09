@@ -12,23 +12,23 @@
       <div class="grid sm:grid-cols-2 gap-8">
         <div>
           <label class="text-gray-800 text-sm mb-2 block">Nombre</label>
-          <input name="name" type="text" [(ngModel)]="userData.name" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter name" />
+          <input name="name" type="text" [(ngModel)]="userData.name" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Ingrese su nombre" />
         </div>
         <div>
           <label class="text-gray-800 text-sm mb-2 block">Apellido</label>
-          <input name="lname" type="text" [(ngModel)]="userData.surname" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter last name" />
+          <input name="lname" type="text" [(ngModel)]="userData.surname" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Ingrese su apellido" />
         </div>
         <div>
-          <label class="text-gray-800 text-sm mb-2 block">Mail</label>
-          <input name="email" type="text" [(ngModel)]="userData.mail" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter email" />
+          <label class="text-gray-800 text-sm mb-2 block">Correo electrónico</label>
+          <input name="email" type="text" [(ngModel)]="userData.mail" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Ingrese su email" />
         </div>
         <div>
-            <label class="text-gray-800 text-sm mb-2 block">Dni</label>
-            <input name="dni" type="number" [(ngModel)]="userData.dni" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter Dni" />
+            <label class="text-gray-800 text-sm mb-2 block">DNI</label>
+            <input name="dni" type="number" [(ngModel)]="userData.dni" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Ingrese su DNI" />
         </div>
         <div>
-            <label class="text-gray-800 text-sm mb-2 block">Direccion</label>
-            <input name="direccion" type="text" [(ngModel)]="userData.adress" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter Direccion" />
+            <label class="text-gray-800 text-sm mb-2 block">Dirección</label>
+            <input name="direccion" type="text" [(ngModel)]="userData.adress" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Ingrese su dirección" />
         </div>        
         <div>    
             <label class="text-gray-800 text-sm mb-2 block">Telefono</label>
@@ -43,11 +43,11 @@
             </select>
         </div>
         <div>
-          <label class="text-gray-800 text-sm mb-2 block">Username</label>
+          <label class="text-gray-800 text-sm mb-2 block">Nombre de usuario</label>
           <input name="Username" type="text" [(ngModel)]="userData.userName" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Ingrese nombre de usuario" />
         </div>
         <div>
-          <label class="text-gray-800 text-sm mb-2 block">Password</label>
+          <label class="text-gray-800 text-sm mb-2 block">Contraseña</label>
           <input name="password" type="password" [(ngModel)]="userData.password" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Ingrese contraseña" />
         </div>
 
@@ -77,7 +77,7 @@
             <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">¡Cuenta creada con éxito!</h3>
             <p>Serás redirigido al login en unos momentos...</p>
             <button (click)="closeModal()" type="button" class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-              Ir al Login
+              Iniciar sesión
             </button>
           </div>
         </div>
