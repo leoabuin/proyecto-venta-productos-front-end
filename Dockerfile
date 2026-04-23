@@ -14,4 +14,5 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Copiamos los archivos de la carpeta browser al directorio de Nginx
 COPY --from=build /app/dist/proyecto-venta-productos-front-end/browser /usr/share/nginx/html
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# Inyectamos el puerto que Railway asigne dinámicamente
+CMD sed -i -e 's/listen 80;/listen '"$PORT"';/g' /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'
