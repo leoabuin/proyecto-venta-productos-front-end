@@ -41,7 +41,10 @@
                     </div>
                     <div class="flex items-center">
                         <span class="font-bold text-gray-700 dark:text-gray-300 mr-1">Disponibilidad:</span>
-                        <span class="text-gray-600 dark:text-gray-300">En Stock</span>
+                        <span [ngClass]="stock > 5 ? 'text-green-600' : stock > 0 ? 'text-yellow-600' : 'text-red-600'"
+                              class="font-bold dark:text-gray-300">
+                          {{ stock > 0 ? stock + ' unidades disponibles' : 'Sin stock' }}
+                        </span>
                     </div>
                 </div>
 
@@ -115,6 +118,11 @@
                                 Agregar al carrito
                             </button>
                         </div>
+                    </div>
+                    <!-- Error de stock al acumular -->
+                    <div *ngIf="stockError" class="mt-1 flex items-center gap-1 text-red-600 text-sm font-semibold">
+                      <i class="fas fa-exclamation-circle"></i>
+                      {{ stockError }}
                     </div>
                 </div>
 

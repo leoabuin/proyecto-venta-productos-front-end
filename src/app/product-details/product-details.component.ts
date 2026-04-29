@@ -43,6 +43,7 @@ export class ProductDetailsComponent implements OnInit {
   isLoading: boolean = false;
   isFavorite: boolean = false;
   isFavoriteLoading: boolean = false;
+  stockError: string = '';
 
   selectSize(size: string) {
     // Solo permitir seleccionar si el talle es el del producto
@@ -198,13 +199,14 @@ export class ProductDetailsComponent implements OnInit {
       return;
     }
     this.sizeError = false;
+    this.stockError = '';
     this.isLoading = true
+    const unitPrice = this.currentPrice ? this.currentPrice.cost : 0;
     const cartItem = {
       productId: this.product.id,
       quantity: this.quantity,
-      item_price: (this.currentPrice ? this.currentPrice.cost : 0) * this.quantity,
+      item_price: unitPrice * this.quantity,
     }
-
 
     let cart = JSON.parse(this.localStorageService.getItem('cart') || '[]')
     let cartToshow = JSON.parse(this.localStorageService.getItem('cartToshow') || '[]')
@@ -212,7 +214,13 @@ export class ProductDetailsComponent implements OnInit {
     const existingItemIndex = cart.findIndex((item: any) => item.productId === cartItem.productId)
 
     if (existingItemIndex > -1) {
-      cart[existingItemIndex].quantity += this.quantity;
+      const newTotalQty = cart[existingItemIndex].quantity + this.quantity;
+      if (newTotalQty > this.stock) {
+        this.stockError = `Stock insuficiente. Solo hay ${this.stock} unidades disponibles y ya tienes ${cart[existingItemIndex].quantity} en el carrito.`;
+        this.isLoading = false;
+        return;
+      }
+      cart[existingItemIndex].quantity = newTotalQty;
     } else {
       cart.push(cartItem)
     }
@@ -222,20 +230,17 @@ export class ProductDetailsComponent implements OnInit {
       name: this.product.name,
       imagen: this.product.imagen,
       quantity: this.quantity,
-      item_price: (this.currentPrice ? this.currentPrice.cost : 0) * this.quantity,
+      item_price: unitPrice * this.quantity,
     };
-
 
     const existingShowIndex = cartToshow.findIndex((item: any) => item.productId === productDetails.productId)
 
     if (existingShowIndex > -1) {
-
       cartToshow[existingShowIndex].quantity += this.quantity
       cartToshow[existingShowIndex].item_price += productDetails.item_price
     } else {
       cartToshow.push(productDetails)
     }
-
 
     this.localStorageService.setItem('cart', JSON.stringify(cart))
     this.localStorageService.setItem('cartToshow', JSON.stringify(cartToshow))

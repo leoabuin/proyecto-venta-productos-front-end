@@ -1,0 +1,178 @@
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+<app-navbar></app-navbar>
+
+<section class="min-h-screen bg-gray-50 py-10 px-4">
+  <div class="max-w-5xl mx-auto">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight flex items-center gap-3">
+          <span class="bg-yellow-400 text-gray-900 text-xs font-black px-2 py-1 rounded">ADMIN</span>
+          Gestión de Cupones
+        </h1>
+        <p class="text-gray-500 mt-1 text-sm">Crea, edita y elimina cupones de descuento para tus clientes.</p>
+      </div>
+      <button (click)="openCreateForm()"
+              id="btn-new-coupon"
+              class="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold px-5 py-3 rounded-xl shadow-lg transition-all active:scale-95">
+        <i class="fas fa-plus"></i> Nuevo Cupón
+      </button>
+    </div>
+
+    <!-- Coupons Table -->
+    <div class="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden">
+      <div *ngIf="coupons.length === 0 && !isLoading" class="flex flex-col items-center py-16 text-center">
+        <i class="fas fa-ticket-alt text-5xl text-gray-200 mb-4"></i>
+        <p class="text-gray-400 font-semibold text-lg">No hay cupones creados todavía.</p>
+        <p class="text-gray-400 text-sm mt-1">Haz clic en "Nuevo Cupón" para empezar.</p>
+      </div>
+
+      <table *ngIf="coupons.length > 0" class="w-full text-sm text-left">
+        <thead class="bg-gray-900 text-white uppercase text-xs tracking-widest">
+          <tr>
+            <th class="px-6 py-4">Código</th>
+            <th class="px-6 py-4">Descuento</th>
+            <th class="px-6 py-4">Vence</th>
+            <th class="px-6 py-4">Estado</th>
+            <th class="px-6 py-4 text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          <tr *ngFor="let coupon of coupons"
+              [ngClass]="isExpired(coupon.expirationDate) ? 'bg-red-50 opacity-70' : 'hover:bg-gray-50'"
+              class="transition-colors">
+            <td class="px-6 py-4">
+              <span class="font-black text-gray-900 tracking-widest bg-gray-100 px-3 py-1 rounded-lg text-base">
+                {{ coupon.code }}
+              </span>
+            </td>
+            <td class="px-6 py-4">
+              <span class="bg-green-100 text-green-700 font-bold px-2 py-1 rounded-full text-sm">
+                {{ coupon.discountPercentage }}% OFF
+              </span>
+            </td>
+            <td class="px-6 py-4 text-gray-600">
+              {{ coupon.expirationDate | date:'dd/MM/yyyy' }}
+              <span *ngIf="!isExpired(coupon.expirationDate)" class="text-xs text-gray-400 block">
+                en {{ getDaysUntilExpiry(coupon.expirationDate) }} días
+              </span>
+            </td>
+            <td class="px-6 py-4">
+              <span *ngIf="!isExpired(coupon.expirationDate)"
+                    class="bg-green-100 text-green-700 text-xs font-black px-2 py-1 rounded-full uppercase">
+                Activo
+              </span>
+              <span *ngIf="isExpired(coupon.expirationDate)"
+                    class="bg-red-100 text-red-600 text-xs font-black px-2 py-1 rounded-full uppercase">
+                Vencido
+              </span>
+            </td>
+            <td class="px-6 py-4">
+              <!-- Confirm delete inline -->
+              <div *ngIf="deleteConfirmId === coupon.id" class="flex items-center gap-2 justify-center">
+                <span class="text-xs text-red-600 font-semibold">¿Confirmar?</span>
+                <button (click)="deleteCoupon(coupon.id)"
+                        class="bg-red-600 text-white text-xs px-3 py-1 rounded-lg font-bold hover:bg-red-700 transition">
+                  Sí, eliminar
+                </button>
+                <button (click)="cancelDelete()"
+                        class="bg-gray-200 text-gray-700 text-xs px-3 py-1 rounded-lg font-bold hover:bg-gray-300 transition">
+                  Cancelar
+                </button>
+              </div>
+
+              <!-- Normal action buttons -->
+              <div *ngIf="deleteConfirmId !== coupon.id" class="flex items-center gap-2 justify-center">
+                <button (click)="openEditForm(coupon)"
+                        title="Editar cupón"
+                        class="p-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition">
+                  <i class="fas fa-pen text-sm"></i>
+                </button>
+                <button (click)="confirmDelete(coupon.id)"
+                        title="Eliminar cupón"
+                        class="p-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition">
+                  <i class="fas fa-trash text-sm"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+<!-- Modal: Create / Edit Form -->
+<div *ngIf="showForm"
+     class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm p-4">
+  <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 relative">
+
+    <button (click)="closeForm()"
+            class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 transition">
+      <i class="fas fa-times text-xl"></i>
+    </button>
+
+    <h2 class="text-2xl font-extrabold text-gray-900 mb-6">
+      {{ isEditing ? '✏️ Editar Cupón' : '🎫 Nuevo Cupón' }}
+    </h2>
+
+    <!-- Alerts -->
+    <div *ngIf="formError" class="mb-4 flex items-center gap-2 bg-red-50 text-red-600 px-4 py-3 rounded-xl text-sm font-semibold">
+      <i class="fas fa-exclamation-circle"></i> {{ formError }}
+    </div>
+    <div *ngIf="formSuccess" class="mb-4 flex items-center gap-2 bg-green-50 text-green-600 px-4 py-3 rounded-xl text-sm font-semibold">
+      <i class="fas fa-check-circle"></i> {{ formSuccess }}
+    </div>
+
+    <form (ngSubmit)="submitForm()" #couponForm="ngForm" class="space-y-5">
+      <!-- Code -->
+      <div>
+        <label for="coupon-code" class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Código del Cupón</label>
+        <input id="coupon-code"
+               type="text"
+               [(ngModel)]="form.code"
+               name="code"
+               placeholder="Ej: VERANO20"
+               maxlength="30"
+               class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-bold uppercase tracking-widest focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition-all"
+               required>
+      </div>
+
+      <!-- Discount Percentage -->
+      <div>
+        <label for="discount-pct" class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Porcentaje de Descuento (%)</label>
+        <input id="discount-pct"
+               type="number"
+               [(ngModel)]="form.discountPercentage"
+               name="discountPercentage"
+               placeholder="Ej: 15"
+               min="1"
+               max="100"
+               class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition-all"
+               required>
+      </div>
+
+      <!-- Expiration Date -->
+      <div>
+        <label for="expiration-date" class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Fecha de Vencimiento</label>
+        <input id="expiration-date"
+               type="date"
+               [(ngModel)]="form.expirationDate"
+               name="expirationDate"
+               class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition-all"
+               required>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit"
+              [disabled]="isLoading"
+              class="w-full bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white font-black uppercase tracking-widest py-3.5 rounded-xl transition-all active:scale-95 shadow-lg mt-2">
+        {{ isEditing ? 'Guardar Cambios' : 'Crear Cupón' }}
+      </button>
+    </form>
+  </div>
+</div>
+
+<app-footer></app-footer>

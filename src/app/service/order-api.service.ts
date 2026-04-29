@@ -9,9 +9,7 @@ import { environment } from "../environment";
 })
 export class OrderApiService {
   private urlOrderApi = `${environment.apiUrl}/orders`;
-  private urlCouponApi = `${environment.apiUrl}/coupons`;
-  
-  
+
   constructor(private http: HttpClient) { }
 
   public getAllOrders(): Observable<any> {
@@ -28,9 +26,5 @@ export class OrderApiService {
 
   public cancelOrder(orderId: number): Observable<any>{
     return this.http.post<any>(`${this.urlOrderApi}/${orderId}`, {}, { withCredentials: true })
-  }
-
-  public validateCoupon(code: string): Observable<any> {
-    return this.http.get<any>(`${this.urlCouponApi}/validate/${code}`, { withCredentials: true });
   }
 }

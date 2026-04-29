@@ -36,7 +36,20 @@
         ${{ (stats.totalVentas / (stats.totalPedidosCount - (stats.totalPedidosCount * stats.porcentajeCancelados / 100)) || 0) | number:'1.2-2' }}
       </p>
     </div>
+
+    <!-- Acceso rápido: Gestor de Cupones -->
+    <a routerLink="/manage-coupons"
+       class="bg-gradient-to-br from-yellow-400 to-orange-500 p-6 rounded-xl shadow-md flex flex-col justify-between cursor-pointer hover:shadow-xl transition-all active:scale-95 group">
+      <div>
+        <p class="text-yellow-900 font-black uppercase text-xs tracking-wider">Gestor de Cupones</p>
+        <p class="text-3xl mt-1">🎫</p>
+      </div>
+      <p class="text-yellow-900 text-xs font-bold mt-3 group-hover:underline flex items-center gap-1">
+        Administrar cupones <i class="fas fa-arrow-right text-[10px]"></i>
+      </p>
+    </a>
   </div>
+
 
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
     

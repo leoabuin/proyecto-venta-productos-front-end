@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '../service/local-storage.service.js';
 import { FooterComponent } from '../footer/footer.component.js';
 import { OrderApiService } from '../service/order-api.service.js';
+import { CouponApiService } from '../service/coupon-api.service.js';
 import { PaymentService } from '../service/payment.service.js';
 import { formatDate } from '@angular/common';
 import { Router, RouterModule } from '@angular/router'
@@ -38,11 +39,12 @@ export class ShoppingCartComponent implements OnInit {
   constructor(
     private localStorageService: LocalStorageService,
     private orderService: OrderApiService,
+    private couponService: CouponApiService,
     private paymentService: PaymentService,
     private router: Router
   ) {
     const cart = this.localStorageService.getItem('cartToshow');
-    this.cartItems = cart ? JSON.parse(cart) : []; // Convierte el string a un array
+    this.cartItems = cart ? JSON.parse(cart) : [];
     console.log(this.cartItems);
   }
   ngOnInit() {
@@ -82,7 +84,7 @@ export class ShoppingCartComponent implements OnInit {
     }
 
     this.isLoading = true;
-    this.orderService.validateCoupon(this.couponCode).subscribe({
+    this.couponService.validate(this.couponCode).subscribe({
       next: (response) => {
         const coupon = response.data || response;
         
@@ -121,13 +123,11 @@ export class ShoppingCartComponent implements OnInit {
     const username = this.localStorageService.getItem('username') || 'Cliente'
     const userEmail = this.localStorageService.getItem('userEmail')
 
-    // Validación de seguridad: Si no hay mail, no disparamos EmailJS
     if (!userEmail) {
       console.warn("No se pudo enviar la factura: Falta el email del usuario.")
       return
     }
 
-    // Formateamos los productos para el mail
     const itemsHTML = this.cartItems.map(item =>
       `- ${item.name} (x${item.quantity}): $${item.item_price}`
     ).join('<br>');
@@ -171,14 +171,12 @@ export class ShoppingCartComponent implements OnInit {
     const userIdString = this.localStorageService.getItem('idUsuario') as string
     const userId = parseInt(userIdString, 10)
 
-    const orderItem = this.localStorageService.getItem('cart')
-    if (orderItem) {
-      const cartItems = JSON.parse(orderItem)
-    }
+    // Construir orderItems con el precio BRUTO (sin descuento).
+    // El backend aplica el 20% de descuento por volumen internamente.
     const orderItems = this.cartItems.map(item => ({
       productId: item.productId,
       quantity: item.quantity,
-      item_price: item.item_price
+      item_price: item.item_price   // precio total del line-item (unit_price * qty)
     }))
 
     const orderData = {
@@ -188,7 +186,9 @@ export class ShoppingCartComponent implements OnInit {
       estado: "pending",
       metodo_pago: "Mercado Pago",
       userId: userId,
-      couponId: this.appliedCoupon ? this.appliedCoupon.id : null
+      // FIX: se envía couponCode (string) en vez de couponId (number)
+      // El backend lee req.body.couponCode en sanitizeOrderInput y placeOrder
+      couponCode: this.appliedCoupon ? this.appliedCoupon.code : null
     }
     console.log('Creando orden:', orderData)
 
@@ -204,29 +204,26 @@ export class ShoppingCartComponent implements OnInit {
           return
         }
 
-        // Guardar el orderId en localStorage para usar después en la página de éxito
         this.localStorageService.setItem('currentOrderId', String(orderId))
 
-        // Paso 2: Crear la preferencia de pago en Mercado Pago
-        const paymentItems = this.cartItems.map(item => ({
-          productId: item.productId,
-          id: String(item.productId),
-          title: item.name,
-          quantity: item.quantity,
-          unit_price: item.unit_price || (item.item_price / item.quantity)
-        }))
+        // Paso 2: Crear preferencia de MercadoPago con el TOTAL FINAL (incluye descuentos).
+        // Usamos un único line-item con el total calculado para evitar discrepancias.
+        const paymentItems = [{
+          id: String(orderId),
+          title: `Pedido Sportify #${orderId}`,
+          quantity: 1,
+          unit_price: Math.round(this.total * 100) / 100   // total con todos los descuentos aplicados
+        }]
 
-        console.log('Creando preferencia de pago para orden #' + orderId)
+        console.log('Creando preferencia de pago para orden #' + orderId, 'Total con descuentos:', this.total)
         this.paymentService.createPaymentPreference(orderId, paymentItems).subscribe({
           next: (paymentResponse) => {
             console.log('Preferencia de pago creada:', paymentResponse)
             const initPoint = paymentResponse.init_point || paymentResponse.sandbox_init_point
             
           if (initPoint) {
-              // Limpiar el carrito ANTES de salir hacia Mercado Pago
               this.localStorageService.removeItem('cart')
               this.localStorageService.removeItem('cartToshow')
-              // Guardar el orderId para usarlo en la página de éxito
               this.localStorageService.setItem('currentOrderId', String(orderId))
               console.log('Redirigiendo a Mercado Pago:', initPoint)
               window.location.href = initPoint
@@ -255,9 +252,5 @@ export class ShoppingCartComponent implements OnInit {
     this.showOrderDone = false
     this.router.navigate(['/home'])
   }
-
-
-
-
 
 }
