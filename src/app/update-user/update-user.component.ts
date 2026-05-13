@@ -6,12 +6,11 @@ import { ApiUserService } from '../service/userApi.service.js';
 import { LocalStorageService } from '../service/local-storage.service.js';
 
 export interface User {
-  id:number
+  id: number;
   mail: string;
   userName: string;
-  phoneNumber:string,
-  adress:string
-
+  phoneNumber: string;
+  adress: string;
 }
 
 @Component({
@@ -24,16 +23,21 @@ export interface User {
 export class UpdateUserComponent implements OnInit {
 
   user: User = {
-    id:0,
+    id: 0,
     mail: '',
     userName: '',
-    phoneNumber:'',
-    adress:''
-  }
+    phoneNumber: '',
+    adress: ''
+  };
+
+  newPassword: string = '';
+  confirmPassword: string = '';
+  showNewPassword: boolean = false;
+  showConfirmPassword: boolean = false;
 
   errorMessages: string[] = [];
   isSuccessModalOpen = false;
-  showUpdateUser:boolean = false;
+  showUpdateUser: boolean = false;
 
 
   constructor(
@@ -89,28 +93,57 @@ export class UpdateUserComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log('ID de categoría antes de enviar:', this.user.id); // Verifica el ID aquí
-    if (this.user.id) { // Asegúrate de que el ID es válido
-      this.userService.update(this.user.id, this.user).subscribe({
-        next: (updatedUser) => {
-          console.log('usuario actualizado:', updatedUser);
-          this.showUpdateUser = true
-          this.localStorageService.setItem('username', this.user.userName)
-        },
-        error: (error) => {
-          console.error('Error al actualzar usuario:', error);
-          if (error.status === 400 && error.error.errors) {
-            this.errorMessages = error.error.errors.map((err: any) => {
-              return `Error en ${err.path[0]}: ${err.message}`;
-            });
-          }else {
-            this.errorMessages.push('Error desconocido. Intente nuevamente.');
-          }
-        }
-      });
-    } else {
-      console.error('No se puede actualizar el usuario, ID es inválido.');
+    this.errorMessages = [];
+
+    // Validación de contraseña
+    if (this.newPassword || this.confirmPassword) {
+      if (this.newPassword.length < 6) {
+        this.errorMessages.push('La nueva contraseña debe tener al menos 6 caracteres.');
+        return;
+      }
+      if (this.newPassword !== this.confirmPassword) {
+        this.errorMessages.push('Las contraseñas no coinciden.');
+        return;
+      }
     }
+
+    if (!this.user.id) {
+      console.error('No se puede actualizar el usuario, ID es inválido.');
+      return;
+    }
+
+    const payload: any = { ...this.user };
+    if (this.newPassword) {
+      payload.password = this.newPassword;
+    }
+
+    this.userService.update(this.user.id, payload).subscribe({
+      next: (updatedUser) => {
+        console.log('usuario actualizado:', updatedUser);
+        this.newPassword = '';
+        this.confirmPassword = '';
+        this.showUpdateUser = true;
+        this.localStorageService.setItem('username', this.user.userName);
+      },
+      error: (error) => {
+        console.error('Error al actualizar usuario:', error);
+        if (error.status === 400 && error.error.errors) {
+          this.errorMessages = error.error.errors.map((err: any) => {
+            return `Error en ${err.path[0]}: ${err.message}`;
+          });
+        } else {
+          this.errorMessages.push('Error desconocido. Intente nuevamente.');
+        }
+      }
+    });
+  }
+
+  toggleShowNewPassword(): void {
+    this.showNewPassword = !this.showNewPassword;
+  }
+
+  toggleShowConfirmPassword(): void {
+    this.showConfirmPassword = !this.showConfirmPassword;
   }
 
   openSuccessModal() {
